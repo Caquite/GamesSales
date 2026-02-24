@@ -115,10 +115,16 @@ def analyse_uni_quali_nom(nom_table):
 
 
 
-getBDD
+
+
 analyse_uni_quali_nom2("categorie","a_categorie","categorie","id_cat")
 analyse_uni_quali_nom2("os","a_os","OS","id_os")
 
 analyse_uni_quali_nom("developpeur")
 analyse_uni_quali_nom("genre")
 analyse_uni_quali_nom("editeur")
+
+
+
+#--------------------------Graphe nominatif ordinal------------------
+
