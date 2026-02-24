@@ -126,5 +126,59 @@ analyse_uni_quali_nom("editeur")
 
 
 
-#--------------------------Graphe nominatif ordinal------------------
+#--------------------------Graphe qualitatif ordinal------------------
+
+def analyse_uni_quali_ord(nom_table,nom_colonne):
+    
+    bdd = getBDD()
+    if not bdd:
+        return None
+    
+    try:
+        query = """ SELECT """+nom_colonne+""", COUNT(id_jeu) as Nb_Jeux FROM """+nom_table+""" GROUP BY """+nom_colonne+"""
+        ORDER BY """+nom_colonne+""" ASC
+        LIMIT 20
+        """
+        
+        df=pd.read_sql_query(query,bdd)
+        bdd.close()
+    
+
+        # Analyse
+        print("Analyse univariée : Jeux par " +nom_colonne)
+        print(df)
+        print(nom_colonne + str(len(df)))
+        print("Nombre total de jeux : " + str(df['Nb_Jeux'].sum()))
+        
+        # Graphique
+        plt.figure(figsize=(12, 6))
+        bars = plt.bar(range(len(df)), df['Nb_Jeux'], width=1 ,color='skyblue', edgecolor='navy')
+        plt.title('Nombre de jeux par '+nom_colonne)
+        plt.xlabel(nom_colonne)
+        plt.ylabel('Nombre de jeux')
+        plt.xticks(range(len(df)), df[nom_colonne], rotation=45, ha='right')
+        
+        # Nombres sur les barres
+        for bar in bars:
+            height = bar.get_height()
+            plt.text(bar.get_x() + bar.get_width()/2., height,
+                    str(int(height)), ha='center', va='bottom')
+        
+        plt.tight_layout()
+        plt.show()
+        
+        return df
+        
+    except Error as e:
+        print("Erreur : " + str(e))
+        return None
+analyse_uni_quali_ord('jeux','age_requis')
+analyse_uni_quali_ord('jeux','annee')
+
+
+
+
+
+
+
 
