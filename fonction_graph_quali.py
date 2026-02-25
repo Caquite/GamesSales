@@ -47,7 +47,7 @@ def analyse_uni_quali_nom2(table_principale, table_liaison,nom_colonne,nom_id):
         
         # Graphique
         plt.figure(figsize=(12, 6))
-        bars = plt.bar(range(len(df)), df['Nb_Jeux'], color='skyblue', edgecolor='navy')
+        bars = plt.bar(range(len(df)), df['Nb_Jeux'],width=0.2, color='skyblue', edgecolor='navy')
         plt.title('Nombre de jeux par '+nom_colonne)
         plt.xlabel(nom_colonne)
         plt.ylabel('Nombre de jeux')
@@ -91,7 +91,7 @@ def analyse_uni_quali_nom(nom_table):
         
         # Graphique
         plt.figure(figsize=(12, 6))
-        bars = plt.bar(range(len(df)), df['Nb_Jeux'], color='skyblue', edgecolor='navy')
+        bars = plt.bar(range(len(df)), df['Nb_Jeux'],width=0.3, color='skyblue', edgecolor='navy')
         plt.title('Nombre de jeux par '+nom_table)
         plt.xlabel(nom_table)
         plt.ylabel('Nombre de jeux')

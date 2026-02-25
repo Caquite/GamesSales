@@ -57,7 +57,7 @@ def analyse_uni_quanti_dis(nom_table,nom_colonne):
         
         # Graphique
         plt.figure(figsize=(12, 6))
-        bars = plt.bar(range(len(df)), df['Nb_Jeux'], width=1 ,color='skyblue', edgecolor='navy')
+        bars = plt.bar(range(len(df)), df['Nb_Jeux'], width=0.3 ,color='skyblue', edgecolor='navy')
         plt.title('Nombre de jeux par '+nom_colonne)
         plt.xlabel(nom_colonne)
         plt.ylabel('Nombre de jeux')
