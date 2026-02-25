@@ -3,7 +3,6 @@ import mysql.connector
 from mysql.connector import Error
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
 
 def getBDD():
     try:

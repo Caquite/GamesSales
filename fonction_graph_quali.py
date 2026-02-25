@@ -3,7 +3,7 @@ import mysql.connector
 from mysql.connector import Error
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
+
 
 def getBDD():
     try:
@@ -95,8 +95,7 @@ def analyse_uni_quali_nom(nom_table):
         plt.title('Nombre de jeux par '+nom_table)
         plt.xlabel(nom_table)
         plt.ylabel('Nombre de jeux')
-        nom_col= nom_table
-        plt.xticks(range(len(df)), df[nom_col], rotation=45, ha='right')
+        plt.xticks(range(len(df)), df[nom_table], rotation=45, ha='right')
         
         # Nombres sur les barres
         for i, bar in enumerate(bars):
