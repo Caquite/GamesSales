@@ -497,6 +497,35 @@ nrow(df_final_platf)
 # Analyses univariés
 # Occurrence des jeux sortis par année (nombre de jeu par années)
 barplot(table(final$Year))
+class(final$release_date)
+
+final$release_date <- as.numeric(substr(final$release_date, 1, 4))
+head(final$release_date)
+
+df_counts <- final %>%
+  count(Year, name = "effectif")
+
+ggplot(df_counts, aes(x = Year, y = effectif)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  geom_text(aes(label = effectif), vjust = -0.5, size = 5) +
+  labs(title = "Effectifs par catégorie",
+       x = "Catégorie",
+       y = "Effectif") +
+  theme_minimal()
+
+#ou 
+
+df_counts_2 <- final %>%
+  count(release_date, name = "effectif")
+head(final$release_date)
+
+ggplot(df_counts_2, aes(x = release_date, y = effectif)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  geom_text(aes(label = effectif), vjust = -0.5, size = 5) +
+  labs(title = "Effectifs par catégorie",
+       x = "Catégorie",
+       y = "Effectif") +
+  theme_minimal()
 
 # Occurrence des jeux par le nombre de personnes qui le possède
 barplot(table(final$owners))
