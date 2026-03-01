@@ -40,14 +40,14 @@ df_editeur = pd.read_sql("SELECT * FROM editeur", bdd)
 df_genre = pd.read_sql("SELECT * FROM genre", bdd)
 
 
-#-------------
-# Traitement des données et classification
-
 # %%
+#---------------
+# Affichage des informations
 print(df_jeux.columns)
 print(df_jeux.dtypes)
 
 # %%
+# Convertir les objets pd en numérique
 list_col = ["ventes_AN","ventes_EU","ventes_JP","ventes_Autre","ventes_Global"]
 for col in list_col:
     df_jeux[col] = df_jeux[col].str.replace(",", ".")
@@ -55,6 +55,9 @@ for col in list_col:
 print(df_jeux.dtypes)
 
 # %%
+#---------------
+# Analyse par périodes
+# Création des 3 périodes : en années
 df_jeux["annee"] = df_jeux["annee"].replace("", np.nan)
 df_jeux_annee1 = df_jeux[(df_jeux["annee"].notna()) & (df_jeux["annee"]<"2010")]
 df_jeux_annee2 = df_jeux[(df_jeux["annee"]>="2010") & (df_jeux["annee"]<"2015")]
@@ -63,6 +66,7 @@ df_jeux_annee3 = df_jeux[(df_jeux["annee"]>="2015") & (df_jeux["annee"]<"2020")]
 print(df_jeux_annee3["annee"])
 
 # %%
+# Fonction de scatter plot
 def scatter_plot_line(df, var1, var2, ax=None, titre=None):
     """
     Création d'un scatter plot et d'une droite de regression pour visualiser les données.
@@ -150,3 +154,33 @@ scatter_plot_line(df_jeux_annee3, "prix", "ventes_Global", axes[2], "Jeux sortie
 plt.tight_layout()
 plt.show()
 
+
+
+# %%
+#---------------
+# Analyse par réstrictions
+# Création des 4 groupes : en fonction de l'âge de réstriction
+df_jeux_age1 = df_jeux[(df_jeux["age_requis"].notna()) & (df_jeux["age_requis"]<=10)]
+df_jeux_age2 = df_jeux[df_jeux["age_requis"] == 12]
+df_jeux_age3 = df_jeux[df_jeux["age_requis"] == 16]
+df_jeux_age4 = df_jeux[df_jeux["age_requis"] == 18]
+
+print(df_jeux_age1.shape)
+print(df_jeux_age2.shape)
+print(df_jeux_age3.shape)
+print(df_jeux_age4.shape)
+
+
+# Afficher les quatres graphes en même temps
+fig, axes = plt.subplots(2, 2, figsize=(15, 4))
+
+scatter_plot_line(df_jeux_age1, "prix", "ventes_Global", axes[0,0], "Jeux sortient entre 1998 et 2010")
+scatter_plot_line(df_jeux_age2, "prix", "ventes_Global", axes[0,1], "Jeux sortient entre 2010 et 2015")
+scatter_plot_line(df_jeux_age3, "prix", "ventes_Global", axes[1,0], "Jeux sortient entre 2015 et 2020")
+scatter_plot_line(df_jeux_age4, "prix", "ventes_Global", axes[1,1], "Jeux sortient entre 2015 et 2020")
+
+plt.tight_layout()
+plt.show()
+
+
+# %%

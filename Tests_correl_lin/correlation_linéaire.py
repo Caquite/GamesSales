@@ -18,6 +18,7 @@ print(df.head())
 print("Dimention du df : ",df.shape)
 print("Types de chaque variables du df : ",df.dtypes)
 
+# Modification des types des données
 df["EU_Sales"] = df["EU_Sales"].str.replace(" €", "").str.replace(",", ".").astype(float)
 df["NA_Sales"] = df["NA_Sales"].str.replace(" €", "").str.replace(",", ".").astype(float)
 df["JP_Sales"] = df["JP_Sales"].str.replace(" €", "").str.replace(",", ".").astype(float)
@@ -26,54 +27,11 @@ df["Global_Sales"] = df["Global_Sales"].str.replace(" €", "").str.replace(",",
 
 print("Types de chaque variables du df : ",df.dtypes)
 
-# Exemple de scatter plot
-#plt.scatter(df["EU_Sales"], df["NA_Sales"])
-#plt.xlabel("EU_Sales")
-#plt.ylabel("NA_Sales")
-#plt.title("Nombre de ventes d'un jeu en Europe et son équivalent en Amérique (en million?)")
-#plt.show()
-
 
 # ------------
 # Création de la fonction pour faire un scatter plot entre deux variables quantitatives
 # Version sans droite de regression
-def scatter_plot(df, var1, var2):
-    """
-    Création d'un scatter plot pour visualiser les données.
-    Arguments :
-        df : data frame 
-        var1 : variable pour l'axe x
-        var2 : variable pour l'axe y
-    
-    Retourne :
-        un scatter plot
-    """
-    if not isinstance(var1, str) or not isinstance(var2, str):
-        raise TypeError("var1 et var2 doivent être des noms de colonnes (string).")
-
-    if var1 not in df.columns or var2 not in df.columns:
-        raise ValueError(f"La colonne '{var1}' ou '{var2}' n'existe pas dans le dataframe.")
-    
-    if df[var1].dtype not in ["int64", "float64"]:
-        raise ValueError(f"La colonne '{var1}' n'est pas numérique.")
-    
-    if df[var2].dtype not in ["int64", "float64"]:
-        raise ValueError(f"La colonne '{var2}' n'est pas numérique.")
-
-    plt.scatter(df[var1], df[var2])
-    plt.xlabel(var1)
-    plt.ylabel(var2)
-    plt.title(var1 + " par " + var2)
-    plt.grid(linestyle='--', linewidth=0.5, alpha=0.7)
-    plt.show()
-    
-scatter_plot(df, "EU_Sales", "NA_Sales")
-
-
-# ------------
-# Création de la fonction pour faire un scatter plot entre deux variables quantitatives
-# Version avec droite de regression
-def scatter_plot_line(df, var1, var2, titre = None):
+def scatter_plot_line(df, var1, var2, ax=None, titre=None):
     """
     Création d'un scatter plot et d'une droite de regression pour visualiser les données.
     Arguments :
@@ -123,16 +81,28 @@ def scatter_plot_line(df, var1, var2, titre = None):
     else:
         print(f"On a pas assez de preuve pour rejeté H0. Les deux variables {var1} et {var2} sont indépendantes.")
 
-    plt.scatter(df[var1], df[var2])
-    plt.plot(x_range, y_pred, color="red")
-    plt.xlabel(var1)
-    plt.ylabel(var2)
-    if titre != None:
-        plt.title(var2 + " par " + var1)
+    if ax != None:
+        ax.scatter(df[var1], df[var2])
+        ax.plot(x_range, y_pred, color="red")
+        ax.set_xlabel(var1)
+        ax.set_ylabel(var2)
+        if titre != None:
+            ax.set_title(titre)
+        else:
+            ax.set_title(var2 + " par " + var1)
+        ax.grid(linestyle='--', linewidth=0.5, alpha=0.7)
+
     else:
-        plt.title(var2 + " par " + var1)
-    plt.grid(linestyle='--', linewidth=0.5, alpha=0.7)
-    plt.show()
+        plt.scatter(df[var1], df[var2])
+        plt.plot(x_range, y_pred, color="red")
+        plt.xlabel(var1)
+        plt.ylabel(var2)
+        if titre != None:
+            plt.title(titre)
+        else:
+            plt.title(var2 + " par " + var1)
+        plt.grid(linestyle='--', linewidth=0.5, alpha=0.7)
+        plt.show()
 
 scatter_plot_line(df, "EU_Sales", "NA_Sales")
 
