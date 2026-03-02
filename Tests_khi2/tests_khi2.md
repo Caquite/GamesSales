@@ -65,7 +65,6 @@ df = pd.merge(df,genre)
 print(df.head())
 ```
 
-## Développeur et catégorie
 ## Développeur et tag
 ## Développeur et OS
 ## Développeur et âge requis
