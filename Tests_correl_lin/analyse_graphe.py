@@ -45,7 +45,7 @@ print(df_jeux.columns)
 print(df_jeux.dtypes)
 
 # %%
-# Convertir les objets pd en numérique
+# Convertir les objets pd en numériques
 list_col = ["ventes_AN","ventes_EU","ventes_JP","ventes_Autre","ventes_Global"]
 for col in list_col:
     df_jeux[col] = df_jeux[col].str.replace(",", ".")
@@ -202,7 +202,7 @@ plt.show()
 
 
 # %%
-# Création d'un heatmap en utilisant la matrice de covariance
+# Création d'un heatmap pour variables quantitatives en utilisant la matrice de covariance
 df_heatmap = df_jeux[["nb_succes","nb_avis_pos","nb_avis_neg","temps_jeu_moyen","prix","ventes_AN","ventes_EU","ventes_JP","ventes_Autre","ventes_Global"]]
 
 corr = df_heatmap.corr()
