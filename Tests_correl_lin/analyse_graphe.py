@@ -4,11 +4,8 @@ from mysql.connector import Error
 
 import numpy as np
 import pandas as pd
-import seaborn as sns
 import matplotlib.pyplot as plt
-from scipy import stats
-from sklearn.linear_model import LinearRegression
-import importlib
+
 
 # Connexion a la base de données
 def getBDD():
@@ -136,8 +133,11 @@ plt.show()
 # %%
 #---------------
 # Analyse par avis
-scatter_plot_line(df_jeux, "nb_avis_pos", "nb_avis_neg", log=True)
+# Avis positifs et avis négatifs
+scatter_plot_line(df_jeux, "nb_avis_pos", "nb_avis_neg")
 
+# Affichage avec une échelle logarithime
+scatter_plot_line(df_jeux, "nb_avis_pos", "nb_avis_neg", log=True)
 
 
 # %%

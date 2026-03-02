@@ -40,8 +40,8 @@ def scatter_plot_line(df, var1, var2, ax=None, titre=None, log=False):
     if df[var2].dtype not in ["int64", "float64"]:
         raise ValueError(f"La colonne {var2} n'est pas numérique.")
     
-
-    # Model de regression linéaire
+            
+    # Model de regression linéaire simple
     model = LinearRegression()
     model.fit(df[[var1]], df[[var2]])
 
