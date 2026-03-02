@@ -4,6 +4,7 @@ from mysql.connector import Error
 
 import numpy as np
 import pandas as pd
+import seaborn as sns
 import matplotlib.pyplot as plt
 
 
@@ -142,7 +143,69 @@ scatter_plot_line(df_jeux, "nb_avis_pos", "nb_avis_neg", log=True)
 
 # %%
 #---------------
-# Analyse par réstrictions et avis positif
-# Création des 4 groupes : en fonction de l'âge de réstriction
+# Analyse par avis positifs
+scatter_plot_line(df_jeux, "nb_avis_pos", "ventes_Global")
+
+# Affichage avec une échelle logarithime
+scatter_plot_line(df_jeux, "nb_avis_pos", "ventes_Global", log=True)
 
 
+
+# %%
+#---------------
+# Analyse par réstrictions et avis positifs
+# En fonction de l'âge de réstriction vu tout à l'heure
+fig, axes = plt.subplots(2, 2, figsize=(15, 4))
+
+scatter_plot_line(df_jeux_age1, "nb_avis_pos", "ventes_Global", axes[0,0], "Jeux sans restriction")
+scatter_plot_line(df_jeux_age2, "nb_avis_pos", "ventes_Global", axes[0,1], "Jeux 12 ans")
+scatter_plot_line(df_jeux_age3, "nb_avis_pos", "ventes_Global", axes[1,0], "Jeux 16 ans")
+scatter_plot_line(df_jeux_age4, "nb_avis_pos", "ventes_Global", axes[1,1], "Jeux 18 ans")
+
+plt.tight_layout()
+plt.show()
+
+
+# %%
+# Analyse par période (en années) et avis positifs
+# En fonction de la période vu tout à l'heure
+fig, axes = plt.subplots(1, 3, figsize=(15, 4))
+
+scatter_plot_line(df_jeux_annee1, "nb_avis_pos", "ventes_Global", axes[0], "Jeux sortient entre 1998 et 2010")
+scatter_plot_line(df_jeux_annee2, "nb_avis_pos", "ventes_Global", axes[1], "Jeux sortient entre 2010 et 2015")
+scatter_plot_line(df_jeux_annee3, "nb_avis_pos", "ventes_Global", axes[2], "Jeux sortient entre 2015 et 2020")
+
+plt.tight_layout()
+plt.show()
+
+
+# %%
+# Même chose mais par années et non pas par période
+# code vu tout à l'heure
+fig, axes = plt.subplots(5, 3, figsize=(20, 15))
+axes = axes.flatten()
+
+for i, annee in enumerate(annees):
+    df_temp = df_jeux[df_jeux["annee"] == annee]
+    
+    scatter_plot_line(
+        df_temp,
+        "nb_avis_pos",
+        "ventes_Global",
+        axes[i],
+        f"Jeux sortis en {int(annee)}"
+    )
+
+plt.tight_layout()
+plt.show()
+# Fin test par années
+
+
+# %%
+# Création d'un heatmap en utilisant la matrice de covariance
+df_heatmap = df_jeux[["nb_succes","nb_avis_pos","nb_avis_neg","temps_jeu_moyen","prix","ventes_AN","ventes_EU","ventes_JP","ventes_Autre","ventes_Global"]]
+
+corr = df_heatmap.corr()
+
+sns.heatmap(corr, annot=True, cmap="coolwarm")
+plt.show()
