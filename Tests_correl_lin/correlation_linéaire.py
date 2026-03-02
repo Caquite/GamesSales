@@ -14,7 +14,7 @@ from sklearn.linear_model import LinearRegression
 # ------------
 # Création de la fonction pour faire un scatter plot entre deux variables quantitatives
 # Version sans droite de regression
-def scatter_plot_line(df, var1, var2, ax=None, titre=None):
+def scatter_plot_line(df, var1, var2, ax=None, titre=None, log=False):
     """
     Création d'un scatter plot et d'une droite de regression pour visualiser les données.
     Arguments :
@@ -71,6 +71,9 @@ def scatter_plot_line(df, var1, var2, ax=None, titre=None):
         ax.plot(x_range, y_pred, color="red")
         ax.set_xlabel(var1)
         ax.set_ylabel(var2)
+        if log:
+            ax.set_xscale("log")
+            ax.set_yscale("log")
         if titre != None:
             ax.set_title(titre)
         else:
@@ -82,6 +85,9 @@ def scatter_plot_line(df, var1, var2, ax=None, titre=None):
         plt.plot(x_range, y_pred, color="red")
         plt.xlabel(var1)
         plt.ylabel(var2)
+        if log:
+            plt.xscale("log")
+            plt.yscale("log")
         if titre != None:
             plt.title(titre)
         else:

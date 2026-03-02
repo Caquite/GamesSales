@@ -66,7 +66,7 @@ df_jeux_annee3 = df_jeux[(df_jeux["annee"]>="2015") & (df_jeux["annee"]<"2020")]
 
 # %%
 # Fonction de scatter plot
-from correlation_linéaire import scatter_plot_line       
+from correlation_linéaire import scatter_plot_line
 
 scatter_plot_line(df_jeux_annee1, "prix", "ventes_Global", titre="Vente Global par prix des jeux sortient entre 1998 et 2010")
 
@@ -113,7 +113,7 @@ plt.show()
 
 # %%
 #---------------
-# Analyse par réstrictions
+# Analyse par réstrictions et prix
 # Création des 4 groupes : en fonction de l'âge de réstriction
 df_jeux_age1 = df_jeux[(df_jeux["age_requis"].notna()) & (df_jeux["age_requis"]<=10)]
 df_jeux_age2 = df_jeux[df_jeux["age_requis"] == 12]
@@ -134,3 +134,15 @@ plt.show()
 
 
 # %%
+#---------------
+# Analyse par avis
+scatter_plot_line(df_jeux, "nb_avis_pos", "nb_avis_neg", log=True)
+
+
+
+# %%
+#---------------
+# Analyse par réstrictions et avis positif
+# Création des 4 groupes : en fonction de l'âge de réstriction
+
+
