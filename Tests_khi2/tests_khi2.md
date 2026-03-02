@@ -65,77 +65,18 @@ df = pd.merge(df,genre)
 print(df.head())
 ```
 
-## Genre et éditeur
-```python
-
-```
-
-## Genre et développeur
-
-## Genre et catégorie
-
-## Genre et tag
-
-## Genre et OS
-
-## Genre et âge requis
-
-## Genre et année
-
-## Genre et anglais
-
-## Editeur et développeur
-
-## Editeur et catégorie
-
-## Editeur et tag
-
-## Editeur et OS
-
-## Editeur et âge requis
-
-## Editeur et année
-
-## Editeur et anglais
-
 ## Développeur et catégorie
-
 ## Développeur et tag
-
 ## Développeur et OS
-
 ## Développeur et âge requis
-
 ## Développeur et année
-
-## Développeur et anglais
-
 ## Catégorie et tag
-
 ## Catégorie et OS
-
 ## Catégorie et âge requis
-
 ## Catégorie et annéee
-
-## Catégorie et anglais
-
 ## Tag et OS
-
 ## Tag et âge requis
-
 ## Tag et année
-
-## Tag et anglais
-
 ## OS et âge requis
-
 ## OS et année
-
-## OS et anglais
-
 ## Âge requis et année
-
-## Âge requis et anglais
-
-## Année et anglais
