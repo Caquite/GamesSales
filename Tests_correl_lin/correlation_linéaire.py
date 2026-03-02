@@ -11,23 +11,6 @@ if importlib.util.find_spec("sklearn") is None:
 from sklearn.linear_model import LinearRegression
 
 
-# Lecture du csv vgsales.csv
-df = pd.read_csv("GamesSales_R/vgsales.csv")
-print(df.head())
-
-print("Dimention du df : ",df.shape)
-print("Types de chaque variables du df : ",df.dtypes)
-
-# Modification des types des données
-df["EU_Sales"] = df["EU_Sales"].str.replace(" €", "").str.replace(",", ".").astype(float)
-df["NA_Sales"] = df["NA_Sales"].str.replace(" €", "").str.replace(",", ".").astype(float)
-df["JP_Sales"] = df["JP_Sales"].str.replace(" €", "").str.replace(",", ".").astype(float)
-df["Other_Sales"] = df["Other_Sales"].str.replace(" €", "").str.replace(",", ".").astype(float)
-df["Global_Sales"] = df["Global_Sales"].str.replace(" €", "").str.replace(",", ".").astype(float)
-
-print("Types de chaque variables du df : ",df.dtypes)
-
-
 # ------------
 # Création de la fonction pour faire un scatter plot entre deux variables quantitatives
 # Version sans droite de regression
@@ -38,6 +21,8 @@ def scatter_plot_line(df, var1, var2, ax=None, titre=None):
         df : data frame 
         var1 : variable pour l'axe x
         var2 : variable pour l'axe y
+        ax : emplacement du graphe si on fait du multi affichage
+        titre : chaine de carractère pour le titre du graphe (pas obligatoire)
     
     Retourne :
         un scatter plot avec une droite de regression
@@ -104,5 +89,25 @@ def scatter_plot_line(df, var1, var2, ax=None, titre=None):
         plt.grid(linestyle='--', linewidth=0.5, alpha=0.7)
         plt.show()
 
-scatter_plot_line(df, "EU_Sales", "NA_Sales")
+
+if __name__ == "__main__":
+    # Test de la fonction avec un exemple
+    # Lecture du csv vgsales.csv
+    df = pd.read_csv("GamesSales_R/vgsales.csv")
+    print(df.head())
+
+    print("Dimention du df : ",df.shape)
+    print("Types de chaque variables du df : ",df.dtypes)
+
+    # Modification des types des données
+    df["EU_Sales"] = df["EU_Sales"].str.replace(" €", "").str.replace(",", ".").astype(float)
+    df["NA_Sales"] = df["NA_Sales"].str.replace(" €", "").str.replace(",", ".").astype(float)
+    df["JP_Sales"] = df["JP_Sales"].str.replace(" €", "").str.replace(",", ".").astype(float)
+    df["Other_Sales"] = df["Other_Sales"].str.replace(" €", "").str.replace(",", ".").astype(float)
+    df["Global_Sales"] = df["Global_Sales"].str.replace(" €", "").str.replace(",", ".").astype(float)
+
+    print("Types de chaque variables du df : ",df.dtypes)
+
+    scatter_plot_line(df, "EU_Sales", "NA_Sales")
+
 
