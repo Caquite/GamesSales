@@ -1,3 +1,4 @@
+# %%
 import numpy as np
 import pandas as pd
 from scipy import stats
@@ -66,6 +67,9 @@ def droite_regression(df, var1, var2):
     # Model de regression linéaire simple
     model = LinearRegression()
     model.fit(df[[var1]], df[[var2]])
+
+    # Creation droite de regression
+    droite_pred = lambda x: model.intercept_ + x*model.coef_
     
     # Calcul du coefficient de correlation linéaire
     r, p_value = stats.pearsonr(df[var1], df[var2])
@@ -78,7 +82,7 @@ def droite_regression(df, var1, var2):
     else:
         res_test = True
 
-    return (model, res_test, r2*100)
+    return (droite_pred, res_test, r2*100)
 
 
 if __name__ == "__main__":
@@ -95,7 +99,7 @@ if __name__ == "__main__":
     df_genre = pd.read_sql("SELECT * FROM genre", bdd)
 
     # Convertir les objets pd en numériques
-    list_col = ["ventes_AN","ventes_EU","ventes_JP","ventes_Autre","ventes_Global"]
+    list_col = ["annee", "ventes_AN","ventes_EU","ventes_JP","ventes_Autre","ventes_Global"]
     for col in list_col:
         df_jeux[col] = df_jeux[col].str.replace(",", ".")
         df_jeux[col] = pd.to_numeric(df_jeux[col], errors="coerce")
@@ -103,10 +107,26 @@ if __name__ == "__main__":
     # Premiers testes de prediction pas regression lineaire
     test1 = droite_regression(df_jeux, "prix", "ventes_Global")
 
-    droite_pred = lambda x: test1[0].intercept_ + x*test1[0].coef_
-
     # Exemple avec un jeux à 50€
     x_donne = 50
-    if not test1[1] :
-        y_pred = droite_pred(x_donne)
-        print(y_pred)
+
+    def infos_regression_test(droite, x):
+        if not droite[1] :
+            y_pred = droite[0](x)
+            print("Au risque de 5%, on rejet H0. Les deux variables sont liées.")
+            print(f"La droite explique {droite[2]}% des données.")
+            print(y_pred)
+        else :
+            print("On a pas assez de preuve pour rejeté H0. Les deux variables sont indépendantes.")
+
+
+    # %%
+    # Vrais testes :
+    # Prix et ventes_global par année
+    df_2009 = df_jeux[df_jeux["annee"] == 2011]
+    print(df_2009.shape)
+
+    model_2009 = droite_regression(df_2009, "prix", "ventes_Global")
+    infos_regression_test(model_2009, 25)
+
+# %%
