@@ -129,4 +129,5 @@ if __name__ == "__main__":
     model_2009 = droite_regression(df_2009, "prix", "ventes_Global")
     infos_regression_test(model_2009, 25)
 
-# %%
+    # %%
+    
