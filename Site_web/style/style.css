@@ -8,6 +8,7 @@ body {
     height: 100vh;
     background-color: #1A183B;
     margin: 0;
+    padding-bottom: 5em;
 }
 
 p{
@@ -107,19 +108,6 @@ header h2 {
     margin: 0 2% 2% 2%;
 }
 
-.bloc2, .bloc3 {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 15px;
-    padding: 20px;
-    gap: 5%;
-    box-sizing: border-box;
-    color: #333;
-}
-
 /* ----------------------------------------------------------
 
 /* ===== Bloc 1 ===== */
@@ -136,46 +124,6 @@ header h2 {
     color: #333;
     font-size: 1.5em;
 }
-
-/* ===== Fin bloc 1 ===== */
-
-/* ----------------------------------------------------------
-
-/* ===== Bloc 2 ===== */
-
-select {
-    align-self: center;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 1em;
-    width: 200px;
-    cursor: pointer;
-}
-
-.info_modeles {
-    font-size: 0.8em;
-}
-
-.info_modeles a {
-    color: #e14c4c;
-    font-weight: bold;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .tables_grid {
     display: flex;
@@ -200,7 +148,8 @@ select {
     background-color: #f5f5f5;
 }
 
-.tableau_donnees input {
+.tableau_donnees input,
+.tableau_donnees select {
     padding: 4px 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -209,7 +158,141 @@ select {
     box-sizing: border-box;
 }
 
-.tableau_donnees input:focus {
+.tableau_donnees input:focus,
+.tableau_donnees select:focus {
     outline: none;
     border-color: #3498db;
 }
+
+/* ===== Fin bloc 1 ===== */
+
+/* ----------------------------------------------------------
+
+/* ===== Bloc 2 ===== */
+
+.bloc2, .bloc3 {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    gap: 4%;
+    box-sizing: border-box;
+    color: #333;
+}
+
+select {
+    align-self: center;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+    width: 200px;
+    cursor: pointer;
+}
+
+.info_modeles {
+    font-size: 0.8em;
+}
+
+.info_modeles a {
+    color: #e14c4c;
+    font-weight: bold;
+}
+
+.btn_submit {
+    align-self: center;
+    padding: 10px 20px;
+    background-color: #e14c4c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+/* ===== Fin bloc 2 ===== */
+
+/* ----------------------------------------------------------
+
+/* ===== Bloc 3 ===== */
+
+
+
+
+
+/* ===== Fin bloc 3 ===== */
+
+/* ----------------------------------------------------------
+
+/* ===== Page documentation ===== */
+
+.grand_bloc{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    padding: 20px;
+    gap: 3%;
+    margin: 2% 2% 2% 2%;
+    border-radius: 15px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.grand_bloc a {
+    color: #e14c4c;
+    font-weight: bold;
+}
+
+.bloc_soutient{
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.bloc_gauche {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.bloc_droit {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    gap: 20px;
+}
+
+.bloc_modele, .bloc_tableau {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    gap: 20px;
+}
+
+.bloc_tableau table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+  }
+
+.bloc_tableau td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+/* ===== Fin document ===== */
+
+/* ----------------------------------------------------------
