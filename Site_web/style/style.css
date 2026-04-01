@@ -278,6 +278,14 @@ select {
     gap: 20px;
 }
 
+.bloc_droit img {
+    width: 100%;
+    max-width: 200px;
+    height: 150px;
+    object-fit: contain;
+    align-self: center;
+}
+
 .bloc_modele, .bloc_tableau {
     flex: 1;
     display: flex;
