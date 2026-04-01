@@ -64,6 +64,14 @@ header h2 {
     margin: 0;
 }
 
+.retour_dev {
+    position: absolute;
+    font-size: small;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+}
+
 .plus_info {
     position: absolute;
     top: 50%;
@@ -258,6 +266,7 @@ select {
     flex: 1;
     display: flex;
     flex-direction: column;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     gap: 20px;
 }
 
@@ -296,3 +305,32 @@ select {
 /* ===== Fin document ===== */
 
 /* ----------------------------------------------------------
+
+/* ===== Page choix_dev ===== */
+
+.bloc_gauche_choix, .bloc_droit_choix{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    gap: 20px;
+}
+
+.btn_choix1, .btn_choix2{
+    align-self: center;
+    padding: 10px 20px;
+    background-color: #e14c4c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    position: center;
+}
+
+.bloc_gauche_choix a, .bloc_droit_choix a{
+    color: white;
+}

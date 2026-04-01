@@ -15,6 +15,10 @@ session_start();
 <body>
     <header>
         <div class="top_bar">
+            <div class="retour_dev">
+                <a href="choix_dev.php"> Retour au choix <br> du développeur </a>
+            </div>
+            
             <h2> Documentation sur les modèles utilisés </h2>
 
         </div>
