@@ -1,5 +1,33 @@
 <?php
 session_start();
+
+$donnees = [
+    'gradient_boosting' => [
+        'type1' => ['RMSE' => '0.757', 'MAE' => '0.603', 'R²' => '0.246', 'image' => 'images/graphe_VP_vs_VR_GB_datacomplet.png'],
+        'type2' => ['RMSE' => '0.833', 'MAE' => '0.669', 'R²' => '0.202', 'image' => 'images/graphe_VP_vs_VR_GB_moyen.png'],
+        'type3' => ['RMSE' => '0.229', 'MAE' => '0.173', 'R²' => '0.173', 'image' => 'images/graphe_VP_vs_VR_GB_petit.png'],
+    ],
+    'random_forest' => [
+        'type1' => ['RMSE' => '0.762', 'MAE' => '0.608', 'R²' => '0.232', 'image' => 'images/graphe_VP_vs_VR_RF_datacomplet.png'],
+        'type2' => ['RMSE' => '0.846', 'MAE' => '0.679', 'R²' => '0.177', 'image' => 'images/graphe_VP_vs_VR_RF_moyen.png'],
+        'type3' => ['RMSE' => '0.229', 'MAE' => '0.173', 'R²' => '0.169', 'image' => 'images/graphe_VP_vs_VR_RF_petit.png'],
+    ],
+    'svr' => [
+        'type1' => ['RMSE' => '0.831', 'MAE' => '0.664', 'R²' => '0.135', 'image' => 'images/graphe_VP_vs_VR_SVR_datacomplet.png'],
+        'type2' => ['RMSE' => '0.879', 'MAE' => '0.707', 'R²' => '0.112', 'image' => 'images/graphe_VP_vs_VR_SVR_moyen.png'],
+        'type3' => ['RMSE' => '0.324', 'MAE' => '0.300', 'R²' => '-0.663', 'image' => 'images/graphe_VP_vs_VR_SVR_petit.png'],
+    ],
+];
+
+$explications = [
+    'gradient_boosting' => "Le Gradient Boosting est un algorithme d'ensemble qui construit des arbres de décision séquentiellement. Chaque arbre corrige les erreurs du précédent, ce qui le rend très performant mais plus lent à entraîner.",
+    'random_forest'     => "Le Random Forest est un algorithme d'ensemble qui construit plusieurs arbres de décision en parallèle sur des sous-échantillons aléatoires. Il est robuste au surapprentissage et rapide à entraîner.",
+    'svr'               => "Le SVR (Support Vector Regression) cherche à trouver un hyperplan qui s'ajuste au mieux aux données dans un espace de haute dimension. Il est efficace sur les petits jeux de données mais plus lent sur les grands.",
+];
+$modele = $_GET['modele_docu'] ?? '';
+$type   = $_GET['type_docu']   ?? '';
+$valeurs = ($modele && $type) ? ($donnees[$modele][$type] ?? null) : null;
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -15,10 +43,6 @@ session_start();
 <body>
     <header>
         <div class="top_bar">
-            <div class="retour_dev">
-                <a href="choix_dev.php"> Retour au choix <br> du développeur </a>
-            </div>
-            
             <h2> Documentation sur les modèles utilisés </h2>
 
         </div>
@@ -30,16 +54,25 @@ session_start();
         <div class="bloc_soutient">
             <div class="bloc_gauche">
                 <div class="bloc_modele">
-                    <h4> Choisir le modèle à expliquer </h4>
+                    <form method="GET" action="">
+                        <select name="modele_docu" onchange="this.form.submit()">
+                            <option value="">-- Choisir le modèle --</option>
+                            <option value="gradient_boosting" <?= $modele === 'gradient_boosting' ? 'selected' : '' ?>>Gradient Boosting</option>
+                            <option value="random_forest"     <?= $modele === 'random_forest'     ? 'selected' : '' ?>>Random Forest</option>
+                            <option value="svr"               <?= $modele === 'svr'               ? 'selected' : '' ?>>SVR</option>
+                        </select>
 
-                    <select id="modele_docu" name="modele_docu" form="form_model_docu">
-                    <option value="">-- Choisir le modèle --</option>
-                    <option value="option1">Gradient Boosting</option>
-                    <option value="option2">Random Forest</option>
-                    <option value="option3">SVR</option>
-                </select>
-                <button type="submit" form="form_model_docu" class="btn_submit">Envoyer</button>
-
+                        <?php if ($modele): ?>
+                        <select name="type_docu" onchange="this.form.submit()">
+                            <option value="">-- Choisir le type --</option>
+                            <option value="type1" <?= $type === 'type1' ? 'selected' : '' ?>>Grand</option>
+                            <option value="type2" <?= $type === 'type2' ? 'selected' : '' ?>>Moyen</option>
+                            <option value="type3" <?= $type === 'type3' ? 'selected' : '' ?>>Petit</option>
+                        </select>
+                        <?php endif; ?>
+                    </form>
+                    Les types de modèles servent à étuider les capactiés de chacun des trois modèles avec un petit/moyen/grand nombres de données.
+                    Cela permet d'ajuster un maximum le modèle choisi pour prédire à partir de nos données.
                 </div>
 
                 <div class="bloc_tableau">
@@ -53,21 +86,21 @@ session_start();
                         </tr>
                         <tr>
                             <td>RMSE</td>
-                            <td>%</td>
-                            <td>%</td>
-                            <td>%</td>
+                            <td><?= $donnees['gradient_boosting'][$type]['RMSE'] ?? '—' ?></td>
+                            <td><?= $donnees['random_forest'][$type]['RMSE'] ?? '—' ?></td>
+                            <td><?= $donnees['svr'][$type]['RMSE'] ?? '—' ?></td>
                         </tr>
                         <tr>
                             <td>MAE</td>
-                            <td>%</td>
-                            <td>%</td>
-                            <td>%</td>
+                            <td><?= $donnees['gradient_boosting'][$type]['MAE'] ?? '—' ?></td>
+                            <td><?= $donnees['random_forest'][$type]['MAE'] ?? '—' ?></td>
+                            <td><?= $donnees['svr'][$type]['MAE'] ?? '—' ?></td>
                         </tr>
                         <tr>
                             <td>R²</td>
-                            <td>%</td>
-                            <td>%</td>
-                            <td>%</td>
+                            <td><?= $donnees['gradient_boosting'][$type]['R²'] ?? '—' ?></td>
+                            <td><?= $donnees['random_forest'][$type]['R²'] ?? '—' ?></td>
+                            <td><?= $donnees['svr'][$type]['R²'] ?? '—' ?></td>
                         </tr>
                     </table>
 
@@ -76,7 +109,14 @@ session_start();
             </div>
 
             <div class="bloc_droit">
-
+                <?php if ($valeurs): ?>
+                    <img src="<?= $valeurs['image'] ?>" alt="Graphique">
+                    <?php if ($modele && isset($explications[$modele])): ?>
+                        <p class="explication_modele"><?= $explications[$modele] ?></p>
+                    <?php endif; ?>
+                <?php else: ?>
+                    <p>Sélectionnez un modèle et un type pour voir le graphique.</p>
+                <?php endif; ?>
             </div>
         </div>
 
