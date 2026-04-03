@@ -5,42 +5,31 @@ $donnees = [
     'gradient_boosting' => [
         'type1' => ['RMSE' => '0.757', 'MAE' => '0.603', 'R²' => '0.246', 'image' => 'images/graphe_VP_vs_VR_GB_datacomplet.png'],
         'type2' => ['RMSE' => '0.833', 'MAE' => '0.669', 'R²' => '0.202', 'image' => 'images/graphe_VP_vs_VR_GB_moyen.png'],
-        'type3' => ['RMSE' => '0.229', 'MAE' => '0.173', 'R²' => '0.173', 'image' => 'images/graphe_VP_vs_VR_GB_petit.png'],
     ],
     'random_forest' => [
         'type1' => ['RMSE' => '0.762', 'MAE' => '0.608', 'R²' => '0.232', 'image' => 'images/graphe_VP_vs_VR_RF_datacomplet.png'],
         'type2' => ['RMSE' => '0.846', 'MAE' => '0.679', 'R²' => '0.177', 'image' => 'images/graphe_VP_vs_VR_RF_moyen.png'],
-        'type3' => ['RMSE' => '0.229', 'MAE' => '0.173', 'R²' => '0.169', 'image' => 'images/graphe_VP_vs_VR_RF_petit.png'],
-    ],
-    'svr' => [
-        'type1' => ['RMSE' => '0.831', 'MAE' => '0.664', 'R²' => '0.135', 'image' => 'images/graphe_VP_vs_VR_SVR_datacomplet.png'],
-        'type2' => ['RMSE' => '0.879', 'MAE' => '0.707', 'R²' => '0.112', 'image' => 'images/graphe_VP_vs_VR_SVR_moyen.png'],
-        'type3' => ['RMSE' => '0.324', 'MAE' => '0.300', 'R²' => '-0.663', 'image' => 'images/graphe_VP_vs_VR_SVR_petit.png'],
     ],
 ];
 
 $explications = [
     'gradient_boosting' => "Le Gradient Boosting est un algorithme d'ensemble qui construit des arbres de décision séquentiellement. Chaque arbre corrige les erreurs du précédent, ce qui le rend très performant mais plus lent à entraîner.",
     'random_forest'     => "Le Random Forest est un algorithme d'ensemble qui construit plusieurs arbres de décision en parallèle sur des sous-échantillons aléatoires. Il est robuste au surapprentissage et rapide à entraîner.",
-    'svr'               => "Le SVR (Support Vector Regression) cherche à trouver un hyperplan qui s'ajuste au mieux aux données dans un espace de haute dimension. Il est efficace sur les petits jeux de données mais plus lent sur les grands.",
-];
+    ];
 
 
 $description_graphe = [
     'gradient_boosting' => [
         'type1' => "Avec un RMSE de 0.757 et un R² = 0.24, Gradient Boosting est le plus performant des trois modèles. Ses points s'alignent relativement mieux autour de la ligne rouge pour les ventes faibles à moyennes (0-1.5M). Cependant, comme les autres modèles, il sous-estime systématiquement les ventes élevées (>2M), où les points s'éloignent nettement de la diagonale.",
         'type2' => "Avec un RMSE de 0.833 et un R² = 0.202, Gradient Boosting est le plus performant des trois modèles. Ses points s'alignent relativement mieux autour de la ligne rouge pour les ventes faibles à moyennes (0-1,5M). Cependant, comme les autres modèles, il sous-estime systématiquement les ventes élevées (>2M), où les points s'éloignent nettement de la diagonale.",
-        'type3' => "Avec un RMSE de 0,229 et un R² = 0,173, Gradient Boosting est le plus performant des trois modèles. Ses points s'alignent relativement mieux autour de la ligne rouge pour les ventes faibles à moyennes (0–0,4M). Cependant, au-delà de 0,4M, la dispersion augmente nettement et les prédictions deviennent peu fiables. Gradient Boosting est légèrement supérieur à Random Forest grâce à son R² plus élevé.",
     ],
     'random_forest' => [
         'type1' => "Random Forest affiche des résultats très proches (RMSE=0.763, R²=0.232). La distribution de ses points (en bleu) est similaire à celle du Gradient Boosting, avec une légère dispersion supplémentaire pour les ventes entre 0 et 1M. Il échoue lui aussi à prédire les valeurs au dessus de 2M.",
         'type2' => "Random Forest affiche des résultats très proches (RMSE=0,846, R²=0,177). La distribution de ses points (en bleu) est similaire à celle du Gradient Boosting, avec une légère dispersion supplémentaire pour les ventes entre 0 et 1M. Il échoue lui aussi à prédire les valeurs au dessus de 2M.",
-        'type3' => "Random Forest affiche des résultats identiques (RMSE = 0,229, R² = 0,169). La distribution de ses points est similaire à celle du Gradient Boosting, avec une dispersion comparable sur la plage 0–0,4M. Il échoue lui aussi à prédire de manière fiable les valeurs au-dessus de 0,4M.",
     ],
     'svr' => [
         'type1' => "Le SVR en orange est clairement le moins performant. Avec son RMSE=0.810 et le R²=0.135, on voit rapidement visuellement qu'il y a une compression des prédictions basse, contrairement aux dispersions des deux autres modèles. Ce modèle prédit rarement au delà de 1,5M de ventes, quelle que soit la valeur réelle. Il n'arrive pas à prédire les ventes élevées.",
         'type2' => "Le SVR en orange est clairement le moins performant. Avec son RMSE = 0,879 et le R² = 0,112, on voit rapidement visuellement qu'il y a une compression des prédictions vers des valeurs basses. Ce modèle prédit rarement au delà de 1,5M de ventes, quelle que soit la valeur réelle. Il n'arrive pas à prédire les ventes élevées.",
-        'type3' => "SVR est de loin le moins performant, avec un RMSE = 0,324 et un R² = -0,663. Ce R² négatif confirme que le modèle fait pire qu'une prédiction naïve. Cela se voit clairement sur le graphique : SVR prédit quasi systématiquement des ventes autour de 0,42M, quelle que soit la valeur réelle, ce qui explique son incapacité totale à capturer les variations du dataset.",
     ],
 ];
 
@@ -80,7 +69,6 @@ $valeurs = ($modele && $type) ? ($donnees[$modele][$type] ?? null) : null;
                             <option value="">-- Choisir le modèle --</option>
                             <option value="gradient_boosting" <?= $modele === 'gradient_boosting' ? 'selected' : '' ?>>Gradient Boosting</option>
                             <option value="random_forest"     <?= $modele === 'random_forest'     ? 'selected' : '' ?>>Random Forest</option>
-                            <option value="svr"               <?= $modele === 'svr'               ? 'selected' : '' ?>>SVR</option>
                         </select>
 
                         <?php if ($modele): ?>
@@ -88,7 +76,6 @@ $valeurs = ($modele && $type) ? ($donnees[$modele][$type] ?? null) : null;
                             <option value="">-- Choisir le type --</option>
                             <option value="type1" <?= $type === 'type1' ? 'selected' : '' ?>>Grand jeu de données</option>
                             <option value="type2" <?= $type === 'type2' ? 'selected' : '' ?>>Moyen jeu de données</option>
-                            <option value="type3" <?= $type === 'type3' ? 'selected' : '' ?>>Petit jeu de données</option>
                         </select>
                         <?php endif; ?>
                     </form>
@@ -109,25 +96,21 @@ $valeurs = ($modele && $type) ? ($donnees[$modele][$type] ?? null) : null;
                             <td></td>
                             <td>Gradient Boosting</td>
                             <td>Random Forest</td>
-                            <td>SVR</td>
                         </tr>
                         <tr>
                             <td>RMSE</td>
                             <td><?= $donnees['gradient_boosting'][$type]['RMSE'] ?? '—' ?></td>
                             <td><?= $donnees['random_forest'][$type]['RMSE'] ?? '—' ?></td>
-                            <td><?= $donnees['svr'][$type]['RMSE'] ?? '—' ?></td>
                         </tr>
                         <tr>
                             <td>MAE</td>
                             <td><?= $donnees['gradient_boosting'][$type]['MAE'] ?? '—' ?></td>
                             <td><?= $donnees['random_forest'][$type]['MAE'] ?? '—' ?></td>
-                            <td><?= $donnees['svr'][$type]['MAE'] ?? '—' ?></td>
                         </tr>
                         <tr>
                             <td>R²</td>
                             <td><?= $donnees['gradient_boosting'][$type]['R²'] ?? '—' ?></td>
                             <td><?= $donnees['random_forest'][$type]['R²'] ?? '—' ?></td>
-                            <td><?= $donnees['svr'][$type]['R²'] ?? '—' ?></td>
                         </tr>
                     </table>
 

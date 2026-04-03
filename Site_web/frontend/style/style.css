@@ -1,0 +1,345 @@
+* {
+    font-family: 'Kanit', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #1A183B;
+    margin: 0;
+    padding-bottom: 5em;
+}
+
+p{
+    font-size: 1.2em;
+    color: #333;
+    line-height: 1.6;
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 3em;
+    color: #000;
+    margin-top: 10px;
+    margin-bottom: 10spx;
+}
+
+h3 {
+    font-size: 2em;
+    color: #000;
+    margin-top: 18px;
+    margin-bottom: 12px;
+    text-align: center;
+    margin: 0;
+}
+
+h4 {
+    font-size: 1.5em;
+    color: #000;
+    margin-bottom: 12px;
+    text-align: center;
+    margin: 0;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* ----------------------------------------------------------
+
+/* ===== Barre du haut ===== */
+
+.top_bar {
+    background-color: rgb(222, 123, 123);
+    padding: 1.5%;
+    position: relative;
+}
+
+header h2 {
+    text-align: center;
+    margin: 0;
+}
+
+.retour_dev {
+    position: absolute;
+    font-size: small;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+}
+
+.plus_info {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+.info_popup {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: white;
+    border-radius: 10px;
+    padding: 15px;
+    width: 300px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    font-size: 0.9em;
+    color: #333;
+    z-index: 100;
+}
+
+.info_popup.visible {
+    display: block;
+}
+
+.info:hover {
+    background-color: #2980b9;
+}
+
+/* ===== Fin barre du haut ===== */
+
+/* ----------------------------------------------------------
+
+/* ===== Conteneur principal ===== */
+
+.contener {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    gap: 2%;
+    margin: 0 2% 2% 2%;
+}
+
+/* ----------------------------------------------------------
+
+/* ===== Bloc 1 ===== */
+
+.bloc1 {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 2%;
+    padding: 2%;
+    border-radius: 15px;
+    box-sizing: border-box;
+    color: #333;
+    font-size: 1.5em;
+}
+
+.tables_grid {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.tableau_donnees {
+    flex: 1;
+    border-collapse: collapse;
+    font-size: 0.65em;
+}
+
+.tableau_donnees td {
+    padding: 6px 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.tableau_donnees tr:nth-child(even) {
+    background-color: #f5f5f5;
+}
+
+.tableau_donnees input,
+.tableau_donnees select {
+    padding: 4px 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 0.9em;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.tableau_donnees input:focus,
+.tableau_donnees select:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+/* ===== Fin bloc 1 ===== */
+
+/* ----------------------------------------------------------
+
+/* ===== Bloc 2 ===== */
+
+.bloc2, .bloc3 {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    gap: 4%;
+    box-sizing: border-box;
+    color: #333;
+}
+
+select {
+    align-self: center;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+    width: 200px;
+    cursor: pointer;
+}
+
+.info_modeles {
+    font-size: 0.8em;
+}
+
+.info_modeles a {
+    color: #e14c4c;
+    font-weight: bold;
+}
+
+.btn_submit {
+    align-self: center;
+    padding: 10px 20px;
+    background-color: #e14c4c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+/* ===== Fin bloc 2 ===== */
+
+/* ----------------------------------------------------------
+
+/* ===== Bloc 3 ===== */
+
+
+
+
+
+/* ===== Fin bloc 3 ===== */
+
+/* ----------------------------------------------------------
+
+/* ===== Page documentation ===== */
+
+.grand_bloc{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    padding: 20px;
+    gap: 3%;
+    margin: 2% 2% 2% 2%;
+    border-radius: 15px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.grand_bloc a {
+    color: #e14c4c;
+    font-weight: bold;
+}
+
+.bloc_soutient{
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.bloc_gauche {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    gap: 20px;
+}
+
+.bloc_droit {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    gap: 20px;
+}
+
+.bloc_droit img {
+    width: 100%;
+    max-width: 400px;
+    height: 300px;
+    object-fit: contain;
+    align-self: center;
+}
+
+.bloc_modele, .bloc_tableau {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    gap: 20px;
+}
+
+.bloc_tableau table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+  }
+
+.bloc_tableau td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+/* ===== Fin document ===== */
+
+
+/* ----------------------------------------------------------
+
+/* ===== Page choix_dev ===== */
+
+.bloc_gauche_choix, .bloc_droit_choix{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    gap: 20px;
+}
+
+.btn_choix1, .btn_choix2{
+    align-self: center;
+    padding: 10px 20px;
+    background-color: #e14c4c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    position: center;
+}
+
+.bloc_gauche_choix a, .bloc_droit_choix a{
+    color: white;
+}

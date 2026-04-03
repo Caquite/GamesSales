@@ -1,6 +1,17 @@
 <?php
-session_start();
+    session_start();
+
+    if (isset($_GET['reset'])) {
+        unset($_SESSION["type_dev"]);
+    }
+
+    if (isset($_GET["type_dev"])) {
+        $_SESSION["type_dev"] = $_GET["type_dev"];
+        header("Location: accueil.php");
+        exit;
+    }
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -16,7 +27,6 @@ session_start();
     <header>
         <div class="top_bar">
             <h2> Choix du developpeur </h2>
-
         </div>
     </header>
     
@@ -26,17 +36,19 @@ session_start();
 
         <div class="bloc_soutient">
 
+            <!-- PETIT DEVELOPPEUR -->
             <div class="bloc_gauche_choix">
-                <p> Je suis un petit développeur </p>
-                <button class="btn_choix1"> <a href="accueil.php"> Choisir </a> </button>
+                <p>Je suis un petit développeur</p>
+                <a href="?type_dev=petit" class="btn_choix1">Choisir</a>
             </div>
 
+            <!-- DEVELOPPEUR MOYEN -->
             <div class="bloc_gauche_choix">
-                <p> Je suis un grand développeur </p>
-                <button class="btn_choix2"> <a href="accueil.php"> Choisir </a> </button>
+                <p>Je suis un développeur moyen</p>
+                <a href="?type_dev=moyen" class="btn_choix2">Choisir</a>
             </div>
+
         </div>
-
     </div>
 
 </body>
