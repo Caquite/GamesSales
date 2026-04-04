@@ -131,12 +131,13 @@ $(document).ready(function() {
                 `);
             },
             error: function(xhr) {
-                console.log('Erreur complète :', xhr.responseText);
-                $('.bloc3').html(`
-                    <h3>Résultats</h3>
-                    <p style="color:red;">Erreur : ${xhr.responseText}</p>
-                `);
-            }
+            console.log('Status :', xhr.status);
+            console.log('Erreur :', xhr.responseText);
+            $('.bloc3').html(`
+                <h3>Résultats</h3>
+                <p style="color:red;">Erreur ${xhr.status} : ${xhr.responseText}</p>
+            `);
+        }
         });
 
     });
