@@ -32,7 +32,7 @@
             <h2> Prédiction de ventes </h2>
 
             <div class="plus_info">
-                <button class="info" onclick="toggleInfo()">?</button>
+                <button class="info">?</button>
                 <div class="info_popup" id="infoPopup">
                     <p>Bienvenue dans GamesSales, le site de prédiction de ventes. Ici, vous pouvez visualiser les prédictions de ventes pour différents jeux.
                         Il vous suffit d'entrer les données de votre jeu dans la section "Vos données", de choisir un modèle de prédiction dans la 
@@ -60,20 +60,35 @@
                             <option value="16">16</option>
                             <option value="18">18</option>
                         </select></td></tr>
-                        <tr><td>nombre de succès</td><td><input type="number" name="nb_succes"></td></tr>
-                        <tr><td>temps de jeu moyen</td><td><input type="number" name="temps_jeu_moyen"></td></tr>
-                        <tr><td>prix</td><td><input type="number" name="prix"></td></tr>
-                        <tr><td>avis positifs</td><td><input type="number" name="nb_avis_pos"></td></tr>
-                        <tr><td>avis négatifs</td><td><input type="number" name="nb_avis_neg"></td></tr>
-                        <tr><td>genre</td><td><input type="text" name="genre_enc"></td></tr>
-                        <tr><td>éditeur</td><td><input type="text" name="id_editeur"></td></tr>
+                        <tr><td>nombre de succès</td><td><input type="number" name="nb_succes" min="0" step="1"></td></tr>
+                        <tr><td>temps de jeu moyen</td><td><input type="number" name="temps_jeu_moyen" min="0" step="0.01"></td></tr>
+                        <tr><td>prix</td><td><input type="number" name="prix" min="0" step="0.01"></td></tr>
+                        <tr><td>avis positifs</td><td><input type="number" name="nb_avis_pos" min="0" step="1"></td></tr>
+                        <tr><td>avis négatifs</td><td><input type="number" name="nb_avis_neg" min="0" step="1"></td></tr>
+                        <tr><td>genre</td><td><select name="genre_enc">
+                            <option value="">-</option>
+                            <option value="Action">Action</option>
+                            <option value="Shooter">Shooter</option>
+                            <option value="Role-Playing">Role-Playing</option>
+                            <option value="Simulation">Simulation</option>
+                            <option value="Platform">Platform</option>
+                            <option value="Strategy">Strategy</option>
+                            <option value="Fighting">Fighting</option>
+                            <option value="Adventure">Adventure</option>
+                            <option value="Racing">Racing</option>
+                            <option value="Misc">Misc</option>
+                            <option value="Sports">Sports</option>
+                            <option value="Puzzle">Puzzle</option>
+                        </select></td></tr>
+                        <tr><td>éditeur</td><td><input type="number" name="id_editeur"></td></tr>
+     
                     </tbody>
                 </table>
 
                 <!-- Colonne 2 -->
                 <table class="tableau_donnees">
                     <tbody>
-                        <tr><td>développeur</td><td><input type="text" name="id_developpeur"></td></tr>
+                        <tr><td>développeur</td><td><input type="number" name="id_developpeur"></td></tr>
                         <tr><td>sur Windows ?</td><td><select name="os_windows">
                             <option value="">-</option>
                             <option value="1">Oui</option>

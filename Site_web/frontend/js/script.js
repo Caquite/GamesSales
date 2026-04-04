@@ -28,7 +28,6 @@ $(document).ready(function() {
 
     // ------------------------------------------
     // RESTAURATION POUR LE REFRESH
-
     const champs = [
         'age_requis', 'nb_succes', 'temps_jeu_moyen', 'prix',
         'nb_avis_pos', 'nb_avis_neg', 'genre_enc', 'id_editeur',
@@ -56,33 +55,51 @@ $(document).ready(function() {
         e.preventDefault();
         let erreurs = [];
 
+        // Vérifier que tous les champs sont remplis
         $('input, select', this).each(function() {
             const val = $(this).val().trim();
             const nom = $(this).attr('name');
             if (val === '' || val === null) {
                 erreurs.push('Le champ "' + nom + '" est vide.');
-                $(this).css('border-color', 'red');
+                $(this).css('border', '2px solid red');
             } else {
-                $(this).css('border-color', '#ccc');
+                $(this).css('border', '');
             }
         });
 
-        const champsNumeriques = [
-            'nb_succes', 'temps_jeu_moyen', 'prix',
-            'nb_avis_pos', 'nb_avis_neg', 'nb_tags'
+        // Champs entiers (pas de virgule, pas négatif)
+        const champsEntiers = [
+            'nb_succes', 'temps_jeu_moyen',
+            'nb_avis_pos', 'nb_avis_neg', 'nb_tags',
+            'id_developpeur', 'id_editeur'
         ];
 
-        champsNumeriques.forEach(function(nom) {
+        champsEntiers.forEach(function(nom) {
             const input = $('input[name="' + nom + '"]');
-            let val = input.val();
-            val = val.replace(',', '.');
-            if (val !== '' && isNaN(val)) {
+            let val = parseFloat(input.val());
+
+            if (isNaN(val)) {
                 erreurs.push('Le champ "' + nom + '" doit être un nombre.');
-                input.css('border-color', 'red');
+                input.css('border', '2px solid red');
+            } else if (val < 0) {
+                erreurs.push('Le champ "' + nom + '" ne peut pas être négatif.');
+                input.css('border', '2px solid red');
             } else {
-                input.val(val);
+                input.css('border', '');
             }
         });
+
+        // Prix : float autorisé mais positif obligatoire
+        const valPrix = parseFloat($('[name="prix"]').val());
+        if (isNaN(valPrix)) {
+            erreurs.push('Le champ "prix" doit être un nombre.');
+            $('[name="prix"]').css('border', '2px solid red');
+        } else if (valPrix < 0) {
+            erreurs.push('Le champ "prix" ne peut pas être négatif.');
+            $('[name="prix"]').css('border', '2px solid red');
+        } else {
+            $('[name="prix"]').css('border', '');
+        }
 
         if (erreurs.length > 0) {
             alert('Erreurs :\n' + erreurs.join('\n'));
@@ -96,34 +113,32 @@ $(document).ready(function() {
             client_type:     TYPE_DEV === "moyen" ? "big" : "small",
             modele:          $('#monMenu').val(),
             genre:           $('[name="genre_enc"]').val(),
-            age_requis:      parseFloat($('[name="age_requis"]').val()),
-            nb_succes:       parseFloat($('[name="nb_succes"]').val()),
-            nb_avis_pos:     parseFloat($('[name="nb_avis_pos"]').val()),
-            nb_avis_neg:     parseFloat($('[name="nb_avis_neg"]').val()),
-            temps_jeu_moyen: parseFloat($('[name="temps_jeu_moyen"]').val()),
+            age_requis:      Math.round(parseFloat($('[name="age_requis"]').val())),
+            nb_succes:       Math.round(parseFloat($('[name="nb_succes"]').val())),
+            nb_avis_pos:     Math.round(parseFloat($('[name="nb_avis_pos"]').val())),
+            nb_avis_neg:     Math.round(parseFloat($('[name="nb_avis_neg"]').val())),
+            temps_jeu_moyen: Math.round(parseFloat($('[name="temps_jeu_moyen"]').val())),
             prix:            parseFloat($('[name="prix"]').val()),
-            id_editeur:      parseFloat($('[name="id_editeur"]').val()),
-            id_developpeur:  parseFloat($('[name="id_developpeur"]').val()),
-            os_windows:      parseFloat($('[name="os_windows"]').val()),
-            os_mac:          parseFloat($('[name="os_mac"]').val()),
-            os_linux:        parseFloat($('[name="os_linux"]').val()),
-            cat_multi:       parseFloat($('[name="cat_multi"]').val()),
-            cat_online:      parseFloat($('[name="cat_online"]').val()),
-            cat_vac:         parseFloat($('[name="cat_vac"]').val()),
-            cat_solo:        parseFloat($('[name="cat_solo"]').val()),
-            cat_cloud:       parseFloat($('[name="cat_cloud"]').val()),
-            cat_achiev:      parseFloat($('[name="cat_achiev"]').val()),
-            cat_cards:       parseFloat($('[name="cat_cards"]').val()),
-            cat_ctrl:        parseFloat($('[name="cat_ctrl"]').val()),
-            cat_workshop:    parseFloat($('[name="cat_workshop"]').val()),
-            nb_tags:         parseFloat($('[name="nb_tags"]').val()),
+            id_editeur:      Math.round(parseFloat($('[name="id_editeur"]').val())),
+            id_developpeur:  Math.round(parseFloat($('[name="id_developpeur"]').val())),
+            os_windows:      Math.round(parseFloat($('[name="os_windows"]').val())),
+            os_mac:          Math.round(parseFloat($('[name="os_mac"]').val())),
+            os_linux:        Math.round(parseFloat($('[name="os_linux"]').val())),
+            cat_multi:       Math.round(parseFloat($('[name="cat_multi"]').val())),
+            cat_online:      Math.round(parseFloat($('[name="cat_online"]').val())),
+            cat_vac:         Math.round(parseFloat($('[name="cat_vac"]').val())),
+            cat_solo:        Math.round(parseFloat($('[name="cat_solo"]').val())),
+            cat_cloud:       Math.round(parseFloat($('[name="cat_cloud"]').val())),
+            cat_achiev:      Math.round(parseFloat($('[name="cat_achiev"]').val())),
+            cat_cards:       Math.round(parseFloat($('[name="cat_cards"]').val())),
+            cat_ctrl:        Math.round(parseFloat($('[name="cat_ctrl"]').val())),
+            cat_workshop:    Math.round(parseFloat($('[name="cat_workshop"]').val())),
+            nb_tags:         Math.round(parseFloat($('[name="nb_tags"]').val())),
         };
-
 
         console.log('client_type envoyé :', data.client_type);
         console.log('modele envoyé :', data.modele);
         console.log('data complet :', data);
-
 
         $.ajax({
             url:         'https://gamessales.onrender.com/predict',
@@ -137,13 +152,13 @@ $(document).ready(function() {
                 `);
             },
             error: function(xhr) {
-            console.log('Status :', xhr.status);
-            console.log('Erreur :', xhr.responseText);
-            $('.bloc3').html(`
-                <h3>Résultats</h3>
-                <p style="color:red;">Erreur ${xhr.status} : ${xhr.responseText}</p>
-            `);
-        }
+                console.log('Status :', xhr.status);
+                console.log('Erreur :', xhr.responseText);
+                $('.bloc3').html(`
+                    <h3>Résultats</h3>
+                    <p style="color:red;">Erreur ${xhr.status} : ${xhr.responseText}</p>
+                `);
+            }
         });
 
     });
