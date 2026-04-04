@@ -93,7 +93,7 @@ $(document).ready(function() {
         // ENVOIE À L'API
 
         const data = {
-            client_type:     "<?php echo $_SESSION['type_dev'] ?? 'small'; ?>" === "grand" ? "big" : "small",
+            client_type:     TYPE_DEV === "moyen" ? "big" : "small",
             modele:          $('#monMenu').val(),
             genre:           $('[name="genre_enc"]').val(),
             age_requis:      parseFloat($('[name="age_requis"]').val()),
@@ -118,6 +118,12 @@ $(document).ready(function() {
             cat_workshop:    parseFloat($('[name="cat_workshop"]').val()),
             nb_tags:         parseFloat($('[name="nb_tags"]').val()),
         };
+
+
+        console.log('client_type envoyé :', data.client_type);
+        console.log('modele envoyé :', data.modele);
+        console.log('data complet :', data);
+
 
         $.ajax({
             url:         'https://gamessales.onrender.com/predict',

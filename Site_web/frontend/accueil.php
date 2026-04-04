@@ -9,6 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style/style.css">
+    <script> const TYPE_DEV = "<?php echo $_SESSION['type_dev'] ?? 'petit'; ?>"; </script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="js/script.js"></script>
     <title>GamesSales</title>
