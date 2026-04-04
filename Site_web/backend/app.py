@@ -1,9 +1,11 @@
 import os
 import joblib
 import pandas as pd
+from flask_cors import CORS
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
+CORS(app)     # Sans CORS, le navigateur refuse d'envoyer des requêtes vers un domaine différent pour des raisons de sécurité
 
 modeles = {
     ('small', 'rf'): joblib.load('rf_small.pkl'),

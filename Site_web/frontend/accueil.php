@@ -88,12 +88,12 @@
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
                         </select></td></tr>
-                        <tr><td>cat multi-joueurs ?</td><td><select name="os_linux">
+                        <tr><td>cat multi-joueurs ?</td><td><select name="cat_multi">
                             <option value="">-</option>
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
                         </select></td></tr>
-                        <tr><td>cat en ligne ?</td><td><select name="os_online">
+                        <tr><td>cat en ligne ?</td><td><select name="cat_online">
                             <option value="">-</option>
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
@@ -139,10 +139,7 @@
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
                         </select></td></tr>
-                        <tr><td>nombre de tags</td><td><select name="nb_tags">
-                            <option value="">-</option>
-                            <option value="1">Oui</option>
-                            <option value="0">Non</option>
+                        <tr><td>nombre de tag</td><td><input type="number" name="nb_tags"></td></tr>
                         </select></td></tr>
                     </tbody>
                 </table>
