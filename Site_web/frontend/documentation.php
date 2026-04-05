@@ -54,11 +54,11 @@ $valeurs = ($modele && $type) ? ($donnees[$modele][$type] ?? null) : null;
     <title>GamesSales</title>
 </head>
 
-<body>
+<body class="page-documentation">
     <header>
         <div class="top_bar">
             <div class="retour_dev">
-                <p><a href="prediction.php"> <br> <strong> Retour aux <br> prédictions </strong> </a></p>
+                <p><a href="index.php"> <br> <strong> Retour aux <br> prédictions </strong> </a></p>
             </div>
 
             <h2> Documentation sur les modèles utilisés </h2>
@@ -81,10 +81,10 @@ $valeurs = ($modele && $type) ? ($donnees[$modele][$type] ?? null) : null;
 
                         <?php if ($modele): ?>
                         <select name="type_docu" onchange="this.form.submit()">
-                            <option value="">-- Choisir le type de développeur  --</option>
-                            <option value="type3" <?= $type === 'type3' ? 'selected' : '' ?>>Toutes catégories </option>
-                            <option value="type1" <?= $type === 'type1' ? 'selected' : '' ?>>Intermédiaires  </option>
-                            <option value="type2" <?= $type === 'type2' ? 'selected' : '' ?>>Petits</option>
+                            <option value="">-- Choisir le type --</option>
+                            <option value="type3" <?= $type === 'type3' ? 'selected' : '' ?>>Grand jeu de données</option>
+                            <option value="type1" <?= $type === 'type1' ? 'selected' : '' ?>>Moyen jeu de données</option>
+                            <option value="type2" <?= $type === 'type2' ? 'selected' : '' ?>>Petit jeu de données</option>
                         </select>
                         <?php endif; ?>
                     </form>
@@ -137,6 +137,41 @@ $valeurs = ($modele && $type) ? ($donnees[$modele][$type] ?? null) : null;
                     <p>Sélectionnez un modèle et un type pour voir le graphique.</p>
                 <?php endif; ?>
             </div>
+        </div>
+
+        <div class="interpretation">
+            <h3>Interprétation des métriques et conclusion</h3>
+
+            <p>
+                Le RMSE mesure <strong>l'écart moyen entre les valeurs prédites et les valeurs réelles</strong> 
+                (ventes en millions), en accentuant les grandes erreurs du fait de la mise au carré. 
+                Le MAE mesure également cet écart moyen, mais de manière linéaire, sans donner de poids 
+                excessif aux erreurs importantes. Lorsque le RMSE est plus élevé que le MAE, cela indique 
+                que le modèle commet quelques erreurs particulièrement importantes qui tirent le RMSE vers 
+                le haut. L'utilisation conjointe des deux métriques informe à la fois sur la distribution 
+                des erreurs et sur leur magnitude.
+            </p>
+
+            <p>
+                Dans notre cas, <strong>le RMSE et le MAE sont les métriques les plus pertinentes</strong> 
+                pour évaluer nos modèles. Ce qui nous intéresse concrètement c'est de savoir de combien de 
+                millions d'exemplaires le modèle se trompe en moyenne — ce que mesurent directement ces deux 
+                métriques. Le R² quant à lui mesure la part de variance expliquée par le modèle : un R² de 1 
+                indique une explication complète des données, un R² de 0 indique une absence totale de pouvoir 
+                explicatif. Bien que nos R² restent faibles (maximum 24,6%), cela ne signifie pas que nos 
+                modèles sont inutiles — un modèle peut avoir un R² faible tout en produisant des prédictions 
+                utiles si ses erreurs absolues restent raisonnables. C'est exactement notre situation : la 
+                variabilité des ventes de jeux vidéo est très difficile à capturer complètement, notamment 
+                à cause de facteurs imprévisibles comme le bouche-à-oreille ou les tendances du marché.
+            </p>
+
+            <p>
+                <strong>En conclusion</strong>, Gradient Boosting <strong>domine ou égale Random Forest 
+                sur toutes nos configurations</strong> et offre les meilleures prédictions. SVR n'est jamais 
+                le meilleur modèle. Gradient Boosting est donc le meilleur choix parmi les trois pour prédire 
+                les ventes de jeux vidéo, même si ses performances restent limitées par la nature imprévisible 
+                du marché.
+            </p>
         </div>
 
     </div>
