@@ -199,7 +199,7 @@ $valeurs = ($modele && $type) ? ($donnees[$modele][$type] ?? null) : null;
             <strong>SVR</strong> quant à lui n'est <strong>jamais le meilleur</strong>. 
             <strong>Gradient Boosting</strong> est alors le <strong>meilleur choix</strong> pour prédire les ventes de jeux parmi ces 3 modèles, 
             bien que <strong>pas assez fonctionnel</strong> pour réellement le déployer.
-        </p>
+            </p>
 
         </div>
 

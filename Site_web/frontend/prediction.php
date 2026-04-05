@@ -193,7 +193,7 @@
 
             <p> Choisissez le modèle de prédiction à utiliser pour estimer les ventes du jeu. <br>
             Remarque : le modèle Gradient Boosting est le meilleur modèle, quel que soit votre profil. <br>
-            <small><strong style="color:#e14c4c;"><a href="documentation.php">Pour plus d'informations sur les modèles de prédiction, veuillez appuiller ici</a>.</strong></small></p>
+            <small><strong style="color:#e14c4c;"><a href="documentation.php">Pour plus d'informations sur les modèles de prédiction, veuillez appuyer ici</a>.</strong></small></p>
 
         </div>
 
