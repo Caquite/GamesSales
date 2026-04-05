@@ -172,6 +172,45 @@ $valeurs = ($modele && $type) ? ($donnees[$modele][$type] ?? null) : null;
                 les ventes de jeux vidéo, même si ses performances restent limitées par la nature imprévisible 
                 du marché.
             </p>
+
+            <h3>Pertinence du choix des modèles et de l'algorithme</h3>
+            <p><strong>Gradient Boosting</strong> est un modèle de machine learning qui construit des <strong>arbres de décision séquentiellement</strong>. 
+            Chaque arbre <strong>corrige les erreurs du précédent</strong>, ce qui le rend très performant mais plus lent à entraîner.
+            Un des principaux avantages de ce modèle est sa <strong>précision prédictive élevée</strong>. 
+            Cependant, il présente un inconvénient majeur : il est particulièrement exposé au <strong>surapprentissage</strong>, ce qui signifie que le modèle devient "trop adapté" 
+            aux données d'entraînement et perd sa capacité à généraliser. Pour y remédier, nos professeurs nous ont recommandé l'utilisation d'<strong>Optuna</strong>, 
+            un framework open-source d'<strong>optimisation automatique des hyperparamètres</strong>, que nous avons employé afin de déterminer les meilleures configurations pour notre modèle 
+            </p>
+
+            <p><strong>Random Forest</strong> est un modèle de machine learning qui combine <strong>plusieurs arbres de décision</strong>, 
+            entraînés indépendamment sur des <strong>sous-échantillons aléatoires</strong> des données. Chaque arbre produit une prédiction, et le résultat final est obtenu en faisant 
+            la <strong>moyenne de toutes ces prédictions</strong>. En diversifiant ainsi les arbres, le Random Forest capture efficacement les <strong>relations complexes</strong> entre les 
+            caractéristiques tout en <strong>réduisant la variance</strong>.
+            Un des principaux avantages de ce modèle est sa <strong>robustesse naturelle face au surapprentissage</strong> (contrairement à Gradient Boosting), 
+            grâce à la diversité des arbres qui le composent. Cependant, il peut manquer de précision sur certains datasets complexes par rapport à des méthodes séquentielles 
+            comme le Gradient Boosting. Pour optimiser ses performances, nous avons également utilisé <strong>Optuna</strong> afin de déterminer les meilleures configurations.
+            Avec <strong>22 variables</strong> dont une majorité de <strong>variables binaires</strong> (os, catégories), le Random Forest est particulièrement pertinent car il sélectionne aléatoirement un 
+            sous-ensemble de variables à chaque arbre, évitant ainsi que certaines <strong>variables très corrélées</strong> (comme cat_solo et cat_multi) ne dominent les prédictions. 
+            De plus, avec <strong>782 observations</strong>, sa robustesse naturelle face au surapprentissage en fait un <strong>choix évident</strong> pour notre dataset de taille modérée.              
+            </p>
+
+
+             
+            <p>Pour évaluer nos modèles, nous avons choisi la méthode de validation croisée <strong>LOOCV (Leave-One-Out Cross-Validation)</strong>. 
+            Cette méthode consiste à <strong>mettre de côté un seul jeu</strong>, lors de chaque itération, afin de tester le modèle, et d'utiliser 
+            <strong>tous les autres pour l'entraîner</strong>. On répète cette opération pour <strong>chacune des 782 observations</strong> de notre dataset.
+            Nous avons choisi le LOOCV car notre dataset est de <strong>taille limitée</strong> (782 observations). Cette méthode permet d'utiliser un 
+            <strong>maximum de données pour l'entraînement</strong> tout en évaluant le modèle sur chaque observation, ce qui donne une estimation 
+            <strong>très précise et fiable des performances</strong>. Cependant, elle présente un inconvénient : elle est <strong>coûteuse en calcul</strong>, 
+            car le modèle doit être entraîné autant de fois qu'il y a d'observations. Dans notre cas, avec 782 jeux, cela représente <strong>782 entraînements</strong> 
+            par modèle, ce qui reste acceptable.
+            </p>
+
+
+
+
+    
+            
         </div>
 
     </div>
