@@ -116,22 +116,22 @@
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
                         </select></td></tr>
-                        <tr><td>cat multi-joueurs ?</td><td><select name="cat_multi">
+                        <tr><td>catégorie multi-joueurs ?</td><td><select name="cat_multi">
                             <option value="">-</option>
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
                         </select></td></tr>
-                        <tr><td>cat en ligne ?</td><td><select name="cat_online">
+                        <tr><td>catégorie en ligne ?</td><td><select name="cat_online">
                             <option value="">-</option>
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
                         </select></td></tr>
-                        <tr><td>cat vacances ?</td><td><select name="cat_vac">
+                        <tr><td>catégorie vacances ?</td><td><select name="cat_vac">
                             <option value="">-</option>
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
                         </select></td></tr>
-                        <tr><td>cat solo ?</td><td><select name="cat_solo">
+                        <tr><td>catégorie solo ?</td><td><select name="cat_solo">
                             <option value="">-</option>
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
@@ -142,27 +142,27 @@
                 <!-- Colonne 3 -->
                 <table class="tableau_donnees">
                     <tbody>
-                        <tr><td>cat cloud ?</td><td><select name="cat_cloud">
+                        <tr><td>catégorie cloud ?</td><td><select name="cat_cloud">
                             <option value="">-</option>
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
                         </select></td></tr>
-                        <tr><td>cat achivement ?</td><td><select name="cat_achiev">
+                        <tr><td>catégorie achivement ?</td><td><select name="cat_achiev">
                             <option value="">-</option>
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
                         </select></td></tr>
-                        <tr><td>cat cartes ?</td><td><select name="cat_cards">
+                        <tr><td>catégorie cartes ?</td><td><select name="cat_cards">
                             <option value="">-</option>
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
                         </select></td></tr>
-                        <tr><td>cat contrôles ?</td><td><select name="cat_ctrl">
+                        <tr><td>catégorie contrôles ?</td><td><select name="cat_ctrl">
                             <option value="">-</option>
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
                         </select></td></tr>
-                        <tr><td>cat workshop ?</td><td><select name="cat_workshop">
+                        <tr><td>catégorie workshop ?</td><td><select name="cat_workshop">
                             <option value="">-</option>
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
