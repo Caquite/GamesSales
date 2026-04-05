@@ -30,7 +30,7 @@ On a entraîné **Random Forest**, **Gradient Boosting** et **SVR** pour 3 profi
 
 - **Petit développeur** : jeux dans les 70% les moins vendus
 - **Développeur intermédiaire** : jeux entre le quantile 0.50 et 0.90
-- **Grand développeur** : jeux dans les 90% les moins vendus
+- **Tout type de développeur** : jeux dans les 90% les moins vendus
 
 Pour évaluer les modèles on a utilisé le **LOOCV** (Leave-One-Out Cross Validation), et pour trouver les meilleurs hyperparamètres on a utilisé un **grid search** pour Random Forest, **Optuna** (100 essais) pour Gradient Boosting et une recherche manuelle pour **SVR**.
 
