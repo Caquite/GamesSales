@@ -77,7 +77,7 @@ $valeurs = ($modele && $type) ? ($donnees[$modele][$type] ?? null) : null;
                         <?php endif; ?>
                     </form>
                     <?php if (!$modele): ?>
-                        <p>Les types de modèles servent à étudier les capacités de chacun des trois modèles avec un petit/moyen/grand nombre de données.
+                        <p>Les types de modèles servent à étudier les capacités de chacun des trois modèles avec un petit ou moyen jeu de données.
                         Cela permet d'ajuster un maximum le modèle choisi pour prédire à partir de nos données.</p>
                     <?php endif; ?>
 
