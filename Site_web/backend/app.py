@@ -10,8 +10,8 @@ CORS(app)     # Sans CORS, le navigateur refuse d'envoyer des requêtes vers un 
 modeles = {
     ('small', 'rf'): joblib.load('rf_small.pkl'),
     ('small', 'gb'): joblib.load('gb_small.pkl'),
-    ('big',   'rf'): joblib.load('rf_big.pkl'),
-    ('big',   'gb'): joblib.load('gb_big.pkl'),
+    ('big', 'rf'): joblib.load('rf_big.pkl'),
+    ('big', 'gb'): joblib.load('gb_big.pkl'),
 }
 encoders = {
     'small': joblib.load('le_genre_small.pkl'),
@@ -21,11 +21,62 @@ features = joblib.load('features.pkl')
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    data        = request.json
+    data = request.json
+
+    # Validation des données côté serveur
+    champs_obligatoires = [
+        'client_type', 'modele', 'genre', 'age_requis', 'nb_succes',
+        'nb_avis_pos', 'nb_avis_neg', 'temps_jeu_moyen', 'prix',
+        'id_editeur', 'id_developpeur', 'os_windows', 'os_mac', 'os_linux',
+        'cat_multi', 'cat_online', 'cat_vac', 'cat_solo', 'cat_cloud',
+        'cat_achiev', 'cat_cards', 'cat_ctrl', 'cat_workshop', 'nb_tags'
+    ]
+
+    # Vérifier que tous les champs sont présents
+    for champ in champs_obligatoires:
+        if champ not in data:
+            return jsonify({'erreur': f'Champ manquant : {champ}'}), 400
+
+    # Vérifier les valeurs
+    if data['client_type'] not in ['small', 'big']:
+        return jsonify({'erreur': 'client_type invalide'}), 400
+    if data['modele'] not in ['rf', 'gb']:
+        return jsonify({'erreur': 'modele invalide'}), 400
+
+    # Vérifier que les champs numériques sont positifs
+    champs_numeriques = [
+        'age_requis', 'nb_succes', 'nb_avis_pos', 'nb_avis_neg',
+        'temps_jeu_moyen', 'prix', 'id_editeur', 'id_developpeur',
+        'os_windows', 'os_mac', 'os_linux', 'cat_multi', 'cat_online',
+        'cat_vac', 'cat_solo', 'cat_cloud', 'cat_achiev', 'cat_cards',
+        'cat_ctrl', 'cat_workshop', 'nb_tags'
+    ]
+
+    for champ in champs_numeriques:
+        val = data[champ]
+        if not isinstance(val, (int, float)):
+            return jsonify({'erreur': f'{champ} doit être un nombre'}), 400
+        if val < 0:
+            return jsonify({'erreur': f'{champ} ne peut pas être négatif'}), 400
+
+    # Vérifier les champs binaires
+    champs_binaires = [
+        'os_windows', 'os_mac', 'os_linux', 'cat_multi', 'cat_online',
+        'cat_vac', 'cat_solo', 'cat_cloud', 'cat_achiev', 'cat_cards',
+        'cat_ctrl', 'cat_workshop'
+    ]
+
+    for champ in champs_binaires:
+        if data[champ] not in [0, 1]:
+            return jsonify({'erreur': f'{champ} doit être 0 ou 1'}), 400
+    
     client_type = data['client_type']
     modele_type = data['modele']
 
-    genre_enc = encoders[client_type].transform([data['genre']])[0]
+    try:
+        genre_enc = encoders[client_type].transform([data['genre']])[0]
+    except ValueError:
+        return jsonify({'erreur': f'Genre "{data["genre"]}" non reconnu'}), 400
 
     X = pd.DataFrame([{
         'age_requis':       data['age_requis'],
