@@ -40,7 +40,7 @@ def predict():
             return jsonify({'erreur': f'Champ manquant : {champ}'}), 400
 
     # Vérifier les valeurs
-    if data['client_type'] not in ['small', 'big', 'autre']:
+    if data['client_type'] not in ['small', 'big', 'mid']:
         return jsonify({'erreur': 'client_type invalide'}), 400
     if data['modele'] not in ['rf', 'gb']:
         return jsonify({'erreur': 'modele invalide'}), 400
