@@ -3,6 +3,7 @@ import joblib
 import pandas as pd
 from flask_cors import CORS
 from flask import Flask, request, jsonify
+import mysql.connector
 
 app = Flask(__name__)
 CORS(app)     # Sans CORS, le navigateur refuse d'envoyer des requêtes vers un domaine différent pour des raisons de sécurité
@@ -54,6 +55,41 @@ def predict():
 
     prediction = modeles[(client_type, modele_type)].predict(X)[0]
     return jsonify({'ventes_predites_millions': round(float(prediction), 3)})
+
+@app.route('/search/editeur', methods=['GET'])
+def search_editeur():
+    q = request.args.get('q', '').strip()
+    if len(q) < 2:
+        return jsonify([])
+    db = mysql.connector.connect(
+        host=os.environ.get('DB_HOST'),
+        user=os.environ.get('DB_USER'),
+        password=os.environ.get('DB_PASSWORD'),
+        database=os.environ.get('DB_NAME')
+    )
+    cur = db.cursor(dictionary=True)
+    cur.execute("SELECT DISTINCT id_editeur, editeur FROM editeur WHERE editeur LIKE %s LIMIT 10", (f'%{q}%',))
+    results = cur.fetchall()
+    db.close()
+    return jsonify(results)
+
+
+@app.route('/search/developpeur', methods=['GET'])
+def search_developpeur():
+    q = request.args.get('q', '').strip()
+    if len(q) < 2:
+        return jsonify([])
+    db = mysql.connector.connect(
+        host=os.environ.get('DB_HOST'),
+        user=os.environ.get('DB_USER'),
+        password=os.environ.get('DB_PASSWORD'),
+        database=os.environ.get('DB_NAME')
+    )
+    cur = db.cursor(dictionary=True)
+    cur.execute("SELECT DISTINCT id_developpeur, developpeur FROM developpeur WHERE developpeur LIKE %s LIMIT 10", (f'%{q}%',))
+    results = cur.fetchall()
+    db.close()
+    return jsonify(results)
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))

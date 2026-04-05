@@ -80,7 +80,14 @@
                             <option value="Sports">Sports</option>
                             <option value="Puzzle">Puzzle</option>
                         </select></td></tr>
-                        <tr><td>éditeur</td><td><input type="number" name="id_editeur"></td></tr>
+                        <tr><td>éditeur</td><td>
+                            <div class="autocomplete-wrap">
+                                <input type="text" id="search_editeur" placeholder="Rechercher un éditeur..." autocomplete="off">
+                                <input type="hidden" name="id_editeur" id="id_editeur">
+                                <ul class="autocomplete-list" id="list_editeur"></ul>
+                            </div>
+                        </td></tr>
+                        
      
                     </tbody>
                 </table>
@@ -88,7 +95,13 @@
                 <!-- Colonne 2 -->
                 <table class="tableau_donnees">
                     <tbody>
-                        <tr><td>développeur</td><td><input type="number" name="id_developpeur"></td></tr>
+                        <tr><td>développeur</td><td>
+                            <div class="autocomplete-wrap">
+                                <input type="text" id="search_developpeur" placeholder="Rechercher un développeur..." autocomplete="off">
+                                <input type="hidden" name="id_developpeur" id="id_developpeur">
+                                <ul class="autocomplete-list" id="list_developpeur"></ul>
+                            </div>
+                        </td></tr>
                         <tr><td>sur Windows ?</td><td><select name="os_windows">
                             <option value="">-</option>
                             <option value="1">Oui</option>
