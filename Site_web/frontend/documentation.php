@@ -20,17 +20,14 @@ $explications = [
 
 $description_graphe = [
     'gradient_boosting' => [
-        'type1' => "Avec un RMSE de 0.757 et un R² = 0.24, Gradient Boosting est le plus performant des trois modèles. Ses points s'alignent relativement mieux autour de la ligne rouge pour les ventes faibles à moyennes (0-1.5M). Cependant, comme les autres modèles, il sous-estime systématiquement les ventes élevées (>2M), où les points s'éloignent nettement de la diagonale.",
-        'type2' => "Avec un RMSE de 0.833 et un R² = 0.202, Gradient Boosting est le plus performant des trois modèles. Ses points s'alignent relativement mieux autour de la ligne rouge pour les ventes faibles à moyennes (0-1,5M). Cependant, comme les autres modèles, il sous-estime systématiquement les ventes élevées (>2M), où les points s'éloignent nettement de la diagonale.",
+        'type1' => "Avec un RMSE de 0.757 et un R² = 0.24, Gradient Boosting est le plus performant des deux modèles. Ses points s'alignent relativement mieux autour de la ligne rouge pour les ventes faibles à moyennes (0-1.5M). Cependant, comme les autres modèles, il sous-estime systématiquement les ventes élevées (>2M), où les points s'éloignent nettement de la diagonale.",
+        'type2' => "Avec un RMSE de 0.833 et un R² = 0.202, Gradient Boosting est le plus performant des deux modèles. Ses points s'alignent relativement mieux autour de la ligne rouge pour les ventes faibles à moyennes (0-1,5M). Cependant, comme les autres modèles, il sous-estime systématiquement les ventes élevées (>2M), où les points s'éloignent nettement de la diagonale.",
     ],
     'random_forest' => [
         'type1' => "Random Forest affiche des résultats très proches (RMSE=0.763, R²=0.232). La distribution de ses points (en bleu) est similaire à celle du Gradient Boosting, avec une légère dispersion supplémentaire pour les ventes entre 0 et 1M. Il échoue lui aussi à prédire les valeurs au dessus de 2M.",
         'type2' => "Random Forest affiche des résultats très proches (RMSE=0,846, R²=0,177). La distribution de ses points (en bleu) est similaire à celle du Gradient Boosting, avec une légère dispersion supplémentaire pour les ventes entre 0 et 1M. Il échoue lui aussi à prédire les valeurs au dessus de 2M.",
     ],
-    'svr' => [
-        'type1' => "Le SVR en orange est clairement le moins performant. Avec son RMSE=0.810 et le R²=0.135, on voit rapidement visuellement qu'il y a une compression des prédictions basse, contrairement aux dispersions des deux autres modèles. Ce modèle prédit rarement au delà de 1,5M de ventes, quelle que soit la valeur réelle. Il n'arrive pas à prédire les ventes élevées.",
-        'type2' => "Le SVR en orange est clairement le moins performant. Avec son RMSE = 0,879 et le R² = 0,112, on voit rapidement visuellement qu'il y a une compression des prédictions vers des valeurs basses. Ce modèle prédit rarement au delà de 1,5M de ventes, quelle que soit la valeur réelle. Il n'arrive pas à prédire les ventes élevées.",
-    ],
+
 ];
 
 
