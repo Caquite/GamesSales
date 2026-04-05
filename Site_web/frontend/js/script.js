@@ -122,6 +122,14 @@ $(document).ready(function() {
             }
         });
 
+        // Vérification du modèle
+        if ($('#monMenu').val() === '' || $('#monMenu').val() === null) {
+            champVide = true;
+            $('#monMenu').css('border', '2px solid red');
+        } else {
+            $('#monMenu').css('border', '');
+        }
+
         if (champVide) {
             erreurs.push('Au moins un champ est vide.');
         }
