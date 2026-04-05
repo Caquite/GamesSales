@@ -2,7 +2,7 @@
 
 Projet universitaire réalisé dans le cadre de l'UE Science des données 4 (BUT Informatique 3ème année, 2025/2026).
 
-[Accéder au site]
+[Accéder au site](https://gamessales.infinityfreeapp.com)
 
 ---
 
@@ -20,7 +20,7 @@ Base de données MySQL construite à partir de deux jeux de données :
  - [Accéder au premier jeux de données : videogamesales](https://www.kaggle.com/datasets/gregorut/videogamesales)
  - [Accéder au second jeu de données : steam-store-games](https://www.kaggle.com/datasets/nikdavis/steam-store-games)
 
-On otient, grâce à ces jeux de données, des infos sur les jeux : prix, genre, nombre d'avis, temps de jeu moyen, plateformes supportées, catégories, tags, et surtout les ventes mondiales qu'on cherche à prédire.
+On obtient, grâce à ces jeux de données, des infos sur les jeux : prix, genre, nombre d'avis, temps de jeu moyen, plateformes supportées, catégories, tags, et surtout les ventes mondiales qu'on cherche à prédire.
 
 ---
 
