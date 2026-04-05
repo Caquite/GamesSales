@@ -2,10 +2,19 @@ import mysql.connector
 import json
 import pandas as pd
 
-# Connexion
+# Connexion à la BDD
 connexion = mysql.connector.connect(
     host='localhost', user='root', password='', database='gamesale'
 )
+
+
+# -----------------------------------
+# Ici on va créer deux fichiers JSON dans le but de faire le lien entre les noms
+# d'éditeur et de développeur, et leurs identifiants numériques, car pour les modèles
+# il nous faut des entiers pour les champs id_developpeur et id_editeur.
+# Seul façon d'obtenir le bon identifiant sans avoir accès a notre BDD est d'utiliser
+# un JSON dans lequel tout est noté
+
 
 # Éditeurs
 df_edit = pd.read_sql("SELECT id_editeur, editeur FROM editeur GROUP BY id_editeur", connexion)

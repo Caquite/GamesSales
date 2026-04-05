@@ -7,6 +7,7 @@ from flask import Flask, request, jsonify
 app = Flask(__name__)
 CORS(app)     # Sans CORS, le navigateur refuse d'envoyer des requêtes vers un domaine différent pour des raisons de sécurité
 
+# Dictionnaire contenant tous les modèles entraînés
 modeles = {
     ('small', 'rf'): joblib.load('rf_small.pkl'),
     ('small', 'gb'): joblib.load('gb_small.pkl'),
@@ -15,11 +16,17 @@ modeles = {
     ('mid', 'rf'): joblib.load('rf_mid.pkl'),
     ('mid', 'gb'): joblib.load('gb_mid.pkl'),
 }
+
+# Encodeurs pour transformer les genres (transforme le texte en nombre)
 encoders = {
     'small': joblib.load('le_genre_small.pkl'),
     'big':   joblib.load('le_genre_big.pkl'),
     'mid': joblib.load('le_genre_mid.pkl'),
 }
+
+# ---------------------------------------
+# Route API qui reçoit les données du formulaire
+# et calcule une prédiction
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -79,6 +86,8 @@ def predict():
     except ValueError:
         return jsonify({'erreur': f'Genre "{data["genre"]}" non reconnu'}), 400
 
+    # Transformation des données en DataFrame
+    # pour correspondre au format attendu par le modèle
     X = pd.DataFrame([{
         'age_requis':       data['age_requis'],
         'nb_succes':        data['nb_succes'],
@@ -104,6 +113,8 @@ def predict():
         'nb_tags':          data['nb_tags'],
     }])
 
+    # Sélection du bon modèle et génération de la prédiction
+    # et retour de la prédiction au format JSON (arrondi à 3 chiffres après la virgule)
     prediction = modeles[(client_type, modele_type)].predict(X)[0]
     return jsonify({'ventes_predites_millions': round(float(prediction), 3)})
 
