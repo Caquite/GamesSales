@@ -12,10 +12,13 @@ modeles = {
     ('small', 'gb'): joblib.load('gb_small.pkl'),
     ('big', 'rf'): joblib.load('rf_big.pkl'),
     ('big', 'gb'): joblib.load('gb_big.pkl'),
+    ('mid', 'rf'): joblib.load('rf_mid.pkl'),
+    ('mid', 'gb'): joblib.load('gb_mid.pkl'),
 }
 encoders = {
     'small': joblib.load('le_genre_small.pkl'),
     'big':   joblib.load('le_genre_big.pkl'),
+    'mid': joblib.load('le_genre_mid.pkl'),
 }
 
 @app.route('/predict', methods=['POST'])
@@ -37,7 +40,7 @@ def predict():
             return jsonify({'erreur': f'Champ manquant : {champ}'}), 400
 
     # Vérifier les valeurs
-    if data['client_type'] not in ['small', 'big']:
+    if data['client_type'] not in ['small', 'big', 'autre']:
         return jsonify({'erreur': 'client_type invalide'}), 400
     if data['modele'] not in ['rf', 'gb']:
         return jsonify({'erreur': 'modele invalide'}), 400

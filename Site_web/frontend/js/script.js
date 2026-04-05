@@ -222,7 +222,7 @@ $(document).ready(function() {
         // ENVOIE À L'API
 
         const data = {
-            client_type:     TYPE_DEV === "moyen" ? "big" : "small",
+            client_type:     TYPE_DEV === "big" ? "big" : TYPE_DEV === "mid" ? "mid" : "small",
             modele:          $('#monMenu').val(),
             genre:           $('[name="genre_enc"]').val(),
             age_requis:      Math.round(parseFloat($('[name="age_requis"]').val())),

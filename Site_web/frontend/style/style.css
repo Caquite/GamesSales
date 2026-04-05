@@ -329,7 +329,7 @@ select {
     gap: 20px;
 }
 
-.btn_choix1, .btn_choix2{
+.btn_choix1, .btn_choix2, .btn_choix3{
     align-self: center;
     padding: 10px 20px;
     background-color: #e14c4c;
