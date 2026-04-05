@@ -174,7 +174,7 @@ $valeurs = ($modele && $type) ? ($donnees[$modele][$type] ?? null) : null;
             </p>
 
 
-            <h3>Interprétation des métriques et conclusion</h3>
+            <h3>Interprétation des métriques</h3>
 
             <p>Le <strong>RMSE (Root Mean Squared Error)</strong> est la <strong>racine carrée de la moyenne des erreurs au carré</strong>. 
             Elle <strong>pénalise fortement les grandes erreurs</strong> de prédiction. Plus elle est <strong>proche de 0</strong>, meilleur est le modèle.</p>
@@ -192,6 +192,15 @@ $valeurs = ($modele && $type) ? ($donnees[$modele][$type] ?? null) : null;
             Le RMSE et le MAE mesurent toutes les deux les <strong>erreurs de prédiction en unités de ventes</strong>, mais de manière différente avec chacune leurs points forts : 
             le RMSE est plus <strong>sensible aux grandes erreurs ponctuelles</strong>, tandis que le MAE donne une vision plus <strong>globale et stable</strong> de l'erreur moyenne. 
             Le R² quant à lui apporte une <strong>perspective différente</strong> en indiquant la mesure dans laquelle notre modèle explique les <strong>variations de ventes</strong> entre les jeux.</p>
+
+            <h3> Conclusion </h3>
+            <p><strong>Gradient Boosting</strong> domine ou égale <strong>Random Forest</strong> partout et offre les <strong>meilleures prédictions</strong> 
+            malgré des <strong>R² faibles</strong> (max <strong>24,6%</strong>, moyenne environ <strong>20%</strong>). 
+            <strong>SVR</strong> quant à lui n'est <strong>jamais le meilleur</strong>. 
+            <strong>Gradient Boosting</strong> est alors le <strong>meilleur choix</strong> pour prédire les ventes de jeux parmi ces 3 modèles, 
+            bien que <strong>pas assez fonctionnel</strong> pour réellement le déployer.
+        </p>
+
         </div>
 
     </div>
