@@ -55,10 +55,10 @@ $valeurs = ($modele && $type) ? ($donnees[$modele][$type] ?? null) : null;
 </head>
 
 <body class="page-documentation">
-    <header>
+   <header>
         <div class="top_bar">
             <div class="retour_dev">
-                <p><a href="index.php"> <br> <strong> Retour aux <br> prédictions </strong> </a></p>
+                <p><a href="prediction.php"> <br> <strong> Retour aux <br> prédictions </strong> </a></p>
             </div>
 
             <h2> Documentation sur les modèles utilisés </h2>

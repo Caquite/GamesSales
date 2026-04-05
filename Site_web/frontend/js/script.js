@@ -194,7 +194,7 @@ $(document).ready(function() {
         }
 
         if (erreurs.length > 0) {
-            alert('Au moins un des champs est vide.\nVeuillez modifier.');
+            alert('Au moins un des champs est vide, ou a une valeur non-autorisée.\nVeuillez modifier.');
             return;
         }
 
