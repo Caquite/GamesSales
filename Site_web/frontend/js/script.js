@@ -200,6 +200,25 @@ $(document).ready(function() {
 
 
         // ------------------------------------------
+        // AFFICHAGE DES VALEURS NON RECONNUES
+
+        // Affiche message si éditeur inconnu
+        const nomEditeur = $('#input_editeur').val();
+        if (nomEditeur !== '' && mappingEditeurs[nomEditeur] === undefined) {
+            $('#info_editeur').show();
+        } else {
+            $('#info_editeur').hide();
+        }
+
+        // Affiche message si développeur inconnu
+        const nomDeveloppeur = $('#input_developpeur').val();
+        if (nomDeveloppeur !== '' && mappingDeveloppeurs[nomDeveloppeur] === undefined) {
+            $('#info_developpeur').show();
+        } else {
+            $('#info_developpeur').hide();
+        }
+
+        // ------------------------------------------
         // ENVOIE À L'API
 
         const data = {
@@ -238,7 +257,8 @@ $(document).ready(function() {
             success: function(response) {
                 $('.bloc3').html(`
                     <h3>Résultats</h3>
-                    <p>Ventes prédites : <strong>${response.ventes_predites_millions} million(s)</strong></p>
+                    <p>(Pas d'unité particulière pour le résultat)</p>
+                    <p>Ventes prédites : <strong style="color:#e14c4c;">${response.ventes_predites_millions} million(s)</strong></p>
                 `);
             },
             error: function(xhr) {      // xhr = XMLHttpRequest : objet qui contient toutes les infos sur la requête HTTP
@@ -246,6 +266,7 @@ $(document).ready(function() {
                 console.log('Erreur :', xhr.responseText);
                 $('.bloc3').html(`
                     <h3>Résultats</h3>
+                    <p>(Pas d'unité particulière pour le résultat)</p>
                     <p style="color:red;">Erreur ${xhr.status} : ${xhr.responseText}</p>
                 `);
             }

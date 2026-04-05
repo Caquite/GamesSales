@@ -80,7 +80,10 @@
                             <option value="Sports">Sports</option>
                             <option value="Puzzle">Puzzle</option>
                         </select></td></tr>
-                        <tr><td>éditeur</td><td>
+                        <tr><td>éditeur
+                            <small class="info-inconnu" id="info_editeur" style="color:#e14c4c; display:none;">
+                                (Éditeur inconnu)
+                            </small></td><td>
                             <input type="text" name="id_editeur" id="input_editeur" list="liste_editeurs" placeholder="Tapez un éditeur...">
                             <datalist id="liste_editeurs"></datalist>
                         </td></tr>
@@ -91,7 +94,10 @@
                 <!-- Colonne 2 -->
                 <table class="tableau_donnees">
                     <tbody>
-                        <tr><td>développeur</td><td>
+                        <tr><td>développeur
+                            <small class="info-inconnu" id="info_developpeur" style="color:#e14c4c; display:none;">
+                                (Développeur inconnu)
+                            </small></td><td>
                             <input type="text" name="id_developpeur" id="input_developpeur" list="liste_developpeurs" placeholder="Tapez un développeur...">
                             <datalist id="liste_developpeurs"></datalist>
                         </td></tr>
