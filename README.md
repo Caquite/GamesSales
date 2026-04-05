@@ -17,8 +17,8 @@ L'idée de départ : le marché du jeu vidéo est difficile à anticiper, surtou
 ## Les données
 
 Base de données MySQL construite à partir de deux jeux de données :
- - [Accéder au premier jeux de données videogamesales](https://www.kaggle.com/datasets/gregorut/videogamesales)
- - [Accéder au second jeu de données](https://www.kaggle.com/datasets/nikdavis/steam-store-games)
+ - [Accéder au premier jeux de données : videogamesales](https://www.kaggle.com/datasets/gregorut/videogamesales)
+ - [Accéder au second jeu de données : steam-store-games](https://www.kaggle.com/datasets/nikdavis/steam-store-games)
 
 On otient, grâce à ces jeux de données, des infos sur les jeux : prix, genre, nombre d'avis, temps de jeu moyen, plateformes supportées, catégories, tags, et surtout les ventes mondiales qu'on cherche à prédire.
 
