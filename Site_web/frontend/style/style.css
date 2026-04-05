@@ -203,6 +203,7 @@ select {
 
 .info_modeles {
     font-size: 0.8em;
+    margin-top: -3%;
 }
 
 .info_modeles a {

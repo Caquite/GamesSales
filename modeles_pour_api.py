@@ -422,5 +422,3 @@ gb_big.fit(X_big, y_big)
 joblib.dump(gb_big, 'gb_big.pkl')
 
 joblib.dump(le_genre_big, 'le_genre_big.pkl')
-
-joblib.dump(VARIABLES_EXPLICATIVES, 'features.pkl')  # commun aux 4 modèles

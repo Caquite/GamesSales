@@ -17,7 +17,6 @@ encoders = {
     'small': joblib.load('le_genre_small.pkl'),
     'big':   joblib.load('le_genre_big.pkl'),
 }
-features = joblib.load('features.pkl')
 
 @app.route('/predict', methods=['POST'])
 def predict():
