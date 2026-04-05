@@ -80,7 +80,10 @@
                             <option value="Sports">Sports</option>
                             <option value="Puzzle">Puzzle</option>
                         </select></td></tr>
-                        <tr><td>éditeur</td><td><input type="number" name="id_editeur"></td></tr>
+                        <tr><td>éditeur</td><td>
+                            <input type="text" name="id_editeur" id="input_editeur" list="liste_editeurs" placeholder="Tapez un éditeur...">
+                            <datalist id="liste_editeurs"></datalist>
+                        </td></tr>
      
                     </tbody>
                 </table>
@@ -88,7 +91,10 @@
                 <!-- Colonne 2 -->
                 <table class="tableau_donnees">
                     <tbody>
-                        <tr><td>développeur</td><td><input type="number" name="id_developpeur"></td></tr>
+                        <tr><td>développeur</td><td>
+                            <input type="text" name="id_developpeur" id="input_developpeur" list="liste_developpeurs" placeholder="Tapez un développeur...">
+                            <datalist id="liste_developpeurs"></datalist>
+                        </td></tr>
                         <tr><td>sur Windows ?</td><td><select name="os_windows">
                             <option value="">-</option>
                             <option value="1">Oui</option>
@@ -185,6 +191,8 @@
 
         <div class="bloc3">
             <h3> Résultats </h3>
+
+            <p> (Pas d'unité particulière pour le résultat) </p>
 
         </div>
 

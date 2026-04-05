@@ -45,10 +45,9 @@ def predict():
     # Vérifier que les champs numériques sont positifs
     champs_numeriques = [
         'age_requis', 'nb_succes', 'nb_avis_pos', 'nb_avis_neg',
-        'temps_jeu_moyen', 'prix', 'id_editeur', 'id_developpeur',
-        'os_windows', 'os_mac', 'os_linux', 'cat_multi', 'cat_online',
-        'cat_vac', 'cat_solo', 'cat_cloud', 'cat_achiev', 'cat_cards',
-        'cat_ctrl', 'cat_workshop', 'nb_tags'
+        'temps_jeu_moyen', 'prix', 'os_windows', 'os_mac', 'os_linux',
+        'cat_multi', 'cat_online', 'cat_vac', 'cat_solo', 'cat_cloud',
+        'cat_achiev', 'cat_cards', 'cat_ctrl', 'cat_workshop', 'nb_tags'
     ]
 
     for champ in champs_numeriques:

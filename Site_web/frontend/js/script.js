@@ -1,6 +1,32 @@
 $(document).ready(function() {
 
     // ------------------------------------------
+    // PARTIE CHARGEMENT JSON POUR DEV ET EDIT
+
+    // Chargement des correspondances : nom et id
+    let mappingEditeurs = {};
+    let mappingDeveloppeurs = {};
+
+    $.getJSON('js/editeurs.json', function(data) {
+        mappingEditeurs = data;
+        // Remplit le datalist éditeurs
+        const datalistEdit = $('#liste_editeurs');
+        Object.keys(data).forEach(function(nom) {
+            datalistEdit.append('<option value="' + nom + '">');
+        });
+    });
+
+    $.getJSON('js/developpeurs.json', function(data) {
+        mappingDeveloppeurs = data;
+        // Remplit le datalist développeurs
+        const datalistDev = $('#liste_developpeurs');
+        Object.keys(data).forEach(function(nom) {
+            datalistDev.append('<option value="' + nom + '">');
+        });
+    });
+
+
+    // ------------------------------------------
     // PARTIE POPUP
 
     $('.info').on('click', function() {
@@ -131,14 +157,13 @@ $(document).ready(function() {
         }
 
         if (champVide) {
-            erreurs.push('Au moins un champ est vide.');
+            erreurs.push('Au moins un champ est vide ou a une valeur non autorisée.');
         }
 
         // Champs entiers : ni virgule ni valeur négative
         const champsEntiers = [
             'nb_succes', 'temps_jeu_moyen',
-            'nb_avis_pos', 'nb_avis_neg', 'nb_tags',
-            'id_developpeur', 'id_editeur'
+            'nb_avis_pos', 'nb_avis_neg', 'nb_tags'
         ];
 
         champsEntiers.forEach(function(nom) {
@@ -187,8 +212,8 @@ $(document).ready(function() {
             nb_avis_neg:     Math.round(parseFloat($('[name="nb_avis_neg"]').val())),
             temps_jeu_moyen: Math.round(parseFloat($('[name="temps_jeu_moyen"]').val())),
             prix:            parseFloat($('[name="prix"]').val()),
-            id_editeur:      Math.round(parseFloat($('[name="id_editeur"]').val())),
-            id_developpeur:  Math.round(parseFloat($('[name="id_developpeur"]').val())),
+            id_editeur:     mappingEditeurs[$('#input_editeur').val()] ?? -1,
+            id_developpeur: mappingDeveloppeurs[$('#input_developpeur').val()] ?? -1,
             os_windows:      toBinaire('os_windows'),
             os_mac:          toBinaire('os_mac'),
             os_linux:        toBinaire('os_linux'),
