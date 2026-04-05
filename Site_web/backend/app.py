@@ -67,7 +67,7 @@ def predict():
     ]
 
     for champ in champs_binaires:
-        if data[champ] not in [0, 1]:
+        if int(data[champ]) not in [0, 1]:
             return jsonify({'erreur': f'{champ} doit être 0 ou 1'}), 400
     
     client_type = data['client_type']
