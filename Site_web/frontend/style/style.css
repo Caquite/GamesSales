@@ -365,7 +365,7 @@ select {
     display: flex;
     flex-direction: column;
     background-color: #fff;
-    padding: 20px;
+    padding: 35px;
     gap: 3%;
     margin: 2% 2% 2% 2%;
     border-radius: 15px;
