@@ -22,7 +22,7 @@
                 <div class="choix-actuel">
                     <?php if ($type_dev): ?>
                         <span>Profil : <?= $type_dev ?> dev</span>
-                        <a href="choix_dev.php"> <br> Changer de profil ? </a>
+                        <a href="choix_dev.php"> <br> <strong> Changer de profil ? </strong> </a>
                     <?php else: ?>
                         <a href="choix_dev.php">Sélectionner profil</a>
                     <?php endif; ?>
@@ -36,7 +36,9 @@
                 <div class="info_popup" id="infoPopup">
                     <p>Bienvenue dans GamesSales, le site de prédiction de ventes. Ici, vous pouvez visualiser les prédictions de ventes pour différents jeux.
                         Il vous suffit d'entrer les données de votre jeu dans la section "Vos données", de choisir un modèle de prédiction dans la 
-                        section "Choix du modèle", et les résultats seront affichés dans la section "Résultats".</p>
+                        section "Choix du modèle", et les résultats seront affichés dans la section "Résultats". <br>
+                        <strong style="color:#e14c4c;"> Si vous ne connaissez pas certaines données veuillez saisir "0". </strong>
+                    </p>
                 </div>
 
             </div>
