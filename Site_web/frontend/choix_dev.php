@@ -7,7 +7,7 @@
 
     if (isset($_GET["type_dev"])) {
         $_SESSION["type_dev"] = $_GET["type_dev"];
-        header("Location: accueil.php");
+        header("Location: prediction.php");
         exit;
     }
 ?>
@@ -26,7 +26,12 @@
 <body>
     <header>
         <div class="top_bar">
+            <div class="retour_dev">
+                <p><a href="index.php"> <br> <strong> Retour </strong> </a></p>
+            </div>
+
             <h2> Choix du developpeur </h2>
+
         </div>
     </header>
     

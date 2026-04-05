@@ -257,8 +257,7 @@ $(document).ready(function() {
             success: function(response) {
                 $('.bloc3').html(`
                     <h3>Résultats</h3>
-                    <p>(Pas d'unité particulière pour le résultat)</p>
-                    <p>Ventes prédites : <strong style="color:#e14c4c;">${response.ventes_predites_millions} million(s)</strong></p>
+                    <p>Ventes prédites : <strong style="color:#e14c4c;">${response.ventes_predites_millions} million(s) d'exemplaires</strong></p>
                 `);
             },
             error: function(xhr) {      // xhr = XMLHttpRequest : objet qui contient toutes les infos sur la requête HTTP
@@ -266,7 +265,7 @@ $(document).ready(function() {
                 console.log('Erreur :', xhr.responseText);
                 $('.bloc3').html(`
                     <h3>Résultats</h3>
-                    <p>(Pas d'unité particulière pour le résultat)</p>
+                    <p>(En millions d'exemplaires)</p>
                     <p style="color:red;">Erreur ${xhr.status} : ${xhr.responseText}</p>
                 `);
             }

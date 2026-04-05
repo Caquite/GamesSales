@@ -22,7 +22,7 @@
                 <div class="choix-actuel">
                     <?php if ($type_dev): ?>
                         <span>Profil : <?= $type_dev ?> dev</span>
-                        <a href="choix_dev.php"> <br> <strong> Changer de profil ? </strong> </a>
+                        <a href="choix_dev.php"> <br> <strong> Retour </strong> </a>
                     <?php else: ?>
                         <a href="choix_dev.php">Sélectionner profil</a>
                     <?php endif; ?>
@@ -200,7 +200,7 @@
         <div class="bloc3">
             <h3> Résultats </h3>
 
-            <p> (Pas d'unité particulière pour le résultat) </p>
+            <p> (En millions d'exemplaires) </p>
 
         </div>
 

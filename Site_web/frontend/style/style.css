@@ -311,8 +311,7 @@ select {
     vertical-align: middle;
   }
 
-/* ===== Fin document ===== */
-
+/* ===== Fin documentation ===== */
 
 /* ----------------------------------------------------------
 
@@ -343,4 +342,23 @@ select {
 
 .bloc_gauche_choix a, .bloc_droit_choix a{
     color: white;
+}
+
+/* ===== Fin choix_dev ===== */
+
+/* ----------------------------------------------------------
+
+/* ===== Page index ===== */
+
+.grand_bloc_index{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    padding: 20px;
+    gap: 3%;
+    margin: 2% 2% 2% 2%;
+    border-radius: 15px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

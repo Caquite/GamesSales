@@ -135,7 +135,7 @@ $valeurs = ($modele && $type) ? ($donnees[$modele][$type] ?? null) : null;
             </div>
         </div>
 
-        <a href="accueil.php">Retour à la page d'accueil</a>
+        <a href="prediction.php"> Retour à la page de prediction. </a>
 
     </div>
 
