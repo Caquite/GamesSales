@@ -61,7 +61,7 @@
                             <option value="18">18</option>
                         </select></td></tr>
                         <tr><td>nombre de succès</td><td><input type="number" name="nb_succes" min="0" step="1"></td></tr>
-                        <tr><td>temps de jeu moyen</td><td><input type="number" name="temps_jeu_moyen" min="0" step="0.01"></td></tr>
+                        <tr><td>temps de jeu moyen <small>(en minutes)</small></td><td><input type="number" name="temps_jeu_moyen" min="0" step="0.01"></td></tr>
                         <tr><td>prix</td><td><input type="number" name="prix" min="0" step="0.01"></td></tr>
                         <tr><td>avis positifs</td><td><input type="number" name="nb_avis_pos" min="0" step="1"></td></tr>
                         <tr><td>avis négatifs</td><td><input type="number" name="nb_avis_neg" min="0" step="1"></td></tr>
@@ -157,6 +157,7 @@
                         </select></td></tr>
                         <tr><td>nombre de tag</td><td><input type="number" name="nb_tags"></td></tr>
                         </select></td></tr>
+                        <tr><td><button type="button" id="btn_reset" class="btn_reset"> Réinitialiser </button></td></tr>
                     </tbody>
                 </table>
 

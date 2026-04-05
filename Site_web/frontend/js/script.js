@@ -13,17 +13,13 @@ $(document).ready(function() {
         }
     });
 
-    $('#monMenu').on('change', function() {
-        const valeur = $(this).val();
-        console.log('Valeur choisie :', valeur);
-    });
 
     // ------------------------------------------
     // SAUVEGARDE À CHAQUE SAISIE
     $('#formPred input, #formPred select, #monMenu').on('change', function() {
         const nom = $(this).attr('name');
         const valeur = $(this).val();
-        localStorage.setItem(nom, valeur);
+        localStorage.setItem(nom, valeur);      // stockage navigateur (lors d'un refresh)
     });
 
     // ------------------------------------------
@@ -38,7 +34,7 @@ $(document).ready(function() {
     ];
 
     champs.forEach(function(nom) {
-        const valeur = localStorage.getItem(nom);
+        const valeur = localStorage.getItem(nom);   // récupération des valeurs sauvegardées
         if (valeur !== null) {
             if (nom === 'modele') {
                 $('#monMenu').val(valeur);
@@ -48,26 +44,74 @@ $(document).ready(function() {
         }
     });
 
+
+    // ------------------------------------------
+    // DEBUG
+
+    const DEBUG = false;
+
+    if (DEBUG) {
+        // Afficher le modèle sélectionné
+        $('#monMenu').on('change', function() {
+            const valeur = $(this).val();
+            console.log('Valeur choisie :', valeur);
+        });
+
+        console.log('client_type envoyé :', data.client_type);
+        console.log('modele envoyé :', data.modele);
+        console.log('data complet :', data);
+    }
+
+
+    // ------------------------------------------
+    // REINITIALISATION FORMULAIRE
+
+    // Réinitialisation du formulaire
+    $('#btn_reset').on('click', function() {
+        // Remet tous les champs à vide
+        $('#formPred input').val('');
+        $('#formPred select').val('');
+        $('#monMenu').val('');
+        
+        // Remet les bordures en normal
+        $('#formPred input, #formPred select').css('border', '');
+        
+        // Vide le localStorage
+        champs.forEach(function(nom) {
+            localStorage.removeItem(nom);
+        });
+        
+        // Vide le bloc résultats
+        $('.bloc3').html('<h3>Résultats</h3>');
+    });
+
+
     // ------------------------------------------
     // PARTIE FORMULAIRE
 
     $('form').on('submit', function(e) {
         e.preventDefault();
+        let champVide = false;
         let erreurs = [];
 
         // Vérifier que tous les champs sont remplis
         $('input, select', this).each(function() {
             const val = $(this).val().trim();
-            const nom = $(this).attr('name');
+
+            // Si le champ est vide
             if (val === '' || val === null) {
-                erreurs.push('Le champ "' + nom + '" est vide.');
+                champVide = true;
                 $(this).css('border', '2px solid red');
             } else {
                 $(this).css('border', '');
             }
         });
 
-        // Champs entiers (pas de virgule, pas négatif)
+        if (champVide) {
+            erreurs.push('Au moins un champ est vide.');
+        }
+
+        // Champs entiers : ni virgule ni valeur négative
         const champsEntiers = [
             'nb_succes', 'temps_jeu_moyen',
             'nb_avis_pos', 'nb_avis_neg', 'nb_tags',
@@ -89,7 +133,7 @@ $(document).ready(function() {
             }
         });
 
-        // Prix : float autorisé mais positif obligatoire
+        // Prix : virgule autorisé mais positif obligatoire
         const valPrix = parseFloat($('[name="prix"]').val());
         if (isNaN(valPrix)) {
             erreurs.push('Le champ "prix" doit être un nombre.');
@@ -102,9 +146,10 @@ $(document).ready(function() {
         }
 
         if (erreurs.length > 0) {
-            alert('Erreurs :\n' + erreurs.join('\n'));
+            alert('Au moins un des champs est vide.\nVeuillez modifier.');
             return;
         }
+
 
         // ------------------------------------------
         // ENVOIE À L'API
@@ -136,22 +181,19 @@ $(document).ready(function() {
             nb_tags:         Math.round(parseFloat($('[name="nb_tags"]').val())),
         };
 
-        console.log('client_type envoyé :', data.client_type);
-        console.log('modele envoyé :', data.modele);
-        console.log('data complet :', data);
 
         $.ajax({
-            url:         'https://gamessales.onrender.com/predict',
-            method:      'POST',
+            url: 'https://gamessales.onrender.com/predict',
+            method: 'POST',
             contentType: 'application/json',
-            data:        JSON.stringify(data),
+            data: JSON.stringify(data),        // convertit objet JS en JSON pour l'API
             success: function(response) {
                 $('.bloc3').html(`
                     <h3>Résultats</h3>
                     <p>Ventes prédites : <strong>${response.ventes_predites_millions} million(s)</strong></p>
                 `);
             },
-            error: function(xhr) {
+            error: function(xhr) {      // xhr = XMLHttpRequest : objet qui contient toutes les infos sur la requête HTTP
                 console.log('Status :', xhr.status);
                 console.log('Erreur :', xhr.responseText);
                 $('.bloc3').html(`
