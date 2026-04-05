@@ -44,6 +44,21 @@ $(document).ready(function() {
         }
     });
 
+    // Vérification des champs binaires (0 ou 1 uniquement)
+    const champsBinaires = [
+        'os_windows', 'os_mac', 'os_linux', 'cat_multi', 'cat_online',
+        'cat_vac', 'cat_solo', 'cat_cloud', 'cat_achiev', 'cat_cards',
+        'cat_ctrl', 'cat_workshop'
+    ];
+
+    // Fonction qui force une valeur binaire entre 0 et 1
+    function toBinaire(nom) {
+        const val = Math.round(parseFloat($('[name="' + nom + '"]').val()));
+        if (val < 0) return 0;
+        if (val > 1) return 1;
+        return val;
+    }
+
 
     // ------------------------------------------
     // DEBUG
@@ -166,18 +181,18 @@ $(document).ready(function() {
             prix:            parseFloat($('[name="prix"]').val()),
             id_editeur:      Math.round(parseFloat($('[name="id_editeur"]').val())),
             id_developpeur:  Math.round(parseFloat($('[name="id_developpeur"]').val())),
-            os_windows:      Math.round(parseFloat($('[name="os_windows"]').val())),
-            os_mac:          Math.round(parseFloat($('[name="os_mac"]').val())),
-            os_linux:        Math.round(parseFloat($('[name="os_linux"]').val())),
-            cat_multi:       Math.round(parseFloat($('[name="cat_multi"]').val())),
-            cat_online:      Math.round(parseFloat($('[name="cat_online"]').val())),
-            cat_vac:         Math.round(parseFloat($('[name="cat_vac"]').val())),
-            cat_solo:        Math.round(parseFloat($('[name="cat_solo"]').val())),
-            cat_cloud:       Math.round(parseFloat($('[name="cat_cloud"]').val())),
-            cat_achiev:      Math.round(parseFloat($('[name="cat_achiev"]').val())),
-            cat_cards:       Math.round(parseFloat($('[name="cat_cards"]').val())),
-            cat_ctrl:        Math.round(parseFloat($('[name="cat_ctrl"]').val())),
-            cat_workshop:    Math.round(parseFloat($('[name="cat_workshop"]').val())),
+            os_windows:      toBinaire('os_windows'),
+            os_mac:          toBinaire('os_mac'),
+            os_linux:        toBinaire('os_linux'),
+            cat_multi:       toBinaire('cat_multi'),
+            cat_online:      toBinaire('cat_online'),
+            cat_vac:         toBinaire('cat_vac'),
+            cat_solo:        toBinaire('cat_solo'),
+            cat_cloud:       toBinaire('cat_cloud'),
+            cat_achiev:      toBinaire('cat_achiev'),
+            cat_cards:       toBinaire('cat_cards'),
+            cat_ctrl:        toBinaire('cat_ctrl'),
+            cat_workshop:    toBinaire('cat_workshop'),
             nb_tags:         Math.round(parseFloat($('[name="nb_tags"]').val())),
         };
 
