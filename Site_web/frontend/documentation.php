@@ -81,10 +81,10 @@ $valeurs = ($modele && $type) ? ($donnees[$modele][$type] ?? null) : null;
 
                         <?php if ($modele): ?>
                         <select name="type_docu" onchange="this.form.submit()">
-                            <option value="">-- Choisir le type --</option>
-                            <option value="type3" <?= $type === 'type3' ? 'selected' : '' ?>>Grand jeu de données</option>
-                            <option value="type1" <?= $type === 'type1' ? 'selected' : '' ?>>Moyen jeu de données</option>
-                            <option value="type2" <?= $type === 'type2' ? 'selected' : '' ?>>Petit jeu de données</option>
+                            <option value="">-- Choisir le type de développeur  --</option>
+                            <option value="type3" <?= $type === 'type3' ? 'selected' : '' ?>>Toutes catégories </option>
+                            <option value="type1" <?= $type === 'type1' ? 'selected' : '' ?>>Intermédiaires  </option>
+                            <option value="type2" <?= $type === 'type2' ? 'selected' : '' ?>>Petits</option>
                         </select>
                         <?php endif; ?>
                     </form>
