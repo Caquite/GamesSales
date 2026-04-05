@@ -1,6 +1,6 @@
 # GamesSales — Prédiction de ventes de jeux vidéo
 
-Projet universitaire réalisé dans le cadre de l'UE Science des données 4 (BUT Informatique 3ème année, 2025/2026).
+Projet universitaire réalisé dans le cadre de l'UE Science des données 4 (MIASHS 3ème année Université de Montpellier Paul-Valéry, 2025/2026).
 
 [Accéder au site](https://gamessales.infinityfreeapp.com)
 

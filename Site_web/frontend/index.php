@@ -49,7 +49,7 @@
 
         <footer>
             <small>
-            <p>Projet réalisé dans le cadre de l'UE Science des données 4 — MIASHS Université Paul-Valéry 2025/2026</p>
+            <p>Projet réalisé dans le cadre de l'UE Science des données 4 — MIASHS Université de Montpellier Paul-Valéry 2025/2026</p>
             <p>Par <strong>Donia ALFONSI</strong>, <strong>Clémentine BEAULIEU</strong>, <strong>Catherine NIVAULT</strong> et <strong>Lasienica CRUZ</strong></p>
             </small>
         </footer>
