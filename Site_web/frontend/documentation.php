@@ -140,39 +140,6 @@ $valeurs = ($modele && $type) ? ($donnees[$modele][$type] ?? null) : null;
         </div>
 
         <div class="interpretation">
-            <h3>Interprétation des métriques et conclusion</h3>
-
-            <p>
-                Le RMSE mesure <strong>l'écart moyen entre les valeurs prédites et les valeurs réelles</strong> 
-                (ventes en millions), en accentuant les grandes erreurs du fait de la mise au carré. 
-                Le MAE mesure également cet écart moyen, mais de manière linéaire, sans donner de poids 
-                excessif aux erreurs importantes. Lorsque le RMSE est plus élevé que le MAE, cela indique 
-                que le modèle commet quelques erreurs particulièrement importantes qui tirent le RMSE vers 
-                le haut. L'utilisation conjointe des deux métriques informe à la fois sur la distribution 
-                des erreurs et sur leur magnitude.
-            </p>
-
-            <p>
-                Dans notre cas, <strong>le RMSE et le MAE sont les métriques les plus pertinentes</strong> 
-                pour évaluer nos modèles. Ce qui nous intéresse concrètement c'est de savoir de combien de 
-                millions d'exemplaires le modèle se trompe en moyenne — ce que mesurent directement ces deux 
-                métriques. Le R² quant à lui mesure la part de variance expliquée par le modèle : un R² de 1 
-                indique une explication complète des données, un R² de 0 indique une absence totale de pouvoir 
-                explicatif. Bien que nos R² restent faibles (maximum 24,6%), cela ne signifie pas que nos 
-                modèles sont inutiles — un modèle peut avoir un R² faible tout en produisant des prédictions 
-                utiles si ses erreurs absolues restent raisonnables. C'est exactement notre situation : la 
-                variabilité des ventes de jeux vidéo est très difficile à capturer complètement, notamment 
-                à cause de facteurs imprévisibles comme le bouche-à-oreille ou les tendances du marché.
-            </p>
-
-            <p>
-                <strong>En conclusion</strong>, Gradient Boosting <strong>domine ou égale Random Forest 
-                sur toutes nos configurations</strong> et offre les meilleures prédictions. SVR n'est jamais 
-                le meilleur modèle. Gradient Boosting est donc le meilleur choix parmi les trois pour prédire 
-                les ventes de jeux vidéo, même si ses performances restent limitées par la nature imprévisible 
-                du marché.
-            </p>
-
             <h3>Pertinence du choix des modèles et de l'algorithme</h3>
             <p><strong>Gradient Boosting</strong> est un modèle de machine learning qui construit des <strong>arbres de décision séquentiellement</strong>. 
             Chaque arbre <strong>corrige les erreurs du précédent</strong>, ce qui le rend très performant mais plus lent à entraîner.
@@ -207,10 +174,24 @@ $valeurs = ($modele && $type) ? ($donnees[$modele][$type] ?? null) : null;
             </p>
 
 
+            <h3>Interprétation des métriques et conclusion</h3>
 
+            <p>Le <strong>RMSE (Root Mean Squared Error)</strong> est la <strong>racine carrée de la moyenne des erreurs au carré</strong>. 
+            Elle <strong>pénalise fortement les grandes erreurs</strong> de prédiction. Plus elle est <strong>proche de 0</strong>, meilleur est le modèle.</p>
 
-    
-            
+            <p>La <strong>MAE (Mean Absolute Error)</strong> est la <strong>moyenne des valeurs absolues des erreurs</strong>. Elle indique en moyenne de combien 
+            d'<strong>unités de ventes</strong> le modèle se trompe. Contrairement au RMSE, elle <strong>ne pénalise pas excessivement les grandes erreurs</strong>. 
+            Cela en fait une métrique plus <strong>robuste</strong> pour notre dataset qui contient des jeux aux <strong>ventes très variables</strong>. 
+            Ici encore, plus la valeur est <strong>proche de 0</strong>, plus le modèle est performant.</p>
+
+            <p>Le <strong>R² (Coefficient de Détermination)</strong> mesure la <strong>proportion de la variance des ventes</strong> expliquée par notre modèle. 
+            Sa valeur est comprise entre <strong>0 et 1</strong>. Plus il est <strong>proche de 1</strong>, mieux le modèle explique les variations de ventes entre les jeux. 
+            Un R² de <strong>0.8</strong> par exemple signifie que notre modèle explique <strong>80% des variations de ventes</strong> observées.</p>
+
+            <p>Ces trois métriques sont <strong>complémentaires</strong> et permettent d'avoir une <strong>vision complète et globale</strong> des performances de nos modèles. 
+            Le RMSE et le MAE mesurent toutes les deux les <strong>erreurs de prédiction en unités de ventes</strong>, mais de manière différente avec chacune leurs points forts : 
+            le RMSE est plus <strong>sensible aux grandes erreurs ponctuelles</strong>, tandis que le MAE donne une vision plus <strong>globale et stable</strong> de l'erreur moyenne. 
+            Le R² quant à lui apporte une <strong>perspective différente</strong> en indiquant la mesure dans laquelle notre modèle explique les <strong>variations de ventes</strong> entre les jeux.</p>
         </div>
 
     </div>
