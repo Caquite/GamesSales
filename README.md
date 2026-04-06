@@ -54,6 +54,10 @@ GamesSales/
 ├── Machine Learning/
 │   ├── modeles_ml.ipynb     ← analyse complète + évaluation des modèles
 │   └── export_api/          ← export des .pkl + fichiers JSON
+├── Visualisations/
+│   ├── analyse_complete.ipynb
+│   ├── graphiques importants/
+│   └── [CSV des tables]
 ├── Site_web/
 │   ├── backend/             ← API Flask + modèles entraînés (.pkl)
 │   │   ├── app.py
@@ -67,7 +71,11 @@ GamesSales/
 │       ├── images/
 │       ├── style/
 │       └── js/
-├── gamesales.sql           ← base de données
+├── BDD/
+│   └── gamesale.sql         ← base de données
+├── Autre/
+│   ├── Machine Learning/    ← expérimentations (LOOCV, RF brut...)
+│   └── Visualisations/      ← analyses exploratoires (khi2, corrél...)
 └── README.md
 ```
 
