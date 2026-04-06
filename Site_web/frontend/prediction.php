@@ -22,7 +22,7 @@
                 <div class="choix-actuel">
                     <?php if ($type_dev): ?>
                         <span>Profil : <?= $type_dev ?> dev</span>
-                        <a href="choix_dev.php"> <br> Changer de profil ? </a>
+                        <a href="choix_dev.php"> <br> <strong> Retour </strong> </a>
                     <?php else: ?>
                         <a href="choix_dev.php">Sélectionner profil</a>
                     <?php endif; ?>
@@ -36,7 +36,9 @@
                 <div class="info_popup" id="infoPopup">
                     <p>Bienvenue dans GamesSales, le site de prédiction de ventes. Ici, vous pouvez visualiser les prédictions de ventes pour différents jeux.
                         Il vous suffit d'entrer les données de votre jeu dans la section "Vos données", de choisir un modèle de prédiction dans la 
-                        section "Choix du modèle", et les résultats seront affichés dans la section "Résultats".</p>
+                        section "Choix du modèle", et les résultats seront affichés dans la section "Résultats". <br>
+                        <strong style="color:#e14c4c;"> Si vous ne connaissez pas certaines données veuillez saisir "0". </strong>
+                    </p>
                 </div>
 
             </div>
@@ -80,14 +82,13 @@
                             <option value="Sports">Sports</option>
                             <option value="Puzzle">Puzzle</option>
                         </select></td></tr>
-                        <tr><td>éditeur</td><td>
-                            <div class="autocomplete-wrap">
-                                <input type="text" id="search_editeur" placeholder="Rechercher un éditeur..." autocomplete="off">
-                                <input type="hidden" name="id_editeur" id="id_editeur">
-                                <ul class="autocomplete-list" id="list_editeur"></ul>
-                            </div>
+                        <tr><td>éditeur
+                            <small class="info-inconnu" id="info_editeur" style="color:#e14c4c; display:none;">
+                                (Éditeur inconnu)
+                            </small></td><td>
+                            <input type="text" name="id_editeur" id="input_editeur" list="liste_editeurs" placeholder="Tapez un éditeur...">
+                            <datalist id="liste_editeurs"></datalist>
                         </td></tr>
-                        
      
                     </tbody>
                 </table>
@@ -95,12 +96,12 @@
                 <!-- Colonne 2 -->
                 <table class="tableau_donnees">
                     <tbody>
-                        <tr><td>développeur</td><td>
-                            <div class="autocomplete-wrap">
-                                <input type="text" id="search_developpeur" placeholder="Rechercher un développeur..." autocomplete="off">
-                                <input type="hidden" name="id_developpeur" id="id_developpeur">
-                                <ul class="autocomplete-list" id="list_developpeur"></ul>
-                            </div>
+                        <tr><td>développeur
+                            <small class="info-inconnu" id="info_developpeur" style="color:#e14c4c; display:none;">
+                                (Développeur inconnu)
+                            </small></td><td>
+                            <input type="text" name="id_developpeur" id="input_developpeur" list="liste_developpeurs" placeholder="Tapez un développeur...">
+                            <datalist id="liste_developpeurs"></datalist>
                         </td></tr>
                         <tr><td>sur Windows ?</td><td><select name="os_windows">
                             <option value="">-</option>
@@ -117,22 +118,22 @@
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
                         </select></td></tr>
-                        <tr><td>cat multi-joueurs ?</td><td><select name="cat_multi">
+                        <tr><td>catégorie multi-joueurs ?</td><td><select name="cat_multi">
                             <option value="">-</option>
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
                         </select></td></tr>
-                        <tr><td>cat en ligne ?</td><td><select name="cat_online">
+                        <tr><td>catégorie en ligne ?</td><td><select name="cat_online">
                             <option value="">-</option>
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
                         </select></td></tr>
-                        <tr><td>cat vacances ?</td><td><select name="cat_vac">
+                        <tr><td>catégorie vacances ?</td><td><select name="cat_vac">
                             <option value="">-</option>
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
                         </select></td></tr>
-                        <tr><td>cat solo ?</td><td><select name="cat_solo">
+                        <tr><td>catégorie solo ?</td><td><select name="cat_solo">
                             <option value="">-</option>
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
@@ -143,27 +144,27 @@
                 <!-- Colonne 3 -->
                 <table class="tableau_donnees">
                     <tbody>
-                        <tr><td>cat cloud ?</td><td><select name="cat_cloud">
+                        <tr><td>catégorie cloud ?</td><td><select name="cat_cloud">
                             <option value="">-</option>
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
                         </select></td></tr>
-                        <tr><td>cat achivement ?</td><td><select name="cat_achiev">
+                        <tr><td>catégorie achivement ?</td><td><select name="cat_achiev">
                             <option value="">-</option>
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
                         </select></td></tr>
-                        <tr><td>cat cartes ?</td><td><select name="cat_cards">
+                        <tr><td>catégorie cartes ?</td><td><select name="cat_cards">
                             <option value="">-</option>
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
                         </select></td></tr>
-                        <tr><td>cat contrôles ?</td><td><select name="cat_ctrl">
+                        <tr><td>catégorie contrôles ?</td><td><select name="cat_ctrl">
                             <option value="">-</option>
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
                         </select></td></tr>
-                        <tr><td>cat workshop ?</td><td><select name="cat_workshop">
+                        <tr><td>catégorie workshop ?</td><td><select name="cat_workshop">
                             <option value="">-</option>
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
@@ -190,13 +191,16 @@
             </select>
             <button type="submit" form="formPred" class="btn_submit">Envoyer</button>
 
-            <p>Mini blabla</p>
-            <p class="info_modeles">Pour plus d'informations sur les modèles de prédiction, veuillez appuiller <a href="documentation.php">ici</a>.</p>
+            <p> Choisissez le modèle de prédiction à utiliser pour estimer les ventes du jeu. <br>
+            Remarque : le modèle Gradient Boosting est le meilleur modèle, quel que soit votre profil. <br>
+            <small><strong style="color:#e14c4c;"><a href="documentation.php">Pour plus d'informations sur les modèles de prédiction, veuillez appuyer ici</a>.</strong></small></p>
 
         </div>
 
         <div class="bloc3">
             <h3> Résultats </h3>
+
+            <p> (En millions d'exemplaires) </p>
 
         </div>
 

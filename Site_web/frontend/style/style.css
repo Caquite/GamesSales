@@ -87,7 +87,7 @@ header h2 {
     background-color: white;
     border-radius: 10px;
     padding: 15px;
-    width: 300px;
+    width: 400px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     font-size: 0.9em;
     color: #333;
@@ -203,6 +203,7 @@ select {
 
 .info_modeles {
     font-size: 0.8em;
+    margin-top: -3%;
 }
 
 .info_modeles a {
@@ -237,6 +238,11 @@ select {
 
 /* ===== Page documentation ===== */
 
+.page-documentation {
+    min-height: 100vh;
+    height: auto;
+}
+
 .grand_bloc{
     flex: 1;
     display: flex;
@@ -248,11 +254,7 @@ select {
     border-radius: 15px;
     box-sizing: border-box;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.grand_bloc a {
-    color: #e14c4c;
-    font-weight: bold;
+    height: auto;
 }
 
 .bloc_soutient{
@@ -276,6 +278,15 @@ select {
     flex-direction: column;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     gap: 20px;
+}
+
+.interpretation{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    gap: 20px;
+    padding: 20px;
 }
 
 .bloc_droit img {
@@ -310,8 +321,7 @@ select {
     vertical-align: middle;
   }
 
-/* ===== Fin document ===== */
-
+/* ===== Fin documentation ===== */
 
 /* ----------------------------------------------------------
 
@@ -328,7 +338,7 @@ select {
     gap: 20px;
 }
 
-.btn_choix1, .btn_choix2{
+.btn_choix1, .btn_choix2, .btn_choix3{
     align-self: center;
     padding: 10px 20px;
     background-color: #e14c4c;
@@ -342,4 +352,23 @@ select {
 
 .bloc_gauche_choix a, .bloc_droit_choix a{
     color: white;
+}
+
+/* ===== Fin choix_dev ===== */
+
+/* ----------------------------------------------------------
+
+/* ===== Page index ===== */
+
+.grand_bloc_index{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    padding: 35px;
+    gap: 3%;
+    margin: 2% 2% 2% 2%;
+    border-radius: 15px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

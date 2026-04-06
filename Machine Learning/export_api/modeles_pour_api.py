@@ -1,16 +1,19 @@
 # %%
+# Ce fichier sert uniquement à exporter les modèles.
+# On reprend le code du notebook modeles_ml.ipynb et on le transforme un peu en fonctions
+# pour que ce soit plus propre, plus simple à relire et plus facile à réutiliser. Comme ça,
+# ce sera aussi plus pratique pour le brancher ensuite dans une API.
+
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 import warnings
 import mysql.connector
+import joblib
 
-from sklearn.inspection import permutation_importance
-from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
-from sklearn.svm import SVR
-from sklearn.model_selection import train_test_split, LeaveOneOut, cross_val_score
-from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.metrics import mean_squared_error, r2_score
 import optuna
 
 warnings.filterwarnings("ignore", message="pandas only supports SQLAlchemy")
@@ -82,6 +85,7 @@ def charger_donnees():
 # PRÉTRAITEMENT
 # ==============================================================================
 
+# Liste des variables utilisées
 VARIABLES_EXPLICATIVES = [
     'age_requis', 'nb_succes', 'nb_avis_pos', 'nb_avis_neg',
     'temps_jeu_moyen', 'prix', 'genre_enc', 'id_editeur', 'id_developpeur',
@@ -90,6 +94,9 @@ VARIABLES_EXPLICATIVES = [
     'cat_ctrl', 'cat_workshop', 'nb_tags',
 ]
 
+# Fonction qui permet de selectionner les données d'entrainement pour le(s) modèle(s)
+# Une seule contrainte (<) :
+# - Plus petit que seuil_quantile
 def preprocesser(df, seuil_quantile):
     df = df.dropna(subset=['ventes_Global', 'age_requis', 'prix'])
     df['genre']          = df['genre'].fillna('Unknown')
@@ -112,6 +119,31 @@ def preprocesser(df, seuil_quantile):
 
     print(f"\nDataset final : {X.shape[0]} jeux, {X.shape[1]} features")
     print(f"Ventes : min={y.min():.2f}M - max={y.max():.2f}M - moyenne={y.mean():.2f}M")
+    return X, y, y_log, le_genre
+
+# Fonction qui permet de selectionner les données d'entrainement pour le(s) modèle(s)
+# Deux contraintes (> et <) :
+# - Plus grand que seuil_bas
+# - Plus petit que seuil_haut
+def preprocesser_entre(df, seuil_bas, seuil_haut):
+    df = df.dropna(subset=['ventes_Global', 'age_requis', 'prix'])
+    df['genre']          = df['genre'].fillna('Unknown')
+    df['id_editeur']     = df['id_editeur'].fillna(-1).astype(int)
+    df['id_developpeur'] = df['id_developpeur'].fillna(-1).astype(int)
+    df['nb_tags']        = df['nb_tags'].fillna(0)
+    df = df.fillna(0)
+
+    seuil_b = df['ventes_Global'].quantile(seuil_bas)
+    seuil_h = df['ventes_Global'].quantile(seuil_haut)
+    df = df[(df['ventes_Global'] >= seuil_b) & (df['ventes_Global'] <= seuil_h)]
+    print(f"Après filtre entre {seuil_bas} et {seuil_haut} : {len(df)} jeux")
+
+    le_genre = LabelEncoder()
+    df['genre_enc'] = le_genre.fit_transform(df['genre'])
+
+    X     = df[VARIABLES_EXPLICATIVES]
+    y     = df['ventes_Global'].values
+    y_log = np.log1p(y)
     return X, y, y_log, le_genre
 
 
@@ -149,30 +181,6 @@ def tuner_random_forest(X, y):
     return meilleur_n, meilleur_depth, meilleur_split, r2_train
 
 
-def evaluer_random_forest_loo(X, y, n, depth, split):
-    loo = LeaveOneOut()
-    liste_reelles, liste_predites = [], []
-
-    for train_idx, test_idx in loo.split(X):
-        rf = RandomForestRegressor(
-            n_estimators=n, max_depth=depth,
-            min_samples_split=split, random_state=42, n_jobs=-1
-        )
-        rf.fit(X.iloc[train_idx], y[train_idx])
-        liste_predites.append(rf.predict(X.iloc[test_idx])[0])
-        liste_reelles.append(y[test_idx][0])
-
-    y_pred_loo = np.array(liste_predites)
-    y_true_loo = np.array(liste_reelles)
-
-    rmse = np.sqrt(mean_squared_error(y_true_loo, y_pred_loo))
-    mae  = mean_absolute_error(y_true_loo, y_pred_loo)
-    r2   = r2_score(y_true_loo, y_pred_loo)
-    print(f"\nRésultats LOOCV - Random Forest")
-    print(f"  RMSE : {rmse:.3f}M  |  MAE : {mae:.3f}M  |  R² : {r2:.3f}")
-    return rmse, mae, r2, y_pred_loo, y_true_loo
-
-
 # ==============================================================================
 # TUNING & ÉVALUATION GRADIENT BOOSTING
 # ==============================================================================
@@ -207,6 +215,8 @@ def tuner_gradient_boosting(X, y):
         sampler=optuna.samplers.TPESampler(seed=42),
         pruner=optuna.pruners.MedianPruner(n_startup_trials=10)
     )
+
+    # Grod search : 100 essais d'hyperparamètres différents testés par Optuna
     study.optimize(objective, n_trials=100, show_progress_bar=True)
 
     best_params = study.best_params
@@ -221,201 +231,59 @@ def tuner_gradient_boosting(X, y):
     return best_params, r2_train
 
 
-def evaluer_gradient_boosting_loo(X, y, best_params):
-    loo = LeaveOneOut()
-    liste_reelles, liste_predites = [], []
-    modele = GradientBoostingRegressor(**best_params, random_state=42)
-
-    for train_idx, test_idx in loo.split(X):
-        modele.fit(X.iloc[train_idx], y[train_idx])
-        liste_predites.append(modele.predict(X.iloc[test_idx])[0])
-        liste_reelles.append(y[test_idx][0])
-
-    y_pred_loo = np.array(liste_predites)
-    y_true_loo = np.array(liste_reelles)
-
-    rmse = np.sqrt(mean_squared_error(y_true_loo, y_pred_loo))
-    mae  = mean_absolute_error(y_true_loo, y_pred_loo)
-    r2   = r2_score(y_true_loo, y_pred_loo)
-    #print(f"\nRésultats LOOCV - Gradient Boosting")
-    #print(f"  RMSE : {rmse:.3f}M  |  MAE : {mae:.3f}M  |  R² : {r2:.3f}")
-    
-    return rmse, mae, r2, y_pred_loo, y_true_loo
-
-
 # ==============================================================================
-# TUNING & ÉVALUATION SVR
+# EXPORT DES MODÈLES POUR L'API
+# ==============================================================================
+# Pour chaque profil de développeur, on entraîne 2 modèles (RF et GB) sur le
+# dataset correspondant, puis on les sauvegarde en fichiers .pkl.
+# Ces fichiers seront chargés par l'API Flask pour faire les prédictions.
+#
+# Les 3 profils correspondent à des segments de ventes différents :
+#   - small : jeux qui font peu de ventes (≤ quantile 0.70)
+#   - big   : jeux qui font beaucoup de ventes (≤ quantile 0.90)
+#   - mid   : jeux qui font des ventes moyennes (entre quantile 0.50 et 0.90)
+#
+# Pour chaque profil, on exporte :
+#   - rf_[profil].pkl : modèle Random Forest entraîné
+#   - gb_[profil].pkl : modèle Gradient Boosting entraîné
+#   - le_genre_[profil].pkl : LabelEncoder du genre (nécessaire pour encoder le genre textuel en nombre lors des prédictions)
 # ==============================================================================
 
-def tuner_svr(X, y, y_log):
-    X_train, X_test, y_train_log, _ = train_test_split(X, y_log, test_size=0.2, random_state=42)
-    _, _, _, y_test_reel             = train_test_split(X, y,     test_size=0.2, random_state=42)
 
-    meilleur_rmse = np.inf
-    meilleur_C, meilleur_eps, r2_train = None, None, None
-
-    for C in [0.1, 0.5, 1, 2, 3, 4, 5, 6, 7]:
-        for eps in [0.35, 0.36, 0.37, 0.38]:
-            scaler         = StandardScaler()
-            X_train_scaled = scaler.fit_transform(X_train)
-            X_test_scaled  = scaler.transform(X_test)
-
-            svr = SVR(kernel='rbf', C=C, epsilon=eps, gamma='scale')
-            svr.fit(X_train_scaled, y_train_log)
-            y_pred_reel = np.expm1(svr.predict(X_test_scaled))
-
-            rmse = np.sqrt(mean_squared_error(y_test_reel, y_pred_reel))
-            r2   = r2_score(y_test_reel, y_pred_reel)
-            if rmse < meilleur_rmse:
-                meilleur_rmse, r2_train = rmse, r2
-                meilleur_C, meilleur_eps = C, eps
-
-    print(f"SVR meilleurs hyperparamètres : C={meilleur_C}, epsilon={meilleur_eps}")
-    print(f"SVR RMSE train/test : {meilleur_rmse:.3f}M")
-    return meilleur_C, meilleur_eps, r2_train
-
-
-def evaluer_svr_loo(X, y, y_log, C, eps):
-    loo = LeaveOneOut()
-    liste_reelles, liste_predites = [], []
-
-    for train_idx, test_idx in loo.split(X):
-        scaler      = StandardScaler()
-        X_tr_scaled = scaler.fit_transform(X.iloc[train_idx])
-        X_te_scaled = scaler.transform(X.iloc[test_idx])
-
-        svr = SVR(kernel='rbf', C=C, epsilon=eps, gamma='scale')
-        svr.fit(X_tr_scaled, y_log[train_idx])
-        liste_predites.append(np.expm1(svr.predict(X_te_scaled)[0]))
-        liste_reelles.append(float(y[test_idx][0]))
-
-    y_pred_loo = np.array(liste_predites)
-    y_true_loo = np.array(liste_reelles)
-
-    rmse = np.sqrt(mean_squared_error(y_true_loo, y_pred_loo))
-    mae  = mean_absolute_error(y_true_loo, y_pred_loo)
-    r2   = r2_score(y_true_loo, y_pred_loo)
-    print(f"\nRésultats LOOCV - SVR")
-    print(f"  RMSE : {rmse:.3f}M  |  MAE : {mae:.3f}M  |  R² : {r2:.3f}")
-    return rmse, mae, r2, y_pred_loo, y_true_loo
-
-
-# ==============================================================================
-# AFFICHAGE DES RÉSULTATS
-# ==============================================================================
-
-def afficher_resultats(rmse_rf, mae_rf, r2_rf,
-                        rmse_gb, mae_gb, r2_gb,
-                        rmse_svr, mae_svr, r2_svr,
-                        r2_train_rf, r2_train_gb, r2_train_svr):
-    df_res = pd.DataFrame({
-        'Modèle':   ['Random Forest', 'Gradient Boosting', 'SVR'],
-        'RMSE (M)': [rmse_rf, rmse_gb, rmse_svr],
-        'MAE (M)':  [mae_rf,  mae_gb,  mae_svr],
-        'R²':       [r2_rf,   r2_gb,   r2_svr],
-    }).sort_values('RMSE (M)')
-    print("\n--- Tableau comparatif ---")
-    print(df_res.to_string(index=False))
-    print(f"\nR² train vs LOOCV :")
-    print(f"  RF  : train={r2_train_rf:.3f}  LOOCV={r2_rf:.3f}")
-    print(f"  GB  : train={r2_train_gb:.3f}  LOOCV={r2_gb:.3f}")
-    print(f"  SVR : train={r2_train_svr:.3f}  LOOCV={r2_svr:.3f}")
-    return df_res
-
-
-# ==============================================================================
-# PIPELINE PRINCIPAL — change juste le seuil ici
-# ==============================================================================
-
-def run_pipeline(seuil_quantile):
-    print(f"\n{'='*60}")
-    print(f"  PIPELINE — seuil quantile : {seuil_quantile}")
-    print(f"{'='*60}\n")
-
-    # 1. Données
-    df_brut = charger_donnees()
-    X, y, y_log, le_genre = preprocesser(df_brut, seuil_quantile)
-
-    # 2. Random Forest
-    n, depth, split, r2_train_rf = tuner_random_forest(X, y)
-    rmse_rf, mae_rf, r2_rf, y_pred_rf, y_true = evaluer_random_forest_loo(X, y, n, depth, split)
-
-    # 3. Gradient Boosting
-    best_params_gb, r2_train_gb = tuner_gradient_boosting(X, y)
-    rmse_gb, mae_gb, r2_gb, y_pred_gb, _ = evaluer_gradient_boosting_loo(X, y, best_params_gb)
-
-    # 4. SVR
-    C, eps, r2_train_svr = tuner_svr(X, y, y_log)
-    rmse_svr, mae_svr, r2_svr, y_pred_svr, _ = evaluer_svr_loo(X, y, y_log, C, eps)
-
-    # 5. Résultats
-    df_res = afficher_resultats(
-        rmse_rf, mae_rf, r2_rf,
-        rmse_gb, mae_gb, r2_gb,
-        rmse_svr, mae_svr, r2_svr,
-        r2_train_rf, r2_train_gb, r2_train_svr
-    )
-
-    return {
-        'X': X, 'y': y, 'y_log': y_log,
-        'rf':  {'n': n, 'depth': depth, 'split': split, 'y_pred': y_pred_rf},
-        'gb':  {'params': best_params_gb, 'y_pred': y_pred_gb},
-        'svr': {'C': C, 'eps': eps, 'y_pred': y_pred_svr},
-        'y_true': y_true,
-        'resultats': df_res,
-    }
-
-
-# ==============================================================================
-# LANCEMENT — modifie uniquement les seuils ici
-# ==============================================================================
-
-# %%
-res_90 = run_pipeline(seuil_quantile=0.90)
-
-# %%
-res_70 = run_pipeline(seuil_quantile=0.70)
-# %%
-
-# ==============================================================================
-# Code d'export pour l'API
-# ==============================================================================
-
-import joblib
-
-# ==============================================================================
-# EXPORT DES 4 MODÈLES
-# ==============================================================================
-
-# --- Petite entreprise (seuil bas, peu de ventes) ---
+# --- Petite entreprise (seuil bas, peu de ventes, < quantile 0.7) ---
 df_brut = charger_donnees()
 X_small, y_small, y_log_small, le_genre_small = preprocesser(df_brut, seuil_quantile=0.70)
 
 # RF petite entreprise
-n, depth, split, _ = tuner_random_forest(X_small, y_small)
-rf_small = RandomForestRegressor(n_estimators=n, max_depth=depth, min_samples_split=split, random_state=42, n_jobs=-1)
-rf_small.fit(X_small, y_small)
-joblib.dump(rf_small, 'rf_small.pkl')
+# On cherche d'abord les meilleurs hyperparamètres via un grid search
+# sur train/test, puis on entraîne le modèle final sur tout le dataset
+n, depth, split, _ = tuner_random_forest(X_small, y_small)                                                               # Choix des meilleurs paramètres
+rf_small = RandomForestRegressor(n_estimators=n, max_depth=depth, min_samples_split=split, random_state=42, n_jobs=-1)   #Création du modèle
+rf_small.fit(X_small, y_small)                                                                                           # Entrainement
+joblib.dump(rf_small, 'rf_small.pkl')                                                                                    # Sauvegarde du modèle
 
 # GB petite entreprise
+# Même logique
 best_params_gb, _ = tuner_gradient_boosting(X_small, y_small)
 gb_small = GradientBoostingRegressor(**best_params_gb, random_state=42)
 gb_small.fit(X_small, y_small)
 joblib.dump(gb_small, 'gb_small.pkl')
 
-joblib.dump(le_genre_small, 'le_genre_small.pkl')  # 1 seul LabelEncoder par dataset
+joblib.dump(le_genre_small, 'le_genre_small.pkl')
 
 
-# --- Grande entreprise (seuil moyen-haut, ventes moyennes) ---
+# --- Grande entreprise (seuil moyen-haut, ventes moyennes, < au quantile 0.9) ---
 X_big, y_big, y_log_big, le_genre_big = preprocesser(df_brut, seuil_quantile=0.90)
 
 # RF grande entreprise
+# Même logique
 n, depth, split, _ = tuner_random_forest(X_big, y_big)
 rf_big = RandomForestRegressor(n_estimators=n, max_depth=depth, min_samples_split=split, random_state=42, n_jobs=-1)
 rf_big.fit(X_big, y_big)
 joblib.dump(rf_big, 'rf_big.pkl')
 
 # GB grande entreprise
+# Même logique
 best_params_gb, _ = tuner_gradient_boosting(X_big, y_big)
 gb_big = GradientBoostingRegressor(**best_params_gb, random_state=42)
 gb_big.fit(X_big, y_big)
@@ -423,4 +291,22 @@ joblib.dump(gb_big, 'gb_big.pkl')
 
 joblib.dump(le_genre_big, 'le_genre_big.pkl')
 
-joblib.dump(VARIABLES_EXPLICATIVES, 'features.pkl')  # commun aux 4 modèles
+
+# --- Entreprise moyenne (entre quantile 0.5 et 0.9) ---
+X_mid, y_mid, y_log_mid, le_genre_mid = preprocesser_entre(df_brut, seuil_bas=0.5, seuil_haut=0.9)
+
+# RF moyen
+# Même logique
+n, depth, split, _ = tuner_random_forest(X_mid, y_mid)
+rf_mid = RandomForestRegressor(n_estimators=n, max_depth=depth, min_samples_split=split, random_state=42, n_jobs=-1)
+rf_mid.fit(X_mid, y_mid)
+joblib.dump(rf_mid, 'rf_mid.pkl')
+
+# GB moyen
+# Même logique
+best_params_gb, _ = tuner_gradient_boosting(X_mid, y_mid)
+gb_mid = GradientBoostingRegressor(**best_params_gb, random_state=42)
+gb_mid.fit(X_mid, y_mid)
+joblib.dump(gb_mid, 'gb_mid.pkl')
+
+joblib.dump(le_genre_mid, 'le_genre_mid.pkl')

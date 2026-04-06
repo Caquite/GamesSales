@@ -1,13 +1,39 @@
-$(document).ready(function () {
+$(document).ready(function() {
+
+    // ------------------------------------------
+    // PARTIE CHARGEMENT JSON POUR DEV ET EDIT
+
+    // Chargement des correspondances : nom et id
+    let mappingEditeurs = {};
+    let mappingDeveloppeurs = {};
+
+    $.getJSON('js/editeurs.json', function(data) {
+        mappingEditeurs = data;
+        // Remplit le datalist éditeurs
+        const datalistEdit = $('#liste_editeurs');
+        Object.keys(data).forEach(function(nom) {
+            datalistEdit.append('<option value="' + nom + '">');
+        });
+    });
+
+    $.getJSON('js/developpeurs.json', function(data) {
+        mappingDeveloppeurs = data;
+        // Remplit le datalist développeurs
+        const datalistDev = $('#liste_developpeurs');
+        Object.keys(data).forEach(function(nom) {
+            datalistDev.append('<option value="' + nom + '">');
+        });
+    });
+
 
     // ------------------------------------------
     // PARTIE POPUP
 
-    $('.info').on('click', function () {
+    $('.info').on('click', function() {
         $('#infoPopup').toggleClass('visible');
     });
 
-    $(document).on('click', function (e) {
+    $(document).on('click', function(e) {
         if (!$(e.target).closest('.plus_info').length) {
             $('#infoPopup').removeClass('visible');
         }
@@ -16,7 +42,7 @@ $(document).ready(function () {
 
     // ------------------------------------------
     // SAUVEGARDE À CHAQUE SAISIE
-    $('#formPred input, #formPred select, #monMenu').on('change', function () {
+    $('#formPred input, #formPred select, #monMenu').on('change', function() {
         const nom = $(this).attr('name');
         const valeur = $(this).val();
         localStorage.setItem(nom, valeur);      // stockage navigateur (lors d'un refresh)
@@ -33,7 +59,7 @@ $(document).ready(function () {
         'cat_workshop', 'nb_tags', 'modele'
     ];
 
-    champs.forEach(function (nom) {
+    champs.forEach(function(nom) {
         const valeur = localStorage.getItem(nom);   // récupération des valeurs sauvegardées
         if (valeur !== null) {
             if (nom === 'modele') {
@@ -44,59 +70,20 @@ $(document).ready(function () {
         }
     });
 
-    // ------------------------------------------
-    // AUTOCOMPLETE
+    // Vérification des champs binaires (0 ou 1 uniquement)
+    const champsBinaires = [
+        'os_windows', 'os_mac', 'os_linux', 'cat_multi', 'cat_online',
+        'cat_vac', 'cat_solo', 'cat_cloud', 'cat_achiev', 'cat_cards',
+        'cat_ctrl', 'cat_workshop'
+    ];
 
-    function setupAutocomplete(searchId, listId, hiddenId, endpoint, labelKey, valueKey) {
-        let timer = null;
-
-        $('#' + searchId).on('input', function () {
-            const q = $(this).val();
-            $('#' + hiddenId).val('');
-            clearTimeout(timer);
-
-            if (q.length < 2) {
-                $('#' + listId).hide().empty();
-                return;
-            }
-
-            timer = setTimeout(function () {
-                $.getJSON(endpoint + '&q=' + encodeURIComponent(q),
-                    function (data) {
-                        const list = $('#' + listId).empty();
-                        if (data.length === 0) {
-                            list.append('<li class="no-result">Aucun résultat</li>').show();
-                            return;
-                        }
-                        data.forEach(function (item) {
-                            $('<li>')
-                                .html(`${item[labelKey]} <span class="badge-id">#${item[valueKey]}</span>`)
-                                .on('click', function () {
-                                    $('#' + searchId).val(item[labelKey]);
-                                    $('#' + hiddenId).val(item[valueKey]);
-                                    list.hide().empty();
-                                })
-                                .appendTo(list);
-                        });
-                        list.show();
-                    });
-            }, 300);
-        });
-
-        $(document).on('click', function (e) {
-            if (!$(e.target).closest('#' + searchId).length) {
-                $('#' + listId).hide();
-            }
-        });
+    // Fonction qui force une valeur binaire entre 0 et 1
+    function toBinaire(nom) {
+        const val = Math.round(parseFloat($('[name="' + nom + '"]').val()));
+        if (val < 0) return 0;
+        if (val > 1) return 1;
+        return val;
     }
-
-    setupAutocomplete('search_editeur', 'list_editeur', 'id_editeur',
-        'search.php?type=editeur', 'editeur', 'id_editeur');
-
-    setupAutocomplete('search_developpeur', 'list_developpeur', 'id_developpeur',
-        'search.php?type=developpeur', 'developpeur', 'id_developpeur');
-
-
 
 
     // ------------------------------------------
@@ -106,7 +93,7 @@ $(document).ready(function () {
 
     if (DEBUG) {
         // Afficher le modèle sélectionné
-        $('#monMenu').on('change', function () {
+        $('#monMenu').on('change', function() {
             const valeur = $(this).val();
             console.log('Valeur choisie :', valeur);
         });
@@ -121,20 +108,20 @@ $(document).ready(function () {
     // REINITIALISATION FORMULAIRE
 
     // Réinitialisation du formulaire
-    $('#btn_reset').on('click', function () {
+    $('#btn_reset').on('click', function() {
         // Remet tous les champs à vide
         $('#formPred input').val('');
         $('#formPred select').val('');
         $('#monMenu').val('');
-
+        
         // Remet les bordures en normal
         $('#formPred input, #formPred select').css('border', '');
-
+        
         // Vide le localStorage
-        champs.forEach(function (nom) {
+        champs.forEach(function(nom) {
             localStorage.removeItem(nom);
         });
-
+        
         // Vide le bloc résultats
         $('.bloc3').html('<h3>Résultats</h3>');
     });
@@ -143,13 +130,13 @@ $(document).ready(function () {
     // ------------------------------------------
     // PARTIE FORMULAIRE
 
-    $('form').on('submit', function (e) {
+    $('form').on('submit', function(e) {
         e.preventDefault();
         let champVide = false;
         let erreurs = [];
 
         // Vérifier que tous les champs sont remplis
-        $('input:not([type="hidden"]), select', this).each(function () {
+        $('input, select', this).each(function() {
             const val = $(this).val().trim();
 
             // Si le champ est vide
@@ -161,8 +148,16 @@ $(document).ready(function () {
             }
         });
 
+        // Vérification du modèle
+        if ($('#monMenu').val() === '' || $('#monMenu').val() === null) {
+            champVide = true;
+            $('#monMenu').css('border', '2px solid red');
+        } else {
+            $('#monMenu').css('border', '');
+        }
+
         if (champVide) {
-            erreurs.push('Au moins un champ est vide.');
+            erreurs.push('Au moins un champ est vide ou a une valeur non autorisée.');
         }
 
         // Champs entiers : ni virgule ni valeur négative
@@ -171,7 +166,7 @@ $(document).ready(function () {
             'nb_avis_pos', 'nb_avis_neg', 'nb_tags'
         ];
 
-        champsEntiers.forEach(function (nom) {
+        champsEntiers.forEach(function(nom) {
             const input = $('input[name="' + nom + '"]');
             let val = parseFloat(input.val());
 
@@ -199,42 +194,58 @@ $(document).ready(function () {
         }
 
         if (erreurs.length > 0) {
-            alert('Au moins un des champs est vide.\nVeuillez modifier.');
+            alert('Au moins un des champs est vide, ou a une valeur non-autorisée.\nVeuillez modifier.');
             return;
         }
 
 
         // ------------------------------------------
+        // AFFICHAGE DES VALEURS NON RECONNUES
+
+        // Affiche message si éditeur inconnu
+        const nomEditeur = $('#input_editeur').val();
+        if (nomEditeur !== '' && mappingEditeurs[nomEditeur] === undefined) {
+            $('#info_editeur').show();
+        } else {
+            $('#info_editeur').hide();
+        }
+
+        // Affiche message si développeur inconnu
+        const nomDeveloppeur = $('#input_developpeur').val();
+        if (nomDeveloppeur !== '' && mappingDeveloppeurs[nomDeveloppeur] === undefined) {
+            $('#info_developpeur').show();
+        } else {
+            $('#info_developpeur').hide();
+        }
+
+        // ------------------------------------------
         // ENVOIE À L'API
 
-        if (!$('#id_editeur').val()) $('#id_editeur').val(-1);
-        if (!$('#id_developpeur').val()) $('#id_developpeur').val(-1);
-
         const data = {
-            client_type: TYPE_DEV === "moyen" ? "big" : "small",
-            modele: $('#monMenu').val(),
-            genre: $('[name="genre_enc"]').val(),
-            age_requis: Math.round(parseFloat($('[name="age_requis"]').val())),
-            nb_succes: Math.round(parseFloat($('[name="nb_succes"]').val())),
-            nb_avis_pos: Math.round(parseFloat($('[name="nb_avis_pos"]').val())),
-            nb_avis_neg: Math.round(parseFloat($('[name="nb_avis_neg"]').val())),
+            client_type:     TYPE_DEV === "big" ? "big" : TYPE_DEV === "mid" ? "mid" : "small",
+            modele:          $('#monMenu').val(),
+            genre:           $('[name="genre_enc"]').val(),
+            age_requis:      Math.round(parseFloat($('[name="age_requis"]').val())),
+            nb_succes:       Math.round(parseFloat($('[name="nb_succes"]').val())),
+            nb_avis_pos:     Math.round(parseFloat($('[name="nb_avis_pos"]').val())),
+            nb_avis_neg:     Math.round(parseFloat($('[name="nb_avis_neg"]').val())),
             temps_jeu_moyen: Math.round(parseFloat($('[name="temps_jeu_moyen"]').val())),
-            prix: parseFloat($('[name="prix"]').val()),
-            id_editeur: Math.round(parseFloat($('[name="id_editeur"]').val())),
-            id_developpeur: Math.round(parseFloat($('[name="id_developpeur"]').val())),
-            os_windows: Math.round(parseFloat($('[name="os_windows"]').val())),
-            os_mac: Math.round(parseFloat($('[name="os_mac"]').val())),
-            os_linux: Math.round(parseFloat($('[name="os_linux"]').val())),
-            cat_multi: Math.round(parseFloat($('[name="cat_multi"]').val())),
-            cat_online: Math.round(parseFloat($('[name="cat_online"]').val())),
-            cat_vac: Math.round(parseFloat($('[name="cat_vac"]').val())),
-            cat_solo: Math.round(parseFloat($('[name="cat_solo"]').val())),
-            cat_cloud: Math.round(parseFloat($('[name="cat_cloud"]').val())),
-            cat_achiev: Math.round(parseFloat($('[name="cat_achiev"]').val())),
-            cat_cards: Math.round(parseFloat($('[name="cat_cards"]').val())),
-            cat_ctrl: Math.round(parseFloat($('[name="cat_ctrl"]').val())),
-            cat_workshop: Math.round(parseFloat($('[name="cat_workshop"]').val())),
-            nb_tags: Math.round(parseFloat($('[name="nb_tags"]').val())),
+            prix:            parseFloat($('[name="prix"]').val()),
+            id_editeur:     mappingEditeurs[$('#input_editeur').val()] ?? -1,
+            id_developpeur: mappingDeveloppeurs[$('#input_developpeur').val()] ?? -1,
+            os_windows:      toBinaire('os_windows'),
+            os_mac:          toBinaire('os_mac'),
+            os_linux:        toBinaire('os_linux'),
+            cat_multi:       toBinaire('cat_multi'),
+            cat_online:      toBinaire('cat_online'),
+            cat_vac:         toBinaire('cat_vac'),
+            cat_solo:        toBinaire('cat_solo'),
+            cat_cloud:       toBinaire('cat_cloud'),
+            cat_achiev:      toBinaire('cat_achiev'),
+            cat_cards:       toBinaire('cat_cards'),
+            cat_ctrl:        toBinaire('cat_ctrl'),
+            cat_workshop:    toBinaire('cat_workshop'),
+            nb_tags:         Math.round(parseFloat($('[name="nb_tags"]').val())),
         };
 
 
@@ -243,17 +254,18 @@ $(document).ready(function () {
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(data),        // convertit objet JS en JSON pour l'API
-            success: function (response) {
+            success: function(response) {
                 $('.bloc3').html(`
                     <h3>Résultats</h3>
-                    <p>Ventes prédites : <strong>${response.ventes_predites_millions} million(s)</strong></p>
+                    <p>Ventes prédites : <strong style="color:#e14c4c;">${response.ventes_predites_millions} million(s) d'exemplaires</strong></p>
                 `);
             },
-            error: function (xhr) {      // xhr = XMLHttpRequest : objet qui contient toutes les infos sur la requête HTTP
+            error: function(xhr) {      // xhr = XMLHttpRequest : objet qui contient toutes les infos sur la requête HTTP
                 console.log('Status :', xhr.status);
                 console.log('Erreur :', xhr.responseText);
                 $('.bloc3').html(`
                     <h3>Résultats</h3>
+                    <p>(En millions d'exemplaires)</p>
                     <p style="color:red;">Erreur ${xhr.status} : ${xhr.responseText}</p>
                 `);
             }
