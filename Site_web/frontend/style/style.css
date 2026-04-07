@@ -2,18 +2,20 @@
     font-family: 'Kanit', sans-serif;
 }
 
+/* ===== Base ===== */
+
 body {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    background-color: #1A183B;
+    background-color: #f3f4f6;
     margin: 0;
     padding-bottom: 5em;
 }
 
-p{
+p {
     font-size: 1.2em;
-    color: #333;
+    color: #411c00;
     line-height: 1.6;
     margin-top: 0;
     margin-bottom: 15px;
@@ -22,24 +24,20 @@ p{
 
 h2 {
     font-size: 3em;
-    color: #000;
+    color: #411c00;
     margin-top: 10px;
-    margin-bottom: 10spx;
 }
 
 h3 {
     font-size: 2em;
-    color: #000;
-    margin-top: 18px;
-    margin-bottom: 12px;
+    color: #411c00;
     text-align: center;
     margin: 0;
 }
 
 h4 {
     font-size: 1.5em;
-    color: #000;
-    margin-bottom: 12px;
+    color: #411c00;
     text-align: center;
     margin: 0;
 }
@@ -49,12 +47,11 @@ a {
     text-decoration: none;
 }
 
-/* ----------------------------------------------------------
-
 /* ===== Barre du haut ===== */
 
 .top_bar {
-    background-color: rgb(222, 123, 123);
+    background-color: #d96b6b;
+    color: white;
     padding: 1.5%;
     position: relative;
 }
@@ -62,6 +59,7 @@ a {
 header h2 {
     text-align: center;
     margin: 0;
+    color: white;
 }
 
 .retour_dev {
@@ -84,27 +82,20 @@ header h2 {
     position: absolute;
     top: 60px;
     right: 0;
-    background-color: white;
+    background-color: #ffffff;
     border-radius: 10px;
     padding: 15px;
     width: 400px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e5e7eb;
     font-size: 0.9em;
-    color: #333;
+    color: #411c00;
     z-index: 100;
 }
 
 .info_popup.visible {
     display: block;
 }
-
-.info:hover {
-    background-color: #2980b9;
-}
-
-/* ===== Fin barre du haut ===== */
-
-/* ----------------------------------------------------------
 
 /* ===== Conteneur principal ===== */
 
@@ -116,20 +107,29 @@ header h2 {
     margin: 0 2% 2% 2%;
 }
 
-/* ----------------------------------------------------------
+/* ===== Cartes ===== */
+
+.bloc1,
+.bloc2,
+.bloc3,
+.grand_bloc,
+.grand_bloc_index,
+.bloc_modele,
+.bloc_tableau {
+    background-color: #ffffff;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    color: #411c00;
+}
 
 /* ===== Bloc 1 ===== */
 
 .bloc1 {
     display: flex;
     flex-direction: column;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin: 2%;
     padding: 2%;
-    border-radius: 15px;
     box-sizing: border-box;
-    color: #333;
     font-size: 1.5em;
 }
 
@@ -149,56 +149,51 @@ header h2 {
 
 .tableau_donnees td {
     padding: 6px 10px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #e5e7eb;
 }
 
 .tableau_donnees tr:nth-child(even) {
-    background-color: #f5f5f5;
+    background-color: #fafafa;
 }
 
 .tableau_donnees input,
 .tableau_donnees select {
     padding: 4px 8px;
-    border: 1px solid #ccc;
+    border: 1px solid #e5e7eb;
     border-radius: 5px;
     font-size: 0.9em;
     width: 100%;
     box-sizing: border-box;
+    background-color: #ffffff;
 }
 
 .tableau_donnees input:focus,
 .tableau_donnees select:focus {
     outline: none;
-    border-color: #3498db;
+    border-color: #d96b6b;
 }
 
-/* ===== Fin bloc 1 ===== */
+/* ===== Bloc 2 & 3 ===== */
 
-/* ----------------------------------------------------------
-
-/* ===== Bloc 2 ===== */
-
-.bloc2, .bloc3 {
+.bloc2,
+.bloc3 {
     flex: 1;
     display: flex;
     flex-direction: column;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 15px;
     padding: 20px;
     gap: 4%;
     box-sizing: border-box;
-    color: #333;
 }
 
 select {
     align-self: center;
     padding: 10px;
     border-radius: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid #e5e7eb;
     font-size: 1em;
     width: 200px;
     cursor: pointer;
+    background-color: #ffffff;
 }
 
 .info_modeles {
@@ -207,34 +202,34 @@ select {
 }
 
 .info_modeles a {
-    color: #e14c4c;
+    color: #d96b6b;
     font-weight: bold;
 }
 
-.btn_submit {
+/* ===== Boutons ===== */
+
+.btn_submit,
+.btn_choix1,
+.btn_choix2,
+.btn_choix3 {
     align-self: center;
     padding: 10px 20px;
-    background-color: #e14c4c;
+    background-color: #d96b6b;
     color: white;
     border: none;
     border-radius: 8px;
     font-size: 1em;
     cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-/* ===== Fin bloc 2 ===== */
-
-/* ----------------------------------------------------------
-
-/* ===== Bloc 3 ===== */
-
-
-
-
-
-/* ===== Fin bloc 3 ===== */
-
-/* ----------------------------------------------------------
+.btn_submit:hover,
+.btn_choix1:hover,
+.btn_choix2:hover,
+.btn_choix3:hover {
+    background-color: #c85a5a;
+    transform: translateY(-1px);
+}
 
 /* ===== Page documentation ===== */
 
@@ -243,48 +238,35 @@ select {
     height: auto;
 }
 
-.grand_bloc{
+.grand_bloc {
     flex: 1;
     display: flex;
     flex-direction: column;
-    background-color: #fff;
     padding: 20px;
     gap: 3%;
-    margin: 2% 2% 2% 2%;
-    border-radius: 15px;
+    margin: 2%;
     box-sizing: border-box;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    height: auto;
 }
 
-.bloc_soutient{
+.bloc_soutient {
     flex: 1;
     display: flex;
     flex-direction: row;
     gap: 20px;
 }
 
-.bloc_gauche {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    gap: 20px;
-}
-
+.bloc_gauche,
 .bloc_droit {
     flex: 1;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     gap: 20px;
 }
 
-.interpretation{
+.interpretation {
     flex: 1;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     gap: 20px;
     padding: 20px;
 }
@@ -297,13 +279,11 @@ select {
     align-self: center;
 }
 
-.bloc_modele, .bloc_tableau {
+.bloc_modele,
+.bloc_tableau {
     flex: 1;
     display: flex;
     flex-direction: column;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
     gap: 20px;
 }
@@ -312,63 +292,41 @@ select {
     border-collapse: collapse;
     table-layout: fixed;
     width: 100%;
-  }
+}
 
 .bloc_tableau td {
-    border: 1px solid black;
+    border: 1px solid #e5e7eb;
     padding: 8px;
     text-align: center;
-    vertical-align: middle;
-  }
-
-/* ===== Fin documentation ===== */
-
-/* ----------------------------------------------------------
+}
 
 /* ===== Page choix_dev ===== */
 
-.bloc_gauche_choix, .bloc_droit_choix{
+.bloc_gauche_choix,
+.bloc_droit_choix {
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 4px 8px rgb(215, 215, 215);
     font-size: 2em;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     gap: 20px;
 }
 
-.btn_choix1, .btn_choix2, .btn_choix3{
-    align-self: center;
-    padding: 10px 20px;
-    background-color: #e14c4c;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 1em;
-    cursor: pointer;
-    position: center;
-}
-
-.bloc_gauche_choix a, .bloc_droit_choix a{
+.bloc_gauche_choix a,
+.bloc_droit_choix a {
     color: white;
 }
-
-/* ===== Fin choix_dev ===== */
-
-/* ----------------------------------------------------------
 
 /* ===== Page index ===== */
 
-.grand_bloc_index{
+.grand_bloc_index {
     flex: 1;
     display: flex;
     flex-direction: column;
-    background-color: #fff;
     padding: 35px;
     gap: 3%;
-    margin: 2% 2% 2% 2%;
-    border-radius: 15px;
+    margin: 2%;
     box-sizing: border-box;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
