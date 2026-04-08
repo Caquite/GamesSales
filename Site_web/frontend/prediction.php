@@ -54,7 +54,7 @@
                 <!-- Colonne 1 -->
                 <table class="tableau_donnees">
                     <tbody>
-                        <tr><td>âge requis</td><td><select name="age_requis">
+                        <tr><td>Âge minimum requis</td><td><select name="age_requis">
                             <option value="">-</option>
                             <option value="0">0</option>
                             <option value="7">7</option>
@@ -62,12 +62,12 @@
                             <option value="16">16</option>
                             <option value="18">18</option>
                         </select></td></tr>
-                        <tr><td>nombre de succès</td><td><input type="number" name="nb_succes" min="0" step="1"></td></tr>
-                        <tr><td>temps de jeu moyen <small>(en minutes)</small></td><td><input type="number" name="temps_jeu_moyen" min="0" step="0.01"></td></tr>
-                        <tr><td>prix</td><td><input type="number" name="prix" min="0" step="0.01"></td></tr>
-                        <tr><td>avis positifs</td><td><input type="number" name="nb_avis_pos" min="0" step="1"></td></tr>
-                        <tr><td>avis négatifs</td><td><input type="number" name="nb_avis_neg" min="0" step="1"></td></tr>
-                        <tr><td>genre</td><td><select name="genre_enc">
+                        <tr><td>Nombre de succès</td><td><input type="number" name="nb_succes" min="0" step="1"></td></tr>
+                        <tr><td>Temps de jeu moyen <small>(en minutes)</small></td><td><input type="number" name="temps_jeu_moyen" min="0" step="0.01"></td></tr>
+                        <tr><td>Prix</td><td><input type="number" name="prix" min="0" step="0.01"></td></tr>
+                        <tr><td>Nombre d'avis positifs</td><td><input type="number" name="nb_avis_pos" min="0" step="1"></td></tr>
+                        <tr><td>Nombre d'avis négatifs</td><td><input type="number" name="nb_avis_neg" min="0" step="1"></td></tr>
+                        <tr><td>Genre principal</td><td><select name="genre_enc">
                             <option value="">-</option>
                             <option value="Action">Action</option>
                             <option value="Shooter">Shooter</option>
@@ -82,7 +82,7 @@
                             <option value="Sports">Sports</option>
                             <option value="Puzzle">Puzzle</option>
                         </select></td></tr>
-                        <tr><td>éditeur
+                        <tr><td>Éditeur
                             <small class="info-inconnu" id="info_editeur" style="color:#e14c4c; display:none;">
                                 (Éditeur inconnu)
                             </small></td><td>
@@ -96,44 +96,44 @@
                 <!-- Colonne 2 -->
                 <table class="tableau_donnees">
                     <tbody>
-                        <tr><td>développeur
+                        <tr><td>Développeur
                             <small class="info-inconnu" id="info_developpeur" style="color:#e14c4c; display:none;">
                                 (Développeur inconnu)
                             </small></td><td>
                             <input type="text" name="id_developpeur" id="input_developpeur" list="liste_developpeurs" placeholder="Tapez un développeur...">
                             <datalist id="liste_developpeurs"></datalist>
                         </td></tr>
-                        <tr><td>sur Windows ?</td><td><select name="os_windows">
+                        <tr><td>Sur Windows ?</td><td><select name="os_windows">
                             <option value="">-</option>
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
                         </select></td></tr>
-                        <tr><td>sur Mac ?</td><td><select name="os_mac">
+                        <tr><td>Sur Mac ?</td><td><select name="os_mac">
                             <option value="">-</option>
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
                         </select></td></tr>
-                        <tr><td>sur Linux ?</td><td><select name="os_linux">
+                        <tr><td>Sur Linux ?</td><td><select name="os_linux">
                             <option value="">-</option>
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
                         </select></td></tr>
-                        <tr><td>catégorie multi-joueurs ?</td><td><select name="cat_multi">
+                        <tr><td>Catégorie multi-joueurs ?</td><td><select name="cat_multi">
                             <option value="">-</option>
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
                         </select></td></tr>
-                        <tr><td>catégorie en ligne ?</td><td><select name="cat_online">
+                        <tr><td>Catégorie en ligne ?</td><td><select name="cat_online">
                             <option value="">-</option>
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
                         </select></td></tr>
-                        <tr><td>catégorie vacances ?</td><td><select name="cat_vac">
+                        <tr><td>Catégorie vacances ?</td><td><select name="cat_vac">
                             <option value="">-</option>
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
                         </select></td></tr>
-                        <tr><td>catégorie solo ?</td><td><select name="cat_solo">
+                        <tr><td>Catégorie solo ?</td><td><select name="cat_solo">
                             <option value="">-</option>
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
@@ -144,32 +144,32 @@
                 <!-- Colonne 3 -->
                 <table class="tableau_donnees">
                     <tbody>
-                        <tr><td>catégorie cloud ?</td><td><select name="cat_cloud">
+                        <tr><td>Catégorie cloud ?</td><td><select name="cat_cloud">
                             <option value="">-</option>
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
                         </select></td></tr>
-                        <tr><td>catégorie achivement ?</td><td><select name="cat_achiev">
+                        <tr><td>Catégorie achivement ?</td><td><select name="cat_achiev">
                             <option value="">-</option>
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
                         </select></td></tr>
-                        <tr><td>catégorie cartes ?</td><td><select name="cat_cards">
+                        <tr><td>Catégorie cartes ?</td><td><select name="cat_cards">
                             <option value="">-</option>
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
                         </select></td></tr>
-                        <tr><td>catégorie contrôles ?</td><td><select name="cat_ctrl">
+                        <tr><td>Catégorie contrôles ?</td><td><select name="cat_ctrl">
                             <option value="">-</option>
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
                         </select></td></tr>
-                        <tr><td>catégorie workshop ?</td><td><select name="cat_workshop">
+                        <tr><td>Catégorie workshop ?</td><td><select name="cat_workshop">
                             <option value="">-</option>
                             <option value="1">Oui</option>
                             <option value="0">Non</option>
                         </select></td></tr>
-                        <tr><td>nombre de tag</td><td><input type="number" name="nb_tags"></td></tr>
+                        <tr><td>Nombre de tag</td><td><input type="number" name="nb_tags"></td></tr>
                         </select></td></tr>
                         <tr><td><button type="button" id="btn_reset" class="btn_reset"> Réinitialiser </button></td></tr>
                     </tbody>
