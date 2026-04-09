@@ -290,23 +290,3 @@ gb_big.fit(X_big, y_big)
 joblib.dump(gb_big, 'gb_big.pkl')
 
 joblib.dump(le_genre_big, 'le_genre_big.pkl')
-
-
-# --- Entreprise moyenne (entre quantile 0.5 et 0.9) ---
-X_mid, y_mid, y_log_mid, le_genre_mid = preprocesser_entre(df_brut, seuil_bas=0.5, seuil_haut=0.9)
-
-# RF moyen
-# Même logique
-n, depth, split, _ = tuner_random_forest(X_mid, y_mid)
-rf_mid = RandomForestRegressor(n_estimators=n, max_depth=depth, min_samples_split=split, random_state=42, n_jobs=-1)
-rf_mid.fit(X_mid, y_mid)
-joblib.dump(rf_mid, 'rf_mid.pkl')
-
-# GB moyen
-# Même logique
-best_params_gb, _ = tuner_gradient_boosting(X_mid, y_mid)
-gb_mid = GradientBoostingRegressor(**best_params_gb, random_state=42)
-gb_mid.fit(X_mid, y_mid)
-joblib.dump(gb_mid, 'gb_mid.pkl')
-
-joblib.dump(le_genre_mid, 'le_genre_mid.pkl')
