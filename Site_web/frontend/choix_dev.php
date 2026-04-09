@@ -47,12 +47,6 @@
                 <a href="?type_dev=petit" class="btn_choix1"> Choisir </a>
             </div>
 
-            <!-- DEVELOPPEUR MOYEN -->
-            <div class="bloc_gauche_choix">
-                <p> Je suis un développeur intermédiaire </p>
-                <a href="?type_dev=mid" class="btn_choix3"> Choisir </a>
-            </div>
-
             <!-- GRAND DEVELOPPEUR -->
             <div class="bloc_gauche_choix">
                 <p> Toutes catégories de développeurs </p>
