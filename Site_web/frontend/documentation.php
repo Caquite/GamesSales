@@ -5,14 +5,10 @@ $donnees = [
     'gradient_boosting' => [
         'type1' => ['RMSE' => '0.909', 'MAE' => '0.713', 'R²' => '0.048', 'image' => 'images/graphe_VP_vs_VR_GB_moyen.png'],
         'type2' => ['RMSE' => '0.229', 'MAE' => '0.172', 'R²' => '0.173', 'image' => 'images/graphe_VP_vs_VR_GB_petit.png'],
-        'type3' => ['RMSE' => '0.758', 'MAE' => '0.543', 'R²' => '0.243', 'image' => 'images/graphe_VP_vs_VR_GB_datacomplet.png'],
-
     ],
     'random_forest' => [
         'type1' => ['RMSE' => '0.838', 'MAE' => '0.678', 'R²' => '0.193', 'image' => 'images/graphe_VP_vs_VR_RF_moyen.png'],
         'type2' => ['RMSE' => '0.229', 'MAE' => '0.173', 'R²' => '0.167', 'image' => 'images/graphe_VP_vs_VR_RF_petit.png'],
-        'type3' => ['RMSE' => '0.755', 'MAE' => '0.544', 'R²' => '0.248', 'image' => 'images/graphe_VP_vs_VR_RF_datacomplet.png'],
-
     ],
 ];
 
@@ -26,13 +22,10 @@ $description_graphe = [
     'gradient_boosting' => [
         'type1' => "Avec un RMSE de 0.909 et un R² de 0.048, Gradient Boosting est le plus performant des deux modèles. Ses points s'alignent relativement mieux autour de la ligne rouge pour les ventes faibles à moyennes (0-1,5M). Cependant, comme les autres modèles, il sous-estime systématiquement les ventes élevées (>2M), où les points s'éloignent nettement de la diagonale.",
         'type2' => "Avec un RMSE de 0,229 et un R² de 0.173, Gradient Boosting est le plus performant des deux modèles. Ses points s'alignent relativement mieux autour de la ligne rouge pour les ventes faibles à moyennes (0–0,4M). Cependant, au-delà de 0,4M, la dispersion augmente nettement et les prédictions deviennent peu fiables. Gradient Boosting est légèrement supérieur à Random Forest grâce à son R² plus élevé.",
-        'type3' => "Avec un RMSE de 0.758 et un R² de 0.243, Gradient Boosting est le plus performant des trois. Ses points s'alignent relativement mieux autour de la ligne rouge pour les ventes faibles à moyennes (0-1.5M). Cependant, comme les autres modèles, il sous-estime systématiquement les ventes élevées (>2M), où les points s'éloignent nettement de la diagonale.",
     ],
     'random_forest' => [
         'type1' => "Random Forest affiche des résultats très proches (RMSE = 0.838, R² = 0.193). La distribution de ses points (en bleu) est similaire à celle du Gradient Boosting, avec une légère dispersion supplémentaire pour les ventes entre 0 et 1M. Il échoue lui aussi à prédire les valeurs au dessus de 2M.",
         'type2' => "Random Forest affiche des résultats identiques (RMSE = 0.229, R² = 0.167). La distribution de ses points est similaire à celle du Gradient Boosting, avec une dispersion comparable sur la plage 0–0,4M. Il échoue lui aussi à prédire de manière fiable les valeurs au-dessus de 0,4M.",
-        'type3' => "Random Forest affiche des résultats très proches (RMSE=0.755, R²=0.248). La distribution de ses points (en bleu) est similaire à celle du Gradient Boosting, avec une légère dispersion supplémentaire pour les ventes entre 0 et 1M. Il échoue lui aussi à prédire les valeurs au dessus de 2M."
-
         ],
 
 ];
@@ -82,7 +75,6 @@ $valeurs = ($modele && $type) ? ($donnees[$modele][$type] ?? null) : null;
                         <?php if ($modele): ?>
                         <select name="type_docu" onchange="this.form.submit()">
                             <option value=""> Choisir le type de développeur</option>
-                            <option value="type3" <?= $type === 'type3' ? 'selected' : '' ?>>Tous types</option>
                             <option value="type1" <?= $type === 'type1' ? 'selected' : '' ?>>Intermédiaires</option>
                             <option value="type2" <?= $type === 'type2' ? 'selected' : '' ?>>Petits</option>
                         </select>
