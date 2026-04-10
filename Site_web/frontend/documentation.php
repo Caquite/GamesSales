@@ -150,18 +150,18 @@ $valeurs = ($modele && $type) ? ($donnees[$modele][$type] ?? null) : null;
             comme le Gradient Boosting. Pour optimiser ses performances, nous avons également utilisé <strong>Optuna</strong> afin de déterminer les meilleures configurations.
             Avec <strong>22 variables</strong> dont une majorité de <strong>variables binaires</strong> (os, catégories), le Random Forest est particulièrement pertinent car il sélectionne aléatoirement un 
             sous-ensemble de variables à chaque arbre, évitant ainsi que certaines <strong>variables très corrélées</strong> (comme cat_solo et cat_multi) ne dominent les prédictions. 
-            De plus, avec <strong>782 observations</strong>, sa robustesse naturelle face au surapprentissage en fait un <strong>choix évident</strong> pour notre dataset de taille modérée.              
+            De plus, avec <strong>780 observations</strong>, sa robustesse naturelle face au surapprentissage en fait un <strong>choix évident</strong> pour notre dataset de taille modérée.              
             </p>
 
 
              
             <p>Pour évaluer nos modèles, nous avons choisi la méthode de validation croisée <strong>LOOCV (Leave-One-Out Cross-Validation)</strong>. 
             Cette méthode consiste à <strong>mettre de côté un seul jeu</strong>, lors de chaque itération, afin de tester le modèle, et d'utiliser 
-            <strong>tous les autres pour l'entraîner</strong>. On répète cette opération pour <strong>chacune des 782 observations</strong> de notre dataset.
-            Nous avons choisi le LOOCV car notre dataset est de <strong>taille limitée</strong> (782 observations). Cette méthode permet d'utiliser un 
+            <strong>tous les autres pour l'entraîner</strong>. On répète cette opération pour <strong>chacune des 780 observations</strong> de notre dataset.
+            Nous avons choisi le LOOCV car notre dataset est de <strong>taille limitée</strong> (780 observations). Cette méthode permet d'utiliser un 
             <strong>maximum de données pour l'entraînement</strong> tout en évaluant le modèle sur chaque observation, ce qui donne une estimation 
             <strong>très précise et fiable des performances</strong>. Cependant, elle présente un inconvénient : elle est <strong>coûteuse en calcul</strong>, 
-            car le modèle doit être entraîné autant de fois qu'il y a d'observations. Dans notre cas, avec 782 jeux, cela représente <strong>782 entraînements</strong> 
+            car le modèle doit être entraîné autant de fois qu'il y a d'observations. Dans notre cas, avec 780 jeux, cela représente <strong>780 entraînements</strong> 
             par modèle, ce qui reste acceptable.
             </p>
 
