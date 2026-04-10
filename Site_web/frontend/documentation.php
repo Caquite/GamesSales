@@ -76,7 +76,7 @@ $valeurs = ($modele && $type) ? ($donnees[$modele][$type] ?? null) : null;
                         <select name="type_docu" onchange="this.form.submit()">
                             <option value=""> Choisir le type de développeur</option>
                             <option value="type1" <?= $type === 'type1' ? 'selected' : '' ?>>Tous développeurs</option>
-                            <option value="type2" <?= $type === 'type2' ? 'selected' : '' ?>>Petits</option>
+                            <option value="type2" <?= $type === 'type2' ? 'selected' : '' ?>>Petits développeurs</option>
                         </select>
                         <?php endif; ?>
                     </form>
@@ -126,7 +126,7 @@ $valeurs = ($modele && $type) ? ($donnees[$modele][$type] ?? null) : null;
                         <p class="description_graphe"><?= $description_graphe[$modele][$type] ?></p>
                     <?php endif; ?>
                 <?php else: ?>
-                    <p>Sélectionnez un modèle et un type pour voir le graphique.</p>
+                    <p>Sélectionnez un modèle et un type pour voir le graphique associé.</p>
                 <?php endif; ?>
             </div>
         </div>
