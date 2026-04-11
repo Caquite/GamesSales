@@ -1,10 +1,9 @@
-# %%
-# Ce fichier sert uniquement à exporter les modèles.
-# On reprend le code du notebook modeles_ml.ipynb et on le transforme un peu en fonctions
-# pour que ce soit plus propre, plus simple à relire et plus facile à réutiliser. Comme ça,
-# ce sera aussi plus pratique pour le brancher ensuite dans une API.
+# ==============================================================================
+# Ce fichier sert uniquement à exporter les modèles pour l'API.
+# Les hyperparamètres ont été trouvés par Optuna dans le notebook modeles_ml.ipynb,
+# puis fixés en dur ici pour garantir la reproductibilité des modèles exportés.
+# ==============================================================================
 
-import numpy as np
 import pandas as pd
 import warnings
 import mysql.connector
@@ -12,10 +11,8 @@ import joblib
 
 from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
-from sklearn.model_selection import train_test_split, cross_val_score
-from sklearn.metrics import mean_squared_error, r2_score
-import optuna
 
+import optuna
 warnings.filterwarnings("ignore", message="pandas only supports SQLAlchemy")
 optuna.logging.set_verbosity(optuna.logging.WARNING)
 
@@ -85,7 +82,6 @@ def charger_donnees():
 # PRÉTRAITEMENT
 # ==============================================================================
 
-# Liste des variables utilisées
 VARIABLES_EXPLICATIVES = [
     'age_requis', 'nb_succes', 'nb_avis_pos', 'nb_avis_neg',
     'temps_jeu_moyen', 'prix', 'genre_enc', 'id_editeur', 'id_developpeur',
@@ -94,38 +90,31 @@ VARIABLES_EXPLICATIVES = [
     'cat_ctrl', 'cat_workshop', 'nb_tags',
 ]
 
-# Fonction qui permet de selectionner les données d'entrainement pour le(s) modèle(s)
-# Une seule contrainte (<) :
-# - Plus petit que seuil_quantile
 def preprocesser(df, seuil_quantile):
+    """Garde les jeux dont les ventes sont <= seuil_quantile (ex: 0.90 pour big)."""
+    df = df.copy()
     df = df.dropna(subset=['ventes_Global', 'age_requis', 'prix'])
     df['genre']          = df['genre'].fillna('Unknown')
     df['id_editeur']     = df['id_editeur'].fillna(-1).astype(int)
     df['id_developpeur'] = df['id_developpeur'].fillna(-1).astype(int)
     df['nb_tags']        = df['nb_tags'].fillna(0)
     df = df.fillna(0)
-    print(f"Après nettoyage NaN : {len(df)} jeux")
 
     seuil = df['ventes_Global'].quantile(seuil_quantile)
     df = df[df['ventes_Global'] <= seuil]
-    print(f"Après suppression du top {int((1-seuil_quantile)*100)}% (seuil={seuil:.2f}M) : {len(df)} jeux")
+    print(f"Après filtre ≤ {seuil_quantile} : {len(df)} jeux (seuil={seuil:.2f}M)")
 
     le_genre = LabelEncoder()
     df['genre_enc'] = le_genre.fit_transform(df['genre'])
 
-    X     = df[VARIABLES_EXPLICATIVES]
-    y     = df['ventes_Global'].values
-    y_log = np.log1p(y)
+    X = df[VARIABLES_EXPLICATIVES]
+    y = df['ventes_Global'].values
+    return X, y, le_genre
 
-    print(f"\nDataset final : {X.shape[0]} jeux, {X.shape[1]} features")
-    print(f"Ventes : min={y.min():.2f}M - max={y.max():.2f}M - moyenne={y.mean():.2f}M")
-    return X, y, y_log, le_genre
 
-# Fonction qui permet de selectionner les données d'entrainement pour le(s) modèle(s)
-# Deux contraintes (> et <) :
-# - Plus grand que seuil_bas
-# - Plus petit que seuil_haut
 def preprocesser_entre(df, seuil_bas, seuil_haut):
+    """Garde les jeux dont les ventes sont entre seuil_bas et seuil_haut (ex: 0.50 et 0.90 pour mid)."""
+    df = df.copy()
     df = df.dropna(subset=['ventes_Global', 'age_requis', 'prix'])
     df['genre']          = df['genre'].fillna('Unknown')
     df['id_editeur']     = df['id_editeur'].fillna(-1).astype(int)
@@ -141,107 +130,21 @@ def preprocesser_entre(df, seuil_bas, seuil_haut):
     le_genre = LabelEncoder()
     df['genre_enc'] = le_genre.fit_transform(df['genre'])
 
-    X     = df[VARIABLES_EXPLICATIVES]
-    y     = df['ventes_Global'].values
-    y_log = np.log1p(y)
-    return X, y, y_log, le_genre
-
-
-# ==============================================================================
-# TUNING & ÉVALUATION RANDOM FOREST
-# ==============================================================================
-
-def tuner_random_forest(X, y):
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-    meilleur_rmse = np.inf
-    meilleur_n, meilleur_depth, meilleur_split, r2_train = None, None, None, None
-
-    for n_estimators in [100, 200, 300, 500]:
-        for max_depth in [None, 5, 10, 15, 20]:
-            for min_samples_split in [2, 5, 10]:
-
-                rf = RandomForestRegressor(
-                    n_estimators = n_estimators,
-                    max_depth = max_depth,
-                    min_samples_split = min_samples_split,
-                    random_state = 42
-                )
-                rf.fit(X_train, y_train)
-                y_pred = rf.predict(X_test)
-                rmse = np.sqrt(mean_squared_error(y_test, y_pred))
-                r2   = r2_score(y_test, y_pred)
-
-                if rmse < meilleur_rmse:
-                    meilleur_rmse = rmse
-                    r2_train = r2
-                    meilleur_n = n_estimators
-                    meilleur_depth = max_depth
-                    meilleur_split = min_samples_split
-
-    return meilleur_n, meilleur_depth, meilleur_split, r2_train
-
-
-# ==============================================================================
-# TUNING & ÉVALUATION GRADIENT BOOSTING
-# ==============================================================================
-
-def tuner_gradient_boosting(X, y):
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-    def objective(trial):
-        params = {
-            'n_estimators':      trial.suggest_int('n_estimators', 50, 500, step=50),
-            'learning_rate':     trial.suggest_float('learning_rate', 0.01, 0.3, log=True),
-            'max_depth':         trial.suggest_int('max_depth', 2, 8),
-            'subsample':         trial.suggest_float('subsample', 0.5, 1.0),
-            'min_samples_split': trial.suggest_int('min_samples_split', 2, 20),
-            'min_samples_leaf':  trial.suggest_int('min_samples_leaf', 1, 10),
-            'max_features':      trial.suggest_categorical('max_features', ['sqrt', 'log2', None]),
-        }
-
-        modele = GradientBoostingRegressor(**params, random_state=42)
-
-        scores = cross_val_score(
-            modele, X_train, y_train,
-            cv=5,
-            scoring='neg_root_mean_squared_error',
-            n_jobs=-1
-        )
-
-        return -scores.mean()  # on minimise donc on inverse
-
-    study = optuna.create_study(
-        direction='minimize',
-        sampler=optuna.samplers.TPESampler(seed=42),
-        pruner=optuna.pruners.MedianPruner(n_startup_trials=10)
-    )
-
-    # Grod search : 100 essais d'hyperparamètres différents testés par Optuna
-    study.optimize(objective, n_trials=100, show_progress_bar=True)
-
-    best_params = study.best_params
-    meilleur_modele = GradientBoostingRegressor(**study.best_params, random_state=42)
-    meilleur_modele.fit(X_train, y_train)
-    y_pred = meilleur_modele.predict(X_test)
-    r2_train = r2_score(y_test, y_pred)
-    #rmse = np.sqrt(mean_squared_error(y_test, y_pred))
-
-    #print(f"GB meilleurs hyperparamètres : {best_params}")
-    #print(f"GB RMSE train/test : {rmse:.3f}M  |  R² : {r2_train:.3f}")
-    return best_params, r2_train
+    X = df[VARIABLES_EXPLICATIVES]
+    y = df['ventes_Global'].values
+    return X, y, le_genre
 
 
 # ==============================================================================
 # EXPORT DES MODÈLES POUR L'API
 # ==============================================================================
-# Pour chaque profil de développeur, on entraîne 2 modèles (RF et GB) sur le
-# dataset correspondant, puis on les sauvegarde en fichiers .pkl.
-# Ces fichiers seront chargés par l'API Flask pour faire les prédictions.
+# Pour chaque profil, on entraîne RF et GB sur TOUT le dataset correspondant
+# (pas de train/test split ici — le LOOCV du notebook a déjà validé les modèles).
+# Les hyperparamètres sont ceux trouvés par Optuna dans modeles_ml.ipynb.
 #
-# Les 3 profils correspondent à des segments de ventes différents :
+# Les 2 profils sont :
 #   - small : jeux qui font peu de ventes (≤ quantile 0.70)
 #   - big   : jeux qui font beaucoup de ventes (≤ quantile 0.90)
-#   - mid   : jeux qui font des ventes moyennes (entre quantile 0.50 et 0.90)
 #
 # Pour chaque profil, on exporte :
 #   - rf_[profil].pkl : modèle Random Forest entraîné
@@ -249,44 +152,83 @@ def tuner_gradient_boosting(X, y):
 #   - le_genre_[profil].pkl : LabelEncoder du genre (nécessaire pour encoder le genre textuel en nombre lors des prédictions)
 # ==============================================================================
 
-
-# --- Petite entreprise (seuil bas, peu de ventes, < quantile 0.7) ---
 df_brut = charger_donnees()
-X_small, y_small, y_log_small, le_genre_small = preprocesser(df_brut, seuil_quantile=0.70)
-
-# RF petite entreprise
-# On cherche d'abord les meilleurs hyperparamètres via un grid search
-# sur train/test, puis on entraîne le modèle final sur tout le dataset
-n, depth, split, _ = tuner_random_forest(X_small, y_small)                                                               # Choix des meilleurs paramètres
-rf_small = RandomForestRegressor(n_estimators=n, max_depth=depth, min_samples_split=split, random_state=42, n_jobs=-1)   #Création du modèle
-rf_small.fit(X_small, y_small)                                                                                           # Entrainement
-joblib.dump(rf_small, 'rf_small.pkl')                                                                                    # Sauvegarde du modèle
-
-# GB petite entreprise
-# Même logique
-best_params_gb, _ = tuner_gradient_boosting(X_small, y_small)
-gb_small = GradientBoostingRegressor(**best_params_gb, random_state=42)
-gb_small.fit(X_small, y_small)
-joblib.dump(gb_small, 'gb_small.pkl')
-
-joblib.dump(le_genre_small, 'le_genre_small.pkl')
 
 
-# --- Grande entreprise (seuil moyen-haut, ventes moyennes, < au quantile 0.9) ---
-X_big, y_big, y_log_big, le_genre_big = preprocesser(df_brut, seuil_quantile=0.90)
+# ------------------------------------------------------------------------------
+# PROFIL "BIG" — Grand développeur (dataset complet, ≤ quantile 0.90)
+# Hyperparamètres trouvés par Optuna sur ce dataset dans modeles_ml.ipynb
+# ------------------------------------------------------------------------------
+X_big, y_big, le_genre_big = preprocesser(df_brut, seuil_quantile=0.90)
 
-# RF grande entreprise
-# Même logique
-n, depth, split, _ = tuner_random_forest(X_big, y_big)
-rf_big = RandomForestRegressor(n_estimators=n, max_depth=depth, min_samples_split=split, random_state=42, n_jobs=-1)
+# Hyperparamètres RF — dataset complet
+best_params_rf_big = {
+    'n_estimators':    50,
+    'max_depth':       12,
+    'min_samples_split': 6,
+    'min_samples_leaf':  1,
+    'max_features':   'log2'
+}
+rf_big = RandomForestRegressor(**best_params_rf_big, random_state=42, n_jobs=-1)
 rf_big.fit(X_big, y_big)
 joblib.dump(rf_big, 'rf_big.pkl')
+print("rf_big.pkl exporté")
 
-# GB grande entreprise
-# Même logique
-best_params_gb, _ = tuner_gradient_boosting(X_big, y_big)
-gb_big = GradientBoostingRegressor(**best_params_gb, random_state=42)
+# Hyperparamètres GB — dataset complet
+best_params_gb_big = {
+    'n_estimators':      300,
+    'learning_rate':     0.021085345402470423,
+    'max_depth':         2,
+    'subsample':         0.844382925236584,
+    'min_samples_split': 18,
+    'min_samples_leaf':  4,
+    'max_features':     'log2'
+}
+gb_big = GradientBoostingRegressor(**best_params_gb_big, random_state=42)
 gb_big.fit(X_big, y_big)
 joblib.dump(gb_big, 'gb_big.pkl')
+print("gb_big.pkl exporté")
 
 joblib.dump(le_genre_big, 'le_genre_big.pkl')
+print("le_genre_big.pkl exporté")
+
+
+# ------------------------------------------------------------------------------
+# PROFIL "SMALL" — Petit développeur (petits jeux, ≤ quantile 0.70)
+# Hyperparamètres trouvés par Optuna sur ce dataset dans modeles_ml.ipynb
+# ------------------------------------------------------------------------------
+X_small, y_small, le_genre_small = preprocesser(df_brut, seuil_quantile=0.70)
+
+# Hyperparamètres RF — petits jeux
+best_params_rf_small = {
+    'n_estimators':      50,
+    'max_depth':         4,
+    'min_samples_split': 12,
+    'min_samples_leaf':  6,
+    'max_features':      None
+}
+rf_small = RandomForestRegressor(**best_params_rf_small, random_state=42, n_jobs=-1)
+rf_small.fit(X_small, y_small)
+joblib.dump(rf_small, 'rf_small.pkl')
+print("rf_small.pkl exporté")
+
+# Hyperparamètres GB — petits jeux
+best_params_gb_small = {
+    'n_estimators':      400,
+    'learning_rate':     0.014385435978518381,
+    'max_depth':         3,
+    'subsample':         0.6235482668206153,
+    'min_samples_split': 2,
+    'min_samples_leaf':  10,
+    'max_features':     'log2'
+}
+gb_small = GradientBoostingRegressor(**best_params_gb_small, random_state=42)
+gb_small.fit(X_small, y_small)
+joblib.dump(gb_small, 'gb_small.pkl')
+print("gb_small.pkl exporté")
+
+joblib.dump(le_genre_small, 'le_genre_small.pkl')
+print("le_genre_small.pkl exporté")
+
+
+print("\nTous les modèles ont été exportés avec succès !")
