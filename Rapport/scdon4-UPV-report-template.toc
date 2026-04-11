@@ -1,0 +1,32 @@
+\contentsline {chapter}{\numberline {Chapitre 1}Introduction}{1}{chapter.1}%
+\contentsline {chapter}{\numberline {Chapitre 2}Gestion de projet }{2}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Introduction}{2}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Collaboration avec Git}{2}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Contribution}{3}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Planning}{3}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Conclusions}{4}{section.2.5}%
+\contentsline {chapter}{\numberline {Chapitre 3}Base de données}{5}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Introduction}{5}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Traitements réalisés}{5}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Descriptif des tables}{6}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Modèle conceptuel des données}{6}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Modèle organisationnel des données}{6}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Requêtes réalisées}{6}{section.3.6}%
+\contentsline {section}{\numberline {3.7}Conclusions}{7}{section.3.7}%
+\contentsline {chapter}{\numberline {Chapitre 4}Analyse exploratoire des données}{8}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Introduction}{8}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Distribution des ventes}{8}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Corrélations entre variables}{9}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Relation ventes et avis}{10}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Analyse des ventes par genre}{10}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Analyse des ventes par année}{11}{section.4.6}%
+\contentsline {section}{\numberline {4.7}Relation ventes et prix par période}{12}{section.4.7}%
+\contentsline {section}{\numberline {4.8}Évolution des genres dans le temps}{13}{section.4.8}%
+\contentsline {section}{\numberline {4.9}Répartition des catégories}{14}{section.4.9}%
+\contentsline {chapter}{\numberline {Chapitre 5}Description technique et fonctionnelle}{15}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Introduction}{15}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Description technique}{15}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Description fonctionnelle}{15}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Conclusions}{15}{section.5.4}%
+\contentsline {chapter}{\numberline {Chapitre 6}Conclusions et perspectives}{16}{chapter.6}%
+\contentsline {chapter}{Annexes}{17}{chapter*.5}%
