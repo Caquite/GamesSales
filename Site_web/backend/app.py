@@ -3,7 +3,6 @@ import joblib
 import pandas as pd
 from flask_cors import CORS
 from flask import Flask, request, jsonify
-import mysql.connector
 
 app = Flask(__name__)
 CORS(app)     # Sans CORS, le navigateur refuse d'envoyer des requêtes vers un domaine différent pour des raisons de sécurité
