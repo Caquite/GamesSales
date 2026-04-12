@@ -14,15 +14,12 @@ modeles = {
     ('small', 'gb'): joblib.load('gb_small.pkl'),
     ('big', 'rf'): joblib.load('rf_big.pkl'),
     ('big', 'gb'): joblib.load('gb_big.pkl'),
-    ('mid', 'rf'): joblib.load('rf_mid.pkl'),
-    ('mid', 'gb'): joblib.load('gb_mid.pkl'),
 }
 
 # Encodeurs pour transformer les genres (transforme le texte en nombre)
 encoders = {
     'small': joblib.load('le_genre_small.pkl'),
     'big':   joblib.load('le_genre_big.pkl'),
-    'mid': joblib.load('le_genre_mid.pkl'),
 }
 
 # ---------------------------------------
@@ -48,7 +45,7 @@ def predict():
             return jsonify({'erreur': f'Champ manquant : {champ}'}), 400
 
     # Vérifier les valeurs
-    if data['client_type'] not in ['small', 'big', 'mid']:
+    if data['client_type'] not in ['small', 'big']:
         return jsonify({'erreur': 'client_type invalide'}), 400
     if data['modele'] not in ['rf', 'gb']:
         return jsonify({'erreur': 'modele invalide'}), 400
@@ -114,45 +111,11 @@ def predict():
         'nb_tags':          data['nb_tags'],
     }])
 
-    # Sélection du bon modèle et génération de la prédiction
-    # et retour de la prédiction au format JSON (arrondi à 3 chiffres après la virgule)
+    # Sélection du bon modèle
+    # et retour de la prédiction
     prediction = modeles[(client_type, modele_type)].predict(X)[0]
     return jsonify({'ventes_predites_millions': round(float(prediction), 3)})
 
-@app.route('/search/editeur', methods=['GET'])
-def search_editeur():
-    q = request.args.get('q', '').strip()
-    if len(q) < 2:
-        return jsonify([])
-    db = mysql.connector.connect(
-        host=os.environ.get('DB_HOST'),
-        user=os.environ.get('DB_USER'),
-        password=os.environ.get('DB_PASSWORD'),
-        database=os.environ.get('DB_NAME')
-    )
-    cur = db.cursor(dictionary=True)
-    cur.execute("SELECT DISTINCT id_editeur, editeur FROM editeur WHERE editeur LIKE %s LIMIT 10", (f'%{q}%',))
-    results = cur.fetchall()
-    db.close()
-    return jsonify(results)
-
-
-@app.route('/search/developpeur', methods=['GET'])
-def search_developpeur():
-    q = request.args.get('q', '').strip()
-    if len(q) < 2:
-        return jsonify([])
-    db = mysql.connector.connect(
-        host=os.environ.get('DB_HOST'),
-        user=os.environ.get('DB_USER'),
-        password=os.environ.get('DB_PASSWORD'),
-        database=os.environ.get('DB_NAME')
-    )
-    cur = db.cursor(dictionary=True)
-    cur.execute("SELECT DISTINCT id_developpeur, developpeur FROM developpeur WHERE developpeur LIKE %s LIMIT 10", (f'%{q}%',))
-    results = cur.fetchall()
-    db.close()
-    return jsonify(results)
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
