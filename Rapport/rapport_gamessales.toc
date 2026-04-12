@@ -1,0 +1,45 @@
+\contentsline {chapter}{\numberline {Chapitre 1}Introduction}{5}{chapter.1}%
+\contentsline {chapter}{\numberline {Chapitre 2}\textbf {Gestion de projet }}{6}{chapter.2}%
+\contentsline {section}{\numberline {2.1}\textbf {Introduction}}{6}{section.2.1}%
+\contentsline {section}{\numberline {2.2}\textbf {Collaboration avec Git}}{6}{section.2.2}%
+\contentsline {section}{\numberline {2.3}\textbf {Contribution}}{6}{section.2.3}%
+\contentsline {section}{\numberline {2.4}\textbf {Planning}}{7}{section.2.4}%
+\contentsline {chapter}{\numberline {Chapitre 3}\textbf {Base de données}}{8}{chapter.3}%
+\contentsline {section}{\numberline {3.1}\textbf {Introduction}}{8}{section.3.1}%
+\contentsline {section}{\numberline {3.2}\textbf {Traitements réalisés}}{8}{section.3.2}%
+\contentsline {section}{\numberline {3.3}\textbf {Descriptif des tables}}{9}{section.3.3}%
+\contentsline {section}{\numberline {3.4}\textbf {Modèle conceptuel des données}}{11}{section.3.4}%
+\contentsline {section}{\numberline {3.5}\textbf {Conclusions}}{12}{section.3.5}%
+\contentsline {chapter}{\numberline {Chapitre 4}\textbf {Analyse exploratoire des données}}{13}{chapter.4}%
+\contentsline {section}{\numberline {4.1}\textbf {Introduction}}{13}{section.4.1}%
+\contentsline {section}{\numberline {4.2}\textbf {Distribution des ventes}}{13}{section.4.2}%
+\contentsline {section}{\numberline {4.3}\textbf {Corrélations entre variables}}{14}{section.4.3}%
+\contentsline {section}{\numberline {4.4}\textbf {Relation ventes et avis}}{15}{section.4.4}%
+\contentsline {section}{\numberline {4.5}\textbf {Analyse des ventes par genre}}{16}{section.4.5}%
+\contentsline {section}{\numberline {4.6}\textbf {Analyse des ventes par année}}{17}{section.4.6}%
+\contentsline {section}{\numberline {4.7}\textbf {Relation ventes et prix par période}}{17}{section.4.7}%
+\contentsline {section}{\numberline {4.8}\textbf {Évolution des genres dans le temps}}{18}{section.4.8}%
+\contentsline {section}{\numberline {4.9}\textbf {Répartition des catégories}}{19}{section.4.9}%
+\contentsline {section}{\numberline {4.10}\textbf {Analyse statistique et choix méthodologiques}}{19}{section.4.10}%
+\contentsline {chapter}{\numberline {Chapitre 5}\textbf {Machine Learning}}{21}{chapter.5}%
+\contentsline {section}{\numberline {5.1}\textbf {Choix des variables explicatives}}{21}{section.5.1}%
+\contentsline {section}{\numberline {5.2}\textbf {Filtrage des données}}{22}{section.5.2}%
+\contentsline {section}{\numberline {5.3}\textbf {Choix des modèles de prédiction}}{22}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}\textbf {Gradient Boosting}}{22}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}\textbf {Random Forest}}{24}{subsection.5.3.2}%
+\contentsline {subsection}{\numberline {5.3.3}\textbf {Support Vector Regression}}{24}{subsection.5.3.3}%
+\contentsline {section}{\numberline {5.4}\textbf {Les Métriques utilisées}}{25}{section.5.4}%
+\contentsline {section}{\numberline {5.5}\textbf {Choix de l’algorithme d’évaluation de modèles}}{26}{section.5.5}%
+\contentsline {section}{\numberline {5.6}\textbf {Conclusion Machine Learning}}{27}{section.5.6}%
+\contentsline {chapter}{\numberline {Chapitre 6}\textbf {Le site web}}{28}{chapter.6}%
+\contentsline {section}{\numberline {6.1}\textbf {Introduction}}{28}{section.6.1}%
+\contentsline {section}{\numberline {6.2}\textbf {Description technique}}{28}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}\textbf {Création de l'API}}{28}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}\textbf {Structure du site}}{29}{subsection.6.2.2}%
+\contentsline {section}{\numberline {6.3}\textbf {Description fonctionnelle}}{29}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}\textbf {Utilisateurs et conception}}{29}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {6.3.2}\textbf {Fonctionnement du site par écran}}{30}{subsection.6.3.2}%
+\contentsline {subsection}{\numberline {6.3.3}\textbf {Gestion des erreurs et sécurité}}{31}{subsection.6.3.3}%
+\contentsline {section}{\numberline {6.4}\textbf {Difficultés rencontrées et solutions apportées}}{32}{section.6.4}%
+\contentsline {section}{\numberline {6.5}\textbf {Bilan du projet et perspectives}}{33}{section.6.5}%
+\contentsline {chapter}{\numberline {Chapitre 7}\textbf {Conclusions et perspectives}}{35}{chapter.7}%
