@@ -39,7 +39,7 @@
 \contentsline {section}{\numberline {6.3}\textbf {Description fonctionnelle}}{29}{section.6.3}%
 \contentsline {subsection}{\numberline {6.3.1}\textbf {Utilisateurs et conception}}{29}{subsection.6.3.1}%
 \contentsline {subsection}{\numberline {6.3.2}\textbf {Fonctionnement du site par écran}}{30}{subsection.6.3.2}%
-\contentsline {subsection}{\numberline {6.3.3}\textbf {Gestion des erreurs et sécurité}}{31}{subsection.6.3.3}%
+\contentsline {subsection}{\numberline {6.3.3}\textbf {Gestion des erreurs et sécurité}}{32}{subsection.6.3.3}%
 \contentsline {section}{\numberline {6.4}\textbf {Difficultés rencontrées et solutions apportées}}{32}{section.6.4}%
-\contentsline {section}{\numberline {6.5}\textbf {Bilan du projet et perspectives}}{33}{section.6.5}%
-\contentsline {chapter}{\numberline {Chapitre 7}\textbf {Conclusions et perspectives}}{35}{chapter.7}%
+\contentsline {section}{\numberline {6.5}\textbf {Bilan du projet et perspectives}}{34}{section.6.5}%
+\contentsline {chapter}{\numberline {Chapitre 7}\textbf {Conclusions et perspectives}}{36}{chapter.7}%

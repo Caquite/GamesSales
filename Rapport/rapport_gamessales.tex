@@ -822,6 +822,16 @@ La première page de notre site est une page de contextualisation et de présent
 
 Cette page propose de sélectionner le niveau du développeur du jeu qu’on cherche à estimer : “petite” ou “toutes catégories de développeurs”. C’est ce choix qui va mener à un certain type de modèle de prédiction vu précédemment. Le choix du “petit développeur” ramène sur les modèles entraînés sur les données inférieures au 7ème décile et le choix du “toutes catégories de développeurs” utilise les modèles entraînés sur les données inférieures au 9ème décile. Ce découpage permet d’avoir des modèles plus adaptés selon le type de développeur. Une fois le choix du développeur fait, l’utilisateur est redirigé vers la page de prédiction. 
 
+
+  \begin{figure}[H]
+  \hypertarget{site1}{%
+  \centering
+  \includegraphics[width=\textwidth]{img/site1.png}
+  \caption{Page de choix du développeur}\label{site1}
+  }
+  \end{figure}
+  
+  
 Écran 3 : Page de prédiction
 
 Depuis cette page de prédiction, l’utilisateur peut entrer ses données concernant le jeu qu’il souhaite estimer. Il doit alors remplir un formulaire de 22 questions. La grande majorité de ces questions concerne le jeu vidéo en lui-même. Tandis que d’autres peuvent être complété seulement une fois le jeu sortie au publique et avoir quelques retour : nombre d’avis positifs et nombre d’avis négatifs. Si le jeu n’est pas encore sorti ou s’il n’a pas encore de retour, il est possible de mettre la valeur “0”. Une fois tous les champs remplis, l’utilisateur à la possibilité de choisir le modèle avec lequel il souhaite faire des prédictions, Gradient Boosting ou Random Forest et lancer le programme d’approximation de ventes.

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.12)  12 APR 2026 21:15
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.12)  12 APR 2026 21:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -798,20 +798,25 @@ File: img/orgaSite.png Graphic file (type png)
 Package pdftex.def Info: img/orgaSite.png  used on input line 795.
 (pdftex.def)             Requested size: 182.5648pt x 199.16928pt.
  [29 <./img/orgaSite.png (PNG copy)>]
-<img/site2.png, id=471, 645.612pt x 296.90926pt>
+<img/site1.png, id=471, 648.62325pt x 296.307pt>
+File: img/site1.png Graphic file (type png)
+<use img/site1.png>
+Package pdftex.def Info: img/site1.png  used on input line 831.
+(pdftex.def)             Requested size: 423.94588pt x 193.67332pt.
+ [30 <./img/site1.png>]
+<img/site2.png, id=479, 645.612pt x 296.90926pt>
 File: img/site2.png Graphic file (type png)
 <use img/site2.png>
-Package pdftex.def Info: img/site2.png  used on input line 837.
+Package pdftex.def Info: img/site2.png  used on input line 847.
 (pdftex.def)             Requested size: 423.94588pt x 194.96854pt.
- [30]
-<img/site3.png, id=476, 1292.83pt x 670.505pt>
+<img/site3.png, id=480, 1292.83pt x 670.505pt>
 File: img/site3.png Graphic file (type png)
 <use img/site3.png>
-Package pdftex.def Info: img/site3.png  used on input line 850.
+Package pdftex.def Info: img/site3.png  used on input line 860.
 (pdftex.def)             Requested size: 423.94588pt x 219.86568pt.
- [31 <./img/site2.png> <./img/site3.png (PNG copy)>] [32] [33] [34]
+ [31 <./img/site2.png>] [32 <./img/site3.png (PNG copy)>] [33] [34] [35]
 Chapitre 7.
-[35
+[36
 
 ] (./rapport_gamessales.aux)
  ***********
@@ -822,18 +827,18 @@ Package rerunfilecheck Info: File `rapport_gamessales.out' has not changed.
 (rerunfilecheck)             Checksum: C34DF7A05E4C04F0E3418EC429BAB7EF;8077.
  ) 
 Here is how much of TeX's memory you used:
- 11276 strings out of 469339
- 174007 string characters out of 5464315
- 590012 words of memory out of 5000000
- 39779 multiletter control sequences out of 15000+600000
+ 11287 strings out of 469339
+ 174175 string characters out of 5464315
+ 590068 words of memory out of 5000000
+ 39787 multiletter control sequences out of 15000+600000
  642228 words of font info for 75 fonts, out of 8000000 for 9000
  16 hyphenation exceptions out of 8191
  80i,8n,82p,1674b,582s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <c:/Users/Donia/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/ecti1200.600pk> <c:/Users/Donia/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0800.600pk> <c:/Users/Donia/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbi1200.600pk> <c:/Users/Donia/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> <c:/Users/Donia/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1728.600pk> <c:/Users/Donia/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1200.600pk> <c:/Users/Donia/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/eccc1728.600pk> <c:/Users/Donia/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1200.600pk> <c:/Users/Donia/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> <c:/Users/Donia/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/eccc1095.600pk> <c:/Users/Donia/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> <c:/Users/Donia/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1728.600pk><c:/Users/Donia/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/Users/Donia/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb>
-Output written on rapport_gamessales.pdf (38 pages, 1774726 bytes).
+Output written on rapport_gamessales.pdf (39 pages, 1856836 bytes).
 PDF statistics:
- 995 PDF objects out of 1000 (max. 8388607)
- 517 compressed objects within 6 object streams
- 152 named destinations out of 1000 (max. 500000)
- 431 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1003 PDF objects out of 1200 (max. 8388607)
+ 522 compressed objects within 6 object streams
+ 155 named destinations out of 1000 (max. 500000)
+ 436 words of extra memory for PDF output out of 10000 (max. 10000000)
 
